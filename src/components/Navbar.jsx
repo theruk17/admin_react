@@ -1,13 +1,13 @@
 import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Breadcrumb, Layout, Menu, theme, Avatar } from 'antd';
 import React from 'react';
 import Data from './Data'
 import '../index.css';
 import LogoIHC from '../assets/logo_ihc.svg'
 const { Header, Content, Sider } = Layout;
-const items1 = ['1', '2', '3'].map((key) => ({
+const items1 = ['Home', 'Upload Excel', 'Test2'].map((key) => ({
   key,
-  label: `nav ${key}`,
+  label: `${key}`,
 }));
 const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map((icon, index) => {
   const key = String(index + 1);
@@ -31,8 +31,10 @@ const App = () => {
   return (
     <Layout>
       <Header className="header">
-        <div className="logo" />
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />
+        <img className='logo' src={LogoIHC} alt="" style={{
+            width: 140,
+          }} />
+        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['Home']} items={items1} />
       </Header>
       <Layout>
         <Sider
