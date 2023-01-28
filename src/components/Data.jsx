@@ -17,6 +17,7 @@ import '../App.css'
 
 
 const API_URL = 'https://drab-jade-haddock-toga.cyclic.app/admin_data'
+const API_URL_EDIT = 'https://drab-jade-haddock-toga.cyclic.app'
 
 const Brand = [
   { val: 'AOC' },
@@ -91,6 +92,10 @@ function Data() {
   const [pagination, setPagination] = useState({
     pageSize: 50
   });
+  state = {
+    formData: {},
+    modalVisible: false
+  }
 
 
   useEffect(() => {
@@ -104,25 +109,24 @@ function Data() {
 
   const handleEdit = (id) => {
     setLoading(true)
-    axios.get(API_URL)
+    axios.get(API_URL_EDIT+"/edit_data/"+id)
       .then(res => {
-        setData(res.data)
-        setCurrentData(data.find(d => d.mnt_id === id));
-        form.setFieldsValue({
-          group: currentData.mnt_group,
-          brand: currentData.mnt_brand,
-          model: currentData.mnt_model,
-          size: currentData.mnt_size,
-          hz: currentData.mnt_refresh_rate,
-          panel: currentData.mnt_panel,
-          resolution: currentData.mnt_resolution,
-          price_srp: currentData.mnt_price_srp,
-          price: currentData.mnt_price_w_com
-        });
+        this.setState({
+          formData: res.data,
+      });
         setLoading(false)
         setVisible(true);
       })
   }
+
+  handleChange = (e, field) => {
+    this.setState({
+        formData: {
+            ...this.state.formData,
+            [field]: e.target.value
+        }
+    });
+}
 
   const handleSubmit = values => {
     setIsSubmitting(true);
@@ -255,7 +259,7 @@ function Data() {
               </Col>
               <Col span={12}>
                 <Form.Item label="Model" name="model">
-                  <Input placeholder='Model' value={currentData.model} />
+                  <Input placeholder='Model' value={this.state.formData.mnt_model} onChange={(e) => this.handleChange(e, "mnt_model")} />
                 </Form.Item>
               </Col>
             </Row>
