@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { NumericFormat } from 'react-number-format';
 import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
-import { Space, Table, Switch, Modal, Divider, message  } from 'antd';
+import { Space, Table, Switch, Modal, Divider, message, Spin } from 'antd';
 import {
   Row,
   Col,
@@ -14,6 +14,7 @@ import {
   Popconfirm,
 } from 'antd';
 import '../App.css'
+
 
 const API_URL = 'https://drab-jade-haddock-toga.cyclic.app/admin_data'
 
@@ -73,6 +74,13 @@ const Resolution = [
   { val: '3440 x 1440 (2K)' },
 ]
 
+const Group = [
+  { val: '1920 x 1080 (FHD)' },
+  { val: '2560 x 1440 (2K)' },
+  { val: '3840 x 2160 (4K)' },
+  { val: '3440 x 1440 (2K)' },
+]
+
 function Data() {
   const [form] = Form.useForm();
   const [data, setData] = useState([]);
@@ -83,7 +91,6 @@ function Data() {
   const [pagination, setPagination] = useState({
     pageSize: 50
   });
-  const [messageApi, contextHolder] = message.useMessage();
 
 
   useEffect(() => {
@@ -96,35 +103,47 @@ function Data() {
   }, []);
 
   const handleEdit = (id) => {
-    setCurrentData(data.find(d => d.mnt_id === id));
-    form.setFieldsValue({
-      brand: currentData.mnt_brand,
-      model: currentData.mnt_model,
-      size: currentData.mnt_size,
-      hz: currentData.mnt_refresh_rate,
-      panel: currentData.mnt_panel,
-      resolution: currentData.mnt_resolution,
-      price_srp: currentData.mnt_price_srp,
-      price: currentData.mnt_price_w_com,
-
-    });
-    setVisible(true);
+    setLoading(true)
+    axios.get(API_URL)
+      .then(res => {
+        setData(res.data)
+        setCurrentData(data.find(d => d.mnt_id === id));
+        form.setFieldsValue({
+          group: currentData.mnt_group,
+          brand: currentData.mnt_brand,
+          model: currentData.mnt_model,
+          size: currentData.mnt_size,
+          hz: currentData.mnt_refresh_rate,
+          panel: currentData.mnt_panel,
+          resolution: currentData.mnt_resolution,
+          price_srp: currentData.mnt_price_srp,
+          price: currentData.mnt_price_w_com
+        });
+        setLoading(false)
+        setVisible(true);
+      })
   }
 
   const handleSubmit = values => {
     setIsSubmitting(true);
     axios.put('https://drab-jade-haddock-toga.cyclic.app/edit/' + currentData.mnt_id, values)
       .then(res => {
-        info = () => {
-          messageApi.info(res.data);
-        };
-        setIsSubmitting(false);
-        setVisible(false);
-        setData(data.map(d => d.mnt_id === currentData.mnt_id ? res.data : d));
+        message.success(res.data);
+        axios.get('https://drab-jade-haddock-toga.cyclic.app/admin_data')
+          .then(res => {
+            setData(res.data);
+            setIsSubmitting(false);
+            setVisible(false);
+          })
+          .catch(err => {
+            console.log(err);
+            message.error("Error fetching updated data");
+            setIsSubmitting(false);
+          });
       })
       .catch(err => {
         console.log(err);
-        //.error('Error updating data');
+        message.error('Error updating data');
         setIsSubmitting(false);
       });
   };
@@ -207,114 +226,126 @@ function Data() {
       target.mnt_status = target.mnt_status === 'Y' ? 'N' : 'Y';
       setData(newData);
     }
-  }; 
+  };
 
   return (
     <>
       <Table columns={columns} dataSource={data} rowKey={record => record.mnt_id} pagination={pagination} />
+      {loading && <div className='spin'><Spin tip="Loading..." /></div>}
+      {!loading && (
+        <Modal title="Edit Form" open={visible} width={1000} onOk={() => form.submit()} onCancel={() => setVisible(false)}>
+          <Divider />
 
-      <Modal title="Edit Form" open={visible} width={1000} onOk={() => form.submit()} onCancel={() => setVisible(false)}>
-      <Divider />
-        <Form form={form} onFinish={handleSubmit}>
-          <Row gutter={20}>
-            <Col span={12}>
-              <Form.Item label="Brand" name="brand"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input your Brand!',
-                  },
-                ]}>
-                <Select placeholder="Brand">
-                {Brand.map(item => (
-                  <Select.Option key={item.val} value={currentData.brand} >{item.val}</Select.Option>
-                ))}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item label="Model" name="model">
-                <Input placeholder='Model' />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={20}>
-            <Col span={4}>
-              <Form.Item label="Size" name="size">
-                <Select placeholder="Size">
-                {Size.map(item => (
-                  <Select.Option key={item.val} value={item.val}>{item.val}"</Select.Option>
-                ))}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <Form.Item label="Refresh Rate" name="hz">
-                <Select placeholder="Refresh Rate">
-                {Hz.map(item => (
-                  <Select.Option key={item.val} value={item.val}>{item.val} Hz</Select.Option>
-                ))}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <Form.Item label="Panel" name="panel">
-                <Select placeholder="Panel">
-                {Panel.map(item => (
-                  <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
-                ))}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <Form.Item label="Resolution" name="resolution">
-                <Select placeholder="Resolution">
-                {Resolution.map(item => (
-                  <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
-                ))}
-                </Select>
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={20}>
-            <Col span={12}>
-              <Form.Item label="Curve" name="curve" valuePropName="checked">
-                <Checkbox></Checkbox>
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <Form.Item label="Price" name="price_srp">
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <Form.Item label="ราคาพร้อมเครื่อง" name="price">
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
+          <Form form={form} onFinish={handleSubmit}>
+            <Row gutter={20}>
+              <Col span={12}>
+                <Form.Item label="Brand" name="brand"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input your Brand!',
+                    },
+                  ]}>
+                  <Select placeholder="Brand">
+                    {Brand.map(item => (
+                      <Select.Option key={item.val} value={currentData.brand} >{item.val}</Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="Model" name="model">
+                  <Input placeholder='Model' value={currentData.model} />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={20}>
+              <Col span={4}>
+                <Form.Item label="Size" name="size">
+                  <Select placeholder="Size">
+                    {Size.map(item => (
+                      <Select.Option key={item.val} value={item.val}>{item.val}"</Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={6}>
+                <Form.Item label="Refresh Rate" name="hz">
+                  <Select placeholder="Refresh Rate">
+                    {Hz.map(item => (
+                      <Select.Option key={item.val} value={item.val}>{item.val} Hz</Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={6}>
+                <Form.Item label="Panel" name="panel">
+                  <Select placeholder="Panel">
+                    {Panel.map(item => (
+                      <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item label="Resolution" name="resolution">
+                  <Select placeholder="Resolution">
+                    {Resolution.map(item => (
+                      <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={20}>
+              <Col span={6}>
+                <Form.Item label="Curve" name="curve" valuePropName="checked">
+                  <Checkbox></Checkbox>
+                </Form.Item>
+              </Col>
+              <Col span={6}>
+                <Form.Item label="Group" name="group">
+                  <Select placeholder="Group">
+                    {Group.map(item => (
+                      <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={6}>
+                <Form.Item label="Price" name="price_srp">
+                  <Input />
+                </Form.Item>
+              </Col>
+              <Col span={6}>
+                <Form.Item label="ราคาพร้อมเครื่อง" name="price">
+                  <Input />
+                </Form.Item>
+              </Col>
+            </Row>
 
-          <Form.Item label="Status" name="status" valuePropName="checked">
-            <Switch checkedChildren="On" unCheckedChildren="Off"/>
-          </Form.Item>
-          <Form.Item label="Upload Image" valuePropName="fileList">
-            <Upload action="/upload.do" listType="picture-card">
-              <div>
-                <PlusOutlined />
-                <div
-                  style={{
-                    marginTop: 8,
-                  }}
-                >
-                  Upload
+            <Form.Item label="Status" name="status" valuePropName="checked">
+              <Switch checkedChildren="On" unCheckedChildren="Off" />
+            </Form.Item>
+            <Form.Item label="Upload Image" valuePropName="fileList">
+              <Upload action="/upload.do" listType="picture-card">
+                <div>
+                  <PlusOutlined />
+                  <div
+                    style={{
+                      marginTop: 8,
+                    }}
+                  >
+                    Upload
+                  </div>
                 </div>
-              </div>
-            </Upload>
-          </Form.Item>
-        </Form>
+              </Upload>
+            </Form.Item>
+          </Form>
 
 
-      </Modal>
+        </Modal>
+      )}
     </>
   )
 }

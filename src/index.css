@@ -29,3 +29,10 @@
   float: right;
   margin: 16px 0 16px 24px;
 }
+
+.spin {
+  margin: 20px 0;
+  margin-bottom: 20px;
+  padding: 30px 50px;
+  text-align: center;
+}
