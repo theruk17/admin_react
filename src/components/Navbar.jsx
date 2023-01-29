@@ -1,7 +1,7 @@
 import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, theme, Avatar } from 'antd';
 import React from 'react';
-import Data from './Data'
+import ShowData from './ShowData'
 import '../index.css';
 import LogoIHC from '../assets/logo_ihc.svg'
 const { Header, Content, Sider } = Layout;
@@ -76,7 +76,8 @@ const App = () => {
               background: colorBgContainer,
             }}
           >
-            <Data />
+            <ShowData />
+           
           </Content>
         </Layout>
       </Layout>
