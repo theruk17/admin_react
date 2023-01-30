@@ -99,7 +99,8 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const [switchValue, setSwitchValue] = useState(false);
 
   useEffect(() => {
-  
+    setChecked(record.mnt_curve === "Y")
+    setSwitchValue(record.mnt_status === "Y")
     form.setFieldsValue({
       group: record.mnt_group,
       brand: record.mnt_brand,
@@ -269,14 +270,17 @@ const ShowData = () => {
   const [data, setData] = useState([]);
   const [visible, setVisible] = useState(false);
   const [record, setRecord] = useState({});
+  const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState({
     pageSize: 50
   });
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(API_URL)
       .then((res) => {
+        setLoading(false);
         setData(res.data);
       });
   }, []);
@@ -288,6 +292,15 @@ const ShowData = () => {
 
   const handleCancel = () => {
     setVisible(false);
+  };
+
+  const handleDelete = id => {
+    axios
+      .delete(`https://drab-jade-haddock-toga.cyclic.app/admin_del/${id}`)
+      .then(res => {
+        setData(data.filter(item => item.mnt_id !== id));
+        message.success(res.data);
+      });
   };
 
   const handleCreate = (values) => {
@@ -379,9 +392,10 @@ const ShowData = () => {
         <Space size="middle">
           <a key={record} onClick={() => showModal(record)}><EditTwoTone twoToneColor="#ffa940" /></a>
           <Popconfirm
-            title="Delete the task"
+            title="Delete the item"
+            onConfirm={() => handleDelete(record.mnt_id)}
             placement="topRight"
-            description="Are you sure to delete this task?"
+            description="Are you sure you want to delete this item?"
             okText="Yes"
             cancelText="No"
           >
@@ -393,9 +407,7 @@ const ShowData = () => {
   ]
   return (
     <div>
-      <Table dataSource={data} columns={Column} rowKey={record => record.mnt_id} pagination={pagination}>
-
-      </Table>
+      <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.mnt_id} pagination={pagination}></Table>
       <EditForm
         visible={visible}
         onCreate={handleCreate}
