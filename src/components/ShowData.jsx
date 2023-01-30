@@ -75,10 +75,22 @@ const Resolution = [
 ]
 
 const Group = [
-  { val: '1920 x 1080 (FHD)' },
-  { val: '2560 x 1440 (2K)' },
-  { val: '3840 x 2160 (4K)' },
-  { val: '3440 x 1440 (2K)' }
+  { val: '21.5" 75Hz' },
+  { val: '24" 75Hz - 100Hz' },
+  { val: '24" 144Hz' },
+  { val: '24" 165Hz' },
+  { val: '27" 75Hz' },
+  { val: '27" 75Hz 2K' },
+  { val: '27" 144Hz' },
+  { val: '27" 165Hz - 170Hz' },
+  { val: '27" 240Hz' },
+  { val: '27" 165Hz 2K' },
+  { val: '27" - 28" 60Hz 4K' },
+  { val: '31.5" 75Hz - 165Hz' },
+  { val: '31.5" 75Hz 2K' },
+  { val: '32" 144Hz - 165Hz 2K' },
+  { val: '32" 240Hz 4K' },
+  { val: '34" 144Hz 2K' }
 ]
 
 const EditForm = ({ visible, onCreate, onCancel, record }) => {
@@ -105,11 +117,8 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
 
 
   const onCheckboxChange = (e) => {
-    
-    setChecked(e.target.checked)
+    setChecked(e.target.checked);
     form.setFieldsValue({ curve: e.target.checked  ? 'Y' : 'N'});
-    
-    
   };
 
   const onStatusChange = (checked) => {
