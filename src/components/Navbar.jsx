@@ -5,7 +5,7 @@ import ShowData from './ShowData'
 import '../index.css';
 import LogoIHC from '../assets/logo_ihc.svg'
 const { Header, Content, Sider, Footer } = Layout;
-const items1 = ['Home', 'Upload Excel', 'Test2'].map((key) => ({
+const items1 = ['Home', 'Upload Excel'].map((key) => ({
   key,
   label: `${key}`,
 }));
@@ -64,20 +64,13 @@ const App = () => {
         <Layout
           style={{
             padding: '0 24px 24px',
+            margin: '16px 0',
           }}
         >
-          <Breadcrumb
-            style={{
-              margin: '16px 0',
-            }}
-          >
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb>
+          
           <Content
             style={{
-
+              
               padding: 24,
               margin: 0,
               minHeight: '75vh',
