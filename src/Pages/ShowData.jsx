@@ -332,6 +332,22 @@ const ShowData = () => {
     if (target) {
       target.mnt_status = target.mnt_status === 'Y' ? 'N' : 'Y';
       setData(newData);
+      axios.put('https://drab-jade-haddock-toga.cyclic.app/edit_status/' + key, { status: target.mnt_status })
+      .then(res => {
+        message.success(res.data);
+        axios.get('https://drab-jade-haddock-toga.cyclic.app/admin_data')
+          .then(res => {
+            setData(res.data);
+          })
+          .catch(err => {
+            console.log(err);
+            message.error("Error fetching updated data");
+          })
+      })
+      .catch(err => {
+        console.log(err);
+        message.error('Error updating data');
+      });
     };
   };
 

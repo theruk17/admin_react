@@ -1,14 +1,12 @@
 import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, theme, Avatar } from 'antd';
 import React from 'react';
-import ShowData from './ShowData'
+import PageContent from '../components/PageContent'
 import '../index.css';
 import LogoIHC from '../assets/logo_ihc.svg'
+import { useNavigate } from 'react-router-dom';
 const { Header, Content, Sider, Footer } = Layout;
-const items1 = ['Home', 'Upload Excel'].map((key) => ({
-  key,
-  label: `${key}`,
-}));
+
 const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map((icon, index) => {
   const key = String(index + 1);
   return {
@@ -28,6 +26,7 @@ const App = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+  const navigate = useNavigate()
   return (
     <Layout>
       <Header className="header" style={{
@@ -39,7 +38,20 @@ const App = () => {
         <img className='logo' src={LogoIHC} alt="" style={{
           width: 140,
         }} />
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['Home']} items={items1} />
+        <Menu theme="dark" mode="horizontal"  defaultSelectedKeys={['1']}
+        onClick={(item) => {
+          navigate(item.key);
+        }}
+        items={[
+          {
+            label: "HOME",
+            key:'/'
+          },
+          {
+            label: "UPLOAD",
+            key:'/upload'
+          }
+        ]} />
       </Header>
       <Layout>
         <Sider
@@ -78,7 +90,7 @@ const App = () => {
               background: colorBgContainer,
             }}
           >
-            <ShowData />
+            <PageContent />
 
           </Content>
           <Footer
