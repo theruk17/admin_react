@@ -2,21 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NumericFormat } from 'react-number-format';
 import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
-import {
-  Space, Table, Switch, Modal, Divider, message, Spin, Row, Button,
-  Col,
-  Form,
-  Checkbox,
-  Input,
-  InputNumber,
-  Select,
-  Upload,
-  Popconfirm,
-} from 'antd';
-
+import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm } from 'antd';
 import '../App.css';
 
-const API_URL = 'https://drab-jade-haddock-toga.cyclic.app/admin_data';
+const API_URL = 'https://drab-jade-haddock-toga.cyclic.app/admin_data_case';
 
 const Brand = [
   { val: 'AOC' },
@@ -32,7 +21,7 @@ const Brand = [
   { val: 'COOLER MASTER' }
 ]
 
-const Size = [
+const Color = [
   { val: '21.5' },
   { val: '23.8' },
   { val: '23.6' },
@@ -45,52 +34,25 @@ const Size = [
   { val: '34' }
 ]
 
-const Hz = [
-  { val: '60' },
-  { val: '75' },
-  { val: '100' },
-  { val: '144' },
-  { val: '165' },
-  { val: '170' },
-  { val: '240' }
-]
-
-const Panel = [
-  { val: 'VA' },
-  { val: 'IPS' },
-  { val: 'TN' },
-  { val: 'SS IPS' },
-  { val: 'IPS HDR' },
-  { val: 'ULTRA-IPS' },
-  { val: 'IPS FLAT' },
-  { val: 'NANO IPS HDR' },
-  { val: 'WQHD' }
-]
-
-const Resolution = [
-  { val: '1920 x 1080 (FHD)' },
-  { val: '2560 x 1440 (2K)' },
-  { val: '3840 x 2160 (4K)' },
-  { val: '3440 x 1440 (2K)' }
-]
 
 const Group = [
-  { val: '21.5" 75Hz' },
-  { val: '24" 75Hz - 100Hz' },
-  { val: '24" 144Hz' },
-  { val: '24" 165Hz' },
-  { val: '27" 75Hz' },
-  { val: '27" 75Hz 2K' },
-  { val: '27" 144Hz' },
-  { val: '27" 165Hz - 170Hz' },
-  { val: '27" 240Hz' },
-  { val: '27" 165Hz 2K' },
-  { val: '27" - 28" 60Hz 4K' },
-  { val: '31.5" 75Hz - 165Hz' },
-  { val: '31.5" 75Hz 2K' },
-  { val: '32" 144Hz - 165Hz 2K' },
-  { val: '32" 240Hz 4K' },
-  { val: '34" 144Hz 2K' }
+  { val: '1' ,label: '21.5" 75Hz'},
+  { val: '2', label: '24" 75Hz - 100Hz' },
+  { val: '3', label: '24" 144Hz' },
+  { val: '4', label: '24" 165Hz' },
+  { val: '5', label: '27" 75Hz' },
+  { val: '6', label: '27" 75Hz 2K' },
+  { val: '7', label: '27" 144Hz' },
+  { val: '8', label: '27" 165Hz - 170Hz' },
+  { val: '9', label: '27" 165Hz 2K' },
+  { val: '10', label: '27" 240Hz' },
+  { val: '11', label: '27" - 28" 60Hz 4K' },
+  { val: '12', label: '31.5" 75Hz - 165Hz' },
+  { val: '13', label: '31.5" 75Hz 2K' },
+  { val: '14', label: '32" 144Hz - 165Hz 2K' },
+  { val: '15', label: '32" 240Hz' },
+  { val: '16', label: '34" 144Hz' },
+  { val: '17', label: '34" 144Hz 2K' }
 ]
 
 const EditForm = ({ visible, onCreate, onCancel, record }) => {
@@ -167,43 +129,16 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           </Col>
           <Col span={12}>
             <Form.Item name="model" label="Model" >
-              <Input placeholder='Model' />
+              <Input placeholder='Model' allowClear />
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={20}>
           <Col span={4}>
-            <Form.Item label="Size" name="size">
+            <Form.Item label="Color" name="size">
               <Select placeholder="Size" allowClear>
-                {Size.map(item => (
+                {Color.map(item => (
                   <Select.Option key={item.val} value={item.mnt_val}>{item.val}"</Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={6}>
-            <Form.Item label="Refresh Rate" name="hz">
-              <Select placeholder="Refresh Rate" allowClear>
-                {Hz.map(item => (
-                  <Select.Option key={item.val} value={item.val}>{item.val} Hz</Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={6}>
-            <Form.Item label="Panel" name="panel">
-              <Select placeholder="Panel" allowClear  >
-                {Panel.map(item => (
-                  <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="Resolution" name="resolution">
-              <Select placeholder="Resolution" allowClear >
-                {Resolution.map(item => (
-                  <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
                 ))}
               </Select>
             </Form.Item>
@@ -211,30 +146,16 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
         </Row>
         <Row gutter={20}>
           <Col span={6}>
-            <Form.Item label="Curve" name="curve" >
-              <Checkbox checked={ checked  } onChange={onCheckboxChange} ></Checkbox>
-            </Form.Item>
-          </Col>
-          <Col span={6}>
             <Form.Item label="Group" name="group">
               <Select placeholder="Group" allowClear>
                 {Group.map(item => (
-                  <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
+                  <Select.Option key={item.val} value={item.val}>{item.label}</Select.Option>
                 ))}
               </Select>
             </Form.Item>
           </Col>
           <Col span={6}>
             <Form.Item label="Price" name="price_srp">
-              <InputNumber
-                formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                min={0}
-              />
-            </Form.Item>
-          </Col>
-          <Col span={6}>
-            <Form.Item label="ราคาพร้อมเครื่อง" name="price_w_com">
               <InputNumber
                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
@@ -266,7 +187,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
   );
 };
 
-const ShowData = () => {
+const MonitorData = () => {
   const [data, setData] = useState([]);
   const [visible, setVisible] = useState(false);
   const [record, setRecord] = useState({});
@@ -274,6 +195,10 @@ const ShowData = () => {
   const [pagination, setPagination] = useState({
     pageSize: 50
   });
+
+  const onChange = (pagination, filters, sorter, extra) => {
+    console.log('params', pagination, filters, sorter, extra);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -362,7 +287,7 @@ const ShowData = () => {
       render: (imageUrl) => <img src={imageUrl} alt="thumbnail" width="30" height="30" />,
     },
     {
-      title: 'Brand', dataIndex: 'mnt_brand', key: 'mnt_brand',
+      title: 'Brand', dataIndex: 'mnt_brand', key: 'mnt_brand', 
       render: (text, record) => <a href={record.mnt_href} target='_blank'>{text}</a>,
       
     },
@@ -370,21 +295,9 @@ const ShowData = () => {
       title: 'Model', dataIndex: 'mnt_model', key: 'mnt_model',
     },
     {
-      title: 'Size', dataIndex: 'mnt_size', key: 'mnt_size',
+      title: 'Color', dataIndex: 'mnt_size', key: 'mnt_size',
+      sorter: (a, b) => a.mnt_size - b.mnt_size ,
       render: (text) => <p>{text}"</p>,
-    },
-    {
-      title: 'Refresh Rate', dataIndex: 'mnt_refresh_rate', key: 'mnt_refresh_rate',
-      render: (text) => <p>{text}Hz</p>,
-    },
-    {
-      title: 'Panel', dataIndex: 'mnt_panel', key: 'mnt_panel',
-    },
-    {
-      title: 'Resolution', dataIndex: 'mnt_resolution', key: 'mnt_resolution',
-    },
-    {
-      title: 'Curve', dataIndex: 'mnt_curve', key: 'mnt_curve',
     },
     {
       title: 'Status', dataIndex: 'mnt_status', key: 'mnt_status',
@@ -395,12 +308,7 @@ const ShowData = () => {
     },
     {
       title: 'Price SRP', dataIndex: 'mnt_price_srp', key: 'mnt_price_srp',
-      render: (value) => (
-        <NumericFormat value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
-      )
-    },
-    {
-      title: 'ซื้อพร้อมเครื่อง', dataIndex: 'mnt_price_w_com', key: 'mnt_price_w_com',
+      sorter: (a, b) => a.mnt_price_srp - b.mnt_price_srp ,
       render: (value) => (
         <NumericFormat value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
@@ -427,7 +335,7 @@ const ShowData = () => {
   ]
   return (
     <div>
-      <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.mnt_id} pagination={pagination}></Table>
+      <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.mnt_id} pagination={pagination} onChange={onChange}></Table>
       <EditForm
         visible={visible}
         onCreate={handleCreate}
@@ -438,4 +346,4 @@ const ShowData = () => {
   );
 };
 
-export default ShowData;
+export default MonitorData;

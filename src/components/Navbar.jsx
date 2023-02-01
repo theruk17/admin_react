@@ -1,5 +1,5 @@
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme, Avatar } from 'antd';
+import { LaptopOutlined, NotificationOutlined, DesktopOutlined, CloudUploadOutlined, HomeOutlined } from '@ant-design/icons';
+import { Layout, Menu, theme } from 'antd';
 import React from 'react';
 import PageContent from '../components/PageContent'
 import '../index.css';
@@ -7,21 +7,6 @@ import LogoIHC from '../assets/logo_ihc.svg'
 import { useNavigate } from 'react-router-dom';
 const { Header, Content, Sider, Footer } = Layout;
 
-const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map((icon, index) => {
-  const key = String(index + 1);
-  return {
-    key: `sub${key}`,
-    icon: React.createElement(icon),
-    label: `subnav ${key}`,
-    children: new Array(4).fill(null).map((_, j) => {
-      const subKey = index * 4 + j + 1;
-      return {
-        key: subKey,
-        label: `option${subKey}`,
-      };
-    }),
-  };
-});
 const App = () => {
   const {
     token: { colorBgContainer },
@@ -44,12 +29,19 @@ const App = () => {
         }}
         items={[
           {
+            icon: <HomeOutlined />,
             label: "HOME",
             key:'/'
           },
           {
+            icon: <CloudUploadOutlined />,
             label: "UPLOAD",
             key:'/upload'
+          },
+          {
+            icon: <CloudUploadOutlined />,
+            label: "UPLOAD CASE",
+            key:'/upload_case'
           }
         ]} />
       </Header>
@@ -60,17 +52,31 @@ const App = () => {
           width={200}
           style={{
             background: colorBgContainer,
+            
           }}
         >
           <Menu
             mode="inline"
             defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
             style={{
               height: '100%',
               borderRight: 0,
             }}
-            items={items2}
+            onClick={(item) => {
+              navigate(item.key);
+            }}
+            items={[
+              {
+                icon: <DesktopOutlined />,
+                label: "Monitor",
+                key:'/monitor'
+              },
+              {
+                icon: <CloudUploadOutlined />,
+                label: "Case",
+                key:'/case'
+              }
+            ]}
           />
         </Sider>
         <Layout
