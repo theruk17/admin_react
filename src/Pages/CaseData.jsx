@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NumericFormat } from 'react-number-format';
 import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
-import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm } from 'antd';
+import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm,Tag } from 'antd';
 import '../App.css';
 
 const API_URL = 'https://drab-jade-haddock-toga.cyclic.app/admin_data_case';
@@ -22,9 +22,9 @@ const Brand = [
 ]
 
 const Color = [
-  { val: '21.5' },
-  { val: '23.8' },
-  { val: '23.6' },
+  { val: '(BLACK)' },
+  { val: '(WHITE)' },
+  { val: '(SNOW WHITE)' },
   { val: '24' },
   { val: '24.5' },
   { val: '27' },
@@ -57,32 +57,20 @@ const Group = [
 
 const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const [form] = Form.useForm();
-  const [checked, setChecked] = useState(false);
   const [switchValue, setSwitchValue] = useState(false);
 
   useEffect(() => {
-    setChecked(record.mnt_curve === "Y")
-    setSwitchValue(record.mnt_status === "Y")
+    setSwitchValue(record.case_status === "Y")
     form.setFieldsValue({
-      group: record.mnt_group,
-      brand: record.mnt_brand,
-      model: record.mnt_model,
-      size: record.mnt_size,
-      hz: record.mnt_refresh_rate,
-      panel: record.mnt_panel,
-      resolution: record.mnt_resolution,
-      price_srp: record.mnt_price_srp,
-      price_w_com: record.mnt_price_w_com,
-      curve: record.mnt_curve,
-      status: record.mnt_status,
+      group: record.case_group,
+      brand: record.case_brand,
+      model: record.case_model,
+      color: record.case_color,
+      price_srp: record.case_price_srp,
+      status: record.case_status,
     });
   }, [record, form]);
 
-
-  const onCheckboxChange = (e) => {
-    setChecked(e.target.checked);
-    form.setFieldsValue({ curve: e.target.checked  ? 'Y' : 'N'});
-  };
 
   const onStatusChange = (checked) => {
     setSwitchValue(checked);
@@ -134,11 +122,11 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           </Col>
         </Row>
         <Row gutter={20}>
-          <Col span={4}>
-            <Form.Item label="Color" name="size">
+          <Col span={6}>
+            <Form.Item label="Color" name="color">
               <Select placeholder="Size" allowClear>
                 {Color.map(item => (
-                  <Select.Option key={item.val} value={item.mnt_val}>{item.val}"</Select.Option>
+                  <Select.Option key={item.val} value={item.mnt_val}>{item.val}</Select.Option>
                 ))}
               </Select>
             </Form.Item>
@@ -221,18 +209,18 @@ const MonitorData = () => {
 
   const handleDelete = id => {
     axios
-      .delete(`https://drab-jade-haddock-toga.cyclic.app/admin_del/${id}`)
+      .delete(`https://drab-jade-haddock-toga.cyclic.app/admin_del_case/${id}`)
       .then(res => {
-        setData(data.filter(item => item.mnt_id !== id));
+        setData(data.filter(item => item.case_id !== id));
         message.success(res.data);
       });
   };
 
   const handleCreate = (values) => {
-    axios.put('https://drab-jade-haddock-toga.cyclic.app/edit/' + record.mnt_id, values)
+    axios.put('https://drab-jade-haddock-toga.cyclic.app/edit/' + record.case_id, values)
       .then(res => {
         message.success(res.data);
-        axios.get('https://drab-jade-haddock-toga.cyclic.app/admin_data')
+        axios.get('https://drab-jade-haddock-toga.cyclic.app/admin_data_case')
           .then(res => {
             setData(res.data);
             setVisible(false);
@@ -253,14 +241,14 @@ const MonitorData = () => {
 
   const handleStatusChange = (key) => {
     const newData = [...data];
-    const target = newData.find((item) => item.mnt_id === key);
+    const target = newData.find((item) => item.case_id === key);
     if (target) {
-      target.mnt_status = target.mnt_status === 'Y' ? 'N' : 'Y';
+      target.case_status = target.case_status === 'Y' ? 'N' : 'Y';
       setData(newData);
-      axios.put('https://drab-jade-haddock-toga.cyclic.app/edit_status/' + key, { status: target.mnt_status })
+      axios.put('https://drab-jade-haddock-toga.cyclic.app/edit_status_case/' + key, { status: target.case_status })
       .then(res => {
         message.success(res.data);
-        axios.get('https://drab-jade-haddock-toga.cyclic.app/admin_data')
+        axios.get('https://drab-jade-haddock-toga.cyclic.app/admin_data_case')
           .then(res => {
             setData(res.data);
           })
@@ -278,39 +266,39 @@ const MonitorData = () => {
 
   const Column = [
     {
-      title: 'SN', dataIndex: 'mnt_id', key: 'mnt_id',
+      title: 'SN', dataIndex: 'case_id', key: 'case_id',
     },
     {
       title: 'Image',
-      dataIndex: 'mnt_img',
-      key: 'mnt_img',
+      dataIndex: 'case_img',
+      key: 'case_img',
       render: (imageUrl) => <img src={imageUrl} alt="thumbnail" width="30" height="30" />,
     },
     {
-      title: 'Brand', dataIndex: 'mnt_brand', key: 'mnt_brand', 
+      title: 'Brand', dataIndex: 'case_brand', key: 'case_brand', 
       render: (text, record) => <a href={record.mnt_href} target='_blank'>{text}</a>,
       
     },
     {
-      title: 'Model', dataIndex: 'mnt_model', key: 'mnt_model',
+      title: 'Model', dataIndex: 'case_model', key: 'case_model',
     },
     {
-      title: 'Color', dataIndex: 'mnt_size', key: 'mnt_size',
-      sorter: (a, b) => a.mnt_size - b.mnt_size ,
-      render: (text) => <p>{text}"</p>,
+      title: 'Color', dataIndex: 'case_color', key: 'case_color',
+      sorter: (a, b) => a.case_color - b.case_color ,
+      
     },
     {
-      title: 'Status', dataIndex: 'mnt_status', key: 'mnt_status',
+      title: 'Status', dataIndex: 'case_status', key: 'case_status',
       render: (text, record) => (
-        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.mnt_status === 'Y'} onChange={() => handleStatusChange(record.mnt_id)}
+        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.mnt_status === 'Y'} onChange={() => handleStatusChange(record.case_id)}
         />
       )
     },
     {
-      title: 'Price SRP', dataIndex: 'mnt_price_srp', key: 'mnt_price_srp',
-      sorter: (a, b) => a.mnt_price_srp - b.mnt_price_srp ,
+      title: 'Price SRP', dataIndex: 'case_price_srp', key: 'case_price_srp',
+      sorter: (a, b) => a.case_price_srp - b.case_price_srp ,
       render: (value) => (
-        <NumericFormat value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+        <NumericFormat style={{color: "#0958d9"}} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
 
@@ -321,7 +309,7 @@ const MonitorData = () => {
           <a key={record} onClick={() => showModal(record)}><EditTwoTone twoToneColor="#ffa940" /></a>
           <Popconfirm
             title="Delete the item"
-            onConfirm={() => handleDelete(record.mnt_id)}
+            onConfirm={() => handleDelete(record.case_id)}
             placement="topRight"
             description="Are you sure you want to delete this item?"
             okText="Yes"
@@ -335,7 +323,7 @@ const MonitorData = () => {
   ]
   return (
     <div>
-      <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.mnt_id} pagination={pagination} onChange={onChange}></Table>
+      <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.case_id} pagination={pagination} onChange={onChange}></Table>
       <EditForm
         visible={visible}
         onCreate={handleCreate}

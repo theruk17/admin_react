@@ -1,6 +1,7 @@
 import { InboxOutlined } from '@ant-design/icons';
 import { message, Upload } from 'antd';
 const { Dragger } = Upload;
+import axios from 'axios';
 const props = {
   name: 'file',
   multiple: true,
