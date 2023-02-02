@@ -64,7 +64,7 @@ const Resolution = [
 ]
 
 const Group = [
-  { val: '1' ,label: '21.5" 75Hz'},
+  { val: '1', label: '21.5" 75Hz' },
   { val: '2', label: '24" 75Hz - 100Hz' },
   { val: '3', label: '24" 144Hz' },
   { val: '4', label: '24" 165Hz' },
@@ -83,14 +83,28 @@ const Group = [
   { val: '17', label: '34" 144Hz 2K' }
 ]
 
+const getBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+
 const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const [form] = Form.useForm();
   const [checked, setChecked] = useState(false);
   const [switchValue, setSwitchValue] = useState(false);
 
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState('');
+  const [previewTitle, setPreviewTitle] = useState('');
+  const [fileList, setFileList] = useState(['']);
+
   useEffect(() => {
     setChecked(record.mnt_curve === "Y")
     setSwitchValue(record.mnt_status === "Y")
+    setFileList([{url:record.mnt_img}])
     form.setFieldsValue({
       group: record.mnt_group,
       brand: record.mnt_brand,
@@ -103,19 +117,43 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
       price_w_com: record.mnt_price_w_com,
       curve: record.mnt_curve,
       status: record.mnt_status,
+      
     });
   }, [record, form]);
 
 
   const onCheckboxChange = (e) => {
     setChecked(e.target.checked);
-    form.setFieldsValue({ curve: e.target.checked  ? 'Y' : 'N'});
+    form.setFieldsValue({ curve: e.target.checked ? 'Y' : 'N' });
   };
 
   const onStatusChange = (checked) => {
     setSwitchValue(checked);
     form.setFieldsValue({ status: checked ? 'Y' : 'N' });
   };
+
+  const handleCancel = () => setPreviewOpen(false);
+  const handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+    setPreviewImage(file.url || file.preview);
+    setPreviewOpen(true);
+    setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
+  };
+  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div
+        style={{
+          marginTop: 8,
+        }}
+      >
+        Upload
+      </div>
+    </div>
+  );
 
   return (
     <Modal
@@ -202,7 +240,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
         <Row gutter={20}>
           <Col span={6}>
             <Form.Item label="Curve" name="curve" >
-              <Checkbox checked={ checked  } onChange={onCheckboxChange} ></Checkbox>
+              <Checkbox checked={checked} onChange={onCheckboxChange} ></Checkbox>
             </Form.Item>
           </Col>
           <Col span={6}>
@@ -237,19 +275,24 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
         <Form.Item label="Status" name="status">
           <Switch checkedChildren="On" unCheckedChildren="Off" checked={switchValue} onChange={onStatusChange} ></Switch>
         </Form.Item>
-        <Form.Item label="Upload Image" valuePropName="fileList">
-          <Upload action="/upload.do" listType="picture-card">
-            <div>
-              <PlusOutlined />
-              <div
-                style={{
-                  marginTop: 8,
-                }}
-              >
-                Upload
-              </div>
-            </div>
+
+        <Form.Item label="Upload Image" >
+          <Upload action="https://api.cloudinary.com/v1_1/drllzqbk0/image/upload" listType="picture-card"
+            fileList={fileList}
+            onPreview={handlePreview}
+            onChange={handleChange}
+          >
+            {fileList.length >= 1 ? null : uploadButton}
           </Upload>
+          <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
+            <img
+              alt="example"
+              style={{
+                width: '100%',
+              }}
+              src={previewImage}
+            />
+          </Modal>
         </Form.Item>
       </Form>
     </Modal>
@@ -316,9 +359,6 @@ const ShowData = () => {
         message.error('Error updating data');
       });
   };
-  
-  
-
 
   const handleStatusChange = (key) => {
     const newData = [...data];
@@ -327,21 +367,21 @@ const ShowData = () => {
       target.mnt_status = target.mnt_status === 'Y' ? 'N' : 'Y';
       setData(newData);
       axios.put('https://drab-jade-haddock-toga.cyclic.app/edit_status/' + key, { status: target.mnt_status })
-      .then(res => {
-        message.success(res.data);
-        axios.get('https://drab-jade-haddock-toga.cyclic.app/admin_data')
-          .then(res => {
-            setData(res.data);
-          })
-          .catch(err => {
-            console.log(err);
-            message.error("Error fetching updated data");
-          })
-      })
-      .catch(err => {
-        console.log(err);
-        message.error('Error updating data');
-      });
+        .then(res => {
+          message.success(res.data);
+          axios.get('https://drab-jade-haddock-toga.cyclic.app/admin_data')
+            .then(res => {
+              setData(res.data);
+            })
+            .catch(err => {
+              console.log(err);
+              message.error("Error fetching updated data");
+            })
+        })
+        .catch(err => {
+          console.log(err);
+          message.error('Error updating data');
+        });
     };
   };
 
@@ -356,21 +396,21 @@ const ShowData = () => {
       render: (imageUrl) => <img src={imageUrl} alt="thumbnail" width="30" height="30" />,
     },
     {
-      title: 'Brand', dataIndex: 'mnt_brand', key: 'mnt_brand', 
+      title: 'Brand', dataIndex: 'mnt_brand', key: 'mnt_brand',
       render: (text, record) => <a href={record.mnt_href} target='_blank'>{text}</a>,
-      
+
     },
     {
       title: 'Model', dataIndex: 'mnt_model', key: 'mnt_model',
     },
     {
       title: 'Size', dataIndex: 'mnt_size', key: 'mnt_size',
-      sorter: (a, b) => a.mnt_size - b.mnt_size ,
+      sorter: (a, b) => a.mnt_size - b.mnt_size,
       render: (text) => <p>{text}"</p>,
     },
     {
       title: 'Refresh Rate', dataIndex: 'mnt_refresh_rate', key: 'mnt_refresh_rate',
-      sorter: (a, b) => a.mnt_refresh_rate - b.mnt_refresh_rate ,
+      sorter: (a, b) => a.mnt_refresh_rate - b.mnt_refresh_rate,
       render: (text) => <p>{text}Hz</p>,
     },
     {
@@ -391,16 +431,16 @@ const ShowData = () => {
     },
     {
       title: 'Price SRP', dataIndex: 'mnt_price_srp', key: 'mnt_price_srp',
-      sorter: (a, b) => a.mnt_price_srp - b.mnt_price_srp ,
+      sorter: (a, b) => a.mnt_price_srp - b.mnt_price_srp,
       render: (value) => (
         <NumericFormat value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
     {
       title: 'ซื้อพร้อมเครื่อง', dataIndex: 'mnt_price_w_com', key: 'mnt_price_w_com',
-      sorter: (a, b) => a.mnt_price_w_com - b.mnt_price_w_com ,
+      sorter: (a, b) => a.mnt_price_w_com - b.mnt_price_w_com,
       render: (value) => (
-        <NumericFormat style={{color: "#f5222d"}} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+        <NumericFormat style={{ color: "#f5222d" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
 
