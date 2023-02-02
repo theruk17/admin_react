@@ -217,7 +217,7 @@ const MonitorData = () => {
   };
 
   const handleCreate = (values) => {
-    axios.put('https://drab-jade-haddock-toga.cyclic.app/edit/' + record.case_id, values)
+    axios.put('https://drab-jade-haddock-toga.cyclic.app/edit_case/' + record.case_id, values)
       .then(res => {
         message.success(res.data);
         axios.get('https://drab-jade-haddock-toga.cyclic.app/admin_data_case')
