@@ -55,12 +55,38 @@ const Group = [
   { val: '17', label: '34" 144Hz 2K' }
 ]
 
+const getBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+
+const beforeUpload = (file) => {
+  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+  if (!isJpgOrPng) {
+    message.error('You can only upload JPG/PNG file!');
+  }
+  const isLt2M = file.size / 1024 / 1024 < 2;
+  if (!isLt2M) {
+    message.error('Image must smaller than 2MB!');
+  }
+  return isJpgOrPng && isLt2M;
+};
+
 const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const [form] = Form.useForm();
   const [switchValue, setSwitchValue] = useState(false);
 
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState('');
+  const [previewTitle, setPreviewTitle] = useState('');
+  const [fileList, setFileList] = useState(['']);
+
   useEffect(() => {
     setSwitchValue(record.case_status === "Y")
+    setFileList([{url:record.case_img,status: 'done'}])
     form.setFieldsValue({
       group: record.case_group,
       brand: record.case_brand,
@@ -76,6 +102,66 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
     setSwitchValue(checked);
     form.setFieldsValue({ status: checked ? 'Y' : 'N' });
   };
+
+  const handleCancel = () => setPreviewOpen(false);
+  const handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+    setPreviewImage(file.url || file.preview);
+    setPreviewOpen(true);
+    setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
+  };
+  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+
+  /* const handleChange = (info) => {
+    if (info.file.status === 'uploading') {
+      setLoading(true);
+      return;
+    }
+    if (info.file.status === 'done') {
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj, (url) => {
+        setLoading(false);
+        setImageUrl(url);
+      });
+    }
+  }; */
+  
+  const handleUpload = async ({ file }) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'xwsut1mj');
+  
+    try {
+      await axios.post('https://api.cloudinary.com/v1_1/drllzqbk0/image/upload', formData)
+      .then(res => {
+        console.log(res);
+        const imageUrl = res.data.secure_url;
+        message.success("Upload Image to Cloud Server "+res.statusText);
+      axios.put('https://drab-jade-haddock-toga.cyclic.app/update_img_case/'+record.case_id, { imageUrl })
+      .then(res => {
+        message.success(res.data);
+        })
+      })
+    
+    } catch (error) {
+      console.error(error);
+      message.error('Image upload failed!');
+    }
+  };
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div
+        style={{
+          marginTop: 8,
+        }}
+      >
+        Upload
+      </div>
+    </div>
+  );
 
   return (
     <Modal
@@ -156,26 +242,34 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
         <Form.Item label="Status" name="status">
           <Switch checkedChildren="On" unCheckedChildren="Off" checked={switchValue} onChange={onStatusChange} ></Switch>
         </Form.Item>
-        <Form.Item label="Upload Image" valuePropName="fileList">
-          <Upload action="/upload.do" listType="picture-card">
-            <div>
-              <PlusOutlined />
-              <div
-                style={{
-                  marginTop: 8,
-                }}
-              >
-                Upload
-              </div>
-            </div>
+
+        <Form.Item label="Upload Image" name='file'>
+          <Upload listType="picture-card"
+            fileList={fileList}
+            customRequest={handleUpload}
+            onPreview={handlePreview}
+            onChange={handleChange}
+            showUploadList={true}
+            beforeUpload={beforeUpload}
+          >
+            {fileList.length >= 1 ? null : uploadButton}
           </Upload>
+          <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
+            <img
+              alt="example"
+              style={{
+                width: '100%',
+              }}
+              src={previewImage}
+            />
+          </Modal>
         </Form.Item>
       </Form>
     </Modal>
   );
 };
 
-const MonitorData = () => {
+const CaseData = () => {
   const [data, setData] = useState([]);
   const [visible, setVisible] = useState(false);
   const [record, setRecord] = useState({});
@@ -334,4 +428,4 @@ const MonitorData = () => {
   );
 };
 
-export default MonitorData;
+export default CaseData;
