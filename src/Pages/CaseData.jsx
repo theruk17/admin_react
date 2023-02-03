@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NumericFormat } from 'react-number-format';
 import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
-import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm,Tag } from 'antd';
+import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tag } from 'antd';
 import '../App.css';
 
 const API_URL = 'https://drab-jade-haddock-toga.cyclic.app/admin_data_case';
@@ -36,7 +36,7 @@ const Color = [
 
 
 const Group = [
-  { val: '1' ,label: '21.5" 75Hz'},
+  { val: '1', label: '21.5" 75Hz' },
   { val: '2', label: '24" 75Hz - 100Hz' },
   { val: '3', label: '24" 144Hz' },
   { val: '4', label: '24" 165Hz' },
@@ -82,11 +82,11 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
-  const [fileList, setFileList] = useState(['']);
+  const [fileList, setFileList] = useState([]);
 
   useEffect(() => {
     setSwitchValue(record.case_status === "Y")
-    setFileList([{url:record.case_img,status: 'done'}])
+    setFileList([{ url: record.case_img}])
     form.setFieldsValue({
       group: record.case_group,
       brand: record.case_brand,
@@ -113,41 +113,34 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
     setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
   };
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
-
-  /* const handleChange = (info) => {
-    if (info.file.status === 'uploading') {
-      setLoading(true);
-      return;
-    }
-    if (info.file.status === 'done') {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj, (url) => {
-        setLoading(false);
-        setImageUrl(url);
-      });
-    }
-  }; */
-  
-  const handleUpload = async ({ file }) => {
+  const handleUpload = ({ file, onSuccess, onError, onProgress }) => {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('upload_preset', 'xwsut1mj');
-  
+
     try {
-      await axios.post('https://api.cloudinary.com/v1_1/drllzqbk0/image/upload', formData)
-      .then(res => {
-        console.log(res);
-        const imageUrl = res.data.secure_url;
-        message.success("Upload Image to Cloud Server "+res.statusText);
-      axios.put('https://drab-jade-haddock-toga.cyclic.app/update_img_case/'+record.case_id, { imageUrl })
-      .then(res => {
-        message.success(res.data);
-        })
+      axios.post('https://api.cloudinary.com/v1_1/drllzqbk0/image/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+        onUploadProgress: (progressEvent) => {
+          const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          onProgress({ percent });
+        }
       })
-    
+        .then(res => {
+          console.log(res);
+          const imageUrl = res.data.secure_url;
+          message.success("Upload Image to Cloud Server " + res.statusText);
+          onSuccess(imageUrl);
+          axios.put('https://drab-jade-haddock-toga.cyclic.app/update_img_case/' + record.case_id, { imageUrl })
+            .then(res => {
+              message.success(res.data);
+            })
+        })
+
     } catch (error) {
       console.error(error);
       message.error('Image upload failed!');
+      onError();
     }
   };
   const uploadButton = (
@@ -243,13 +236,12 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           <Switch checkedChildren="On" unCheckedChildren="Off" checked={switchValue} onChange={onStatusChange} ></Switch>
         </Form.Item>
 
-        <Form.Item label="Upload Image" name='file'>
+        <Form.Item label="Upload Image">
           <Upload listType="picture-card"
             fileList={fileList}
             customRequest={handleUpload}
             onPreview={handlePreview}
             onChange={handleChange}
-            showUploadList={true}
             beforeUpload={beforeUpload}
           >
             {fileList.length >= 1 ? null : uploadButton}
@@ -329,8 +321,8 @@ const CaseData = () => {
         message.error('Error updating data');
       });
   };
-  
-  
+
+
 
 
   const handleStatusChange = (key) => {
@@ -340,21 +332,21 @@ const CaseData = () => {
       target.case_status = target.case_status === 'Y' ? 'N' : 'Y';
       setData(newData);
       axios.put('https://drab-jade-haddock-toga.cyclic.app/edit_status_case/' + key, { status: target.case_status })
-      .then(res => {
-        message.success(res.data);
-        axios.get('https://drab-jade-haddock-toga.cyclic.app/admin_data_case')
-          .then(res => {
-            setData(res.data);
-          })
-          .catch(err => {
-            console.log(err);
-            message.error("Error fetching updated data");
-          })
-      })
-      .catch(err => {
-        console.log(err);
-        message.error('Error updating data');
-      });
+        .then(res => {
+          message.success(res.data);
+          axios.get('https://drab-jade-haddock-toga.cyclic.app/admin_data_case')
+            .then(res => {
+              setData(res.data);
+            })
+            .catch(err => {
+              console.log(err);
+              message.error("Error fetching updated data");
+            })
+        })
+        .catch(err => {
+          console.log(err);
+          message.error('Error updating data');
+        });
     };
   };
 
@@ -369,17 +361,17 @@ const CaseData = () => {
       render: (imageUrl) => <img src={imageUrl} alt="thumbnail" width="30" height="30" />,
     },
     {
-      title: 'Brand', dataIndex: 'case_brand', key: 'case_brand', 
+      title: 'Brand', dataIndex: 'case_brand', key: 'case_brand',
       render: (text, record) => <a href={record.mnt_href} target='_blank'>{text}</a>,
-      
+
     },
     {
       title: 'Model', dataIndex: 'case_model', key: 'case_model',
     },
     {
       title: 'Color', dataIndex: 'case_color', key: 'case_color',
-      sorter: (a, b) => a.case_color - b.case_color ,
-      
+      sorter: (a, b) => a.case_color - b.case_color,
+
     },
     {
       title: 'Status', dataIndex: 'case_status', key: 'case_status',
@@ -390,9 +382,9 @@ const CaseData = () => {
     },
     {
       title: 'Price SRP', dataIndex: 'case_price_srp', key: 'case_price_srp',
-      sorter: (a, b) => a.case_price_srp - b.case_price_srp ,
+      sorter: (a, b) => a.case_price_srp - b.case_price_srp,
       render: (value) => (
-        <NumericFormat style={{color: "#0958d9"}} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+        <NumericFormat style={{ color: "#0958d9" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
 

@@ -91,6 +91,18 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 
+const beforeUpload = (file) => {
+  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+  if (!isJpgOrPng) {
+    message.error('You can only upload JPG/PNG file!');
+  }
+  const isLt2M = file.size / 1024 / 1024 < 2;
+  if (!isLt2M) {
+    message.error('Image must smaller than 2MB!');
+  }
+  return isJpgOrPng && isLt2M;
+};
+
 const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const [form] = Form.useForm();
   const [checked, setChecked] = useState(false);
@@ -142,6 +154,36 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
     setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
   };
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+  const handleUpload = ({ file, onSuccess, onError, onProgress }) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'iylzchgu');
+
+    try {
+      axios.post('https://api.cloudinary.com/v1_1/drllzqbk0/image/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+        onUploadProgress: (progressEvent) => {
+          const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          onProgress({ percent });
+        }
+      })
+        .then(res => {
+          console.log(res);
+          const imageUrl = res.data.secure_url;
+          message.success("Upload Image to Cloud Server " + res.statusText);
+          onSuccess(imageUrl);
+          axios.put('https://drab-jade-haddock-toga.cyclic.app/update_img_mnt/' + record.mnt_id, { imageUrl })
+            .then(res => {
+              message.success(res.data);
+            })
+        })
+
+    } catch (error) {
+      console.error(error);
+      message.error('Image upload failed!');
+      onError();
+    }
+  };
   const uploadButton = (
     <div>
       <PlusOutlined />
@@ -277,10 +319,12 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
         </Form.Item>
 
         <Form.Item label="Upload Image" >
-          <Upload action="https://api.cloudinary.com/v1_1/drllzqbk0/image/upload" listType="picture-card"
+          <Upload listType="picture-card"
             fileList={fileList}
+            customRequest={handleUpload}
             onPreview={handlePreview}
             onChange={handleChange}
+            beforeUpload={beforeUpload}
           >
             {fileList.length >= 1 ? null : uploadButton}
           </Upload>
