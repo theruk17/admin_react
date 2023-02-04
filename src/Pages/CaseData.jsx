@@ -8,51 +8,50 @@ import '../App.css';
 const API_URL = 'https://drab-jade-haddock-toga.cyclic.app/admin_data_case';
 
 const Brand = [
-  { val: 'AOC' },
-  { val: 'MSI' },
-  { val: 'LENOVO' },
-  { val: 'LG' },
-  { val: 'DELL' },
+  { val: 'AEROCOOL' },
+  { val: 'ANTEC' },
   { val: 'ASUS' },
-  { val: 'BENQ' },
-  { val: 'ACER' },
-  { val: 'SAMSUNG' },
-  { val: 'GIGABYTE' },
-  { val: 'COOLER MASTER' }
+  { val: 'AXEL' },
+  { val: 'BE QUIET' },
+  { val: 'COOLER MASTER' },
+  { val: 'CORSAIR' },
+  { val: 'DARKFLASH' },
+  { val: 'LIAN LI' },
+  { val: 'MONTECH' },
+  { val: 'MSI' },
+  { val: 'NZXT' },
+  { val: 'PLENTY' },
+  { val: 'THERMALTAKE' },
+  { val: 'TSUNAMI' },
+  { val: 'XIGMATEK' },
+  { val: 'ZALMAN' },
+
 ]
 
 const Color = [
   { val: '(BLACK)' },
   { val: '(WHITE)' },
   { val: '(SNOW WHITE)' },
-  { val: '24' },
-  { val: '24.5' },
-  { val: '27' },
-  { val: '28' },
-  { val: '31.5' },
-  { val: '32' },
-  { val: '34' }
+  { val: '(BLACK/RED)' },
+  { val: '(BLACK/WHITE)' },
+  { val: '(GRAY)' },
+  { val: '(CYAN)' },
+  { val: '(PURPLE)' },
+  { val: '(PINK)' },
+  { val: '(SILVER)' },
+  { val: '(MATTE BLACK)' },
+  { val: '(MATTE WHITE)' },
+  { val: '(RAZER EDITION)' },
+  { val: '(YELLOW)' },
+
 ]
 
 
 const Group = [
-  { val: '1', label: '21.5" 75Hz' },
-  { val: '2', label: '24" 75Hz - 100Hz' },
-  { val: '3', label: '24" 144Hz' },
-  { val: '4', label: '24" 165Hz' },
-  { val: '5', label: '27" 75Hz' },
-  { val: '6', label: '27" 75Hz 2K' },
-  { val: '7', label: '27" 144Hz' },
-  { val: '8', label: '27" 165Hz - 170Hz' },
-  { val: '9', label: '27" 165Hz 2K' },
-  { val: '10', label: '27" 240Hz' },
-  { val: '11', label: '27" - 28" 60Hz 4K' },
-  { val: '12', label: '31.5" 75Hz - 165Hz' },
-  { val: '13', label: '31.5" 75Hz 2K' },
-  { val: '14', label: '32" 144Hz - 165Hz 2K' },
-  { val: '15', label: '32" 240Hz' },
-  { val: '16', label: '34" 144Hz' },
-  { val: '17', label: '34" 144Hz 2K' }
+  { val: 'ZONE iHAVECPU' },
+  { val: 'ZONE A' },
+  { val: 'ZONE B' },
+  { val: 'ZONE C' },
 ]
 
 const getBase64 = (file) =>
@@ -376,7 +375,7 @@ const CaseData = () => {
     {
       title: 'Status', dataIndex: 'case_status', key: 'case_status',
       render: (text, record) => (
-        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.mnt_status === 'Y'} onChange={() => handleStatusChange(record.case_id)}
+        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.case_status === 'Y'} onChange={() => handleStatusChange(record.case_id)}
         />
       )
     },
