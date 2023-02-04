@@ -33,7 +33,7 @@ const App = () => {
             label: "HOME",
             key:'/'
           },
-          {
+         /*  {
             icon: <CloudUploadOutlined />,
             label: "UPLOAD",
             key:'/upload'
@@ -42,7 +42,7 @@ const App = () => {
             icon: <CloudUploadOutlined />,
             label: "UPLOAD CASE",
             key:'/upload_case'
-          }
+          } */
         ]} />
       </Header>
       <Layout>
