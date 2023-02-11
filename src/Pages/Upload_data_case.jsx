@@ -5,7 +5,7 @@ import axios from 'axios';
 const props = {
   name: 'file',
   multiple: true,
-  action: 'http://localhost:3000/upload_case',
+  action: 'https://drab-jade-haddock-toga.cyclic.app/upload_case',
   onChange(info) {
     const { status } = info.file;
     if (status !== 'uploading') {

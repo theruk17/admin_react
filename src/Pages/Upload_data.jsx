@@ -4,7 +4,7 @@ const { Dragger } = Upload;
 const props = {
   name: 'file',
   multiple: true,
-  action: 'http://localhost:3000/upload',
+  action: 'https://drab-jade-haddock-toga.cyclic.app/upload',
   onChange(info) {
     const { status } = info.file;
     if (status !== 'uploading') {
