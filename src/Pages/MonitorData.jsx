@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NumericFormat } from 'react-number-format';
 import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
-import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm } from 'antd';
+import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Button } from 'antd';
 import '../App.css';
 
 const API_URL = 'https://drab-jade-haddock-toga.cyclic.app/admin_data';
@@ -101,6 +101,233 @@ const beforeUpload = (file) => {
     message.error('Image must smaller than 2MB!');
   }
   return isJpgOrPng && isLt2M;
+};
+
+const AddForm = ({ visible1, onCreate, onCancel, record }) => {
+  const [form] = Form.useForm();
+  const [checked, setChecked] = useState(false);
+  const [switchValue, setSwitchValue] = useState(false);
+
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState('');
+  const [previewTitle, setPreviewTitle] = useState('');
+  const [fileList, setFileList] = useState(['']);
+
+
+  const onCheckboxChange = (e) => {
+    setChecked(e.target.checked);
+    form.setFieldsValue({ curve: e.target.checked ? 'Y' : 'N' });
+  };
+
+  const onStatusChange = (checked) => {
+    setSwitchValue(checked);
+    form.setFieldsValue({ status: checked ? 'Y' : 'N' });
+  };
+
+  const handleCancel = () => setPreviewOpen(false);
+  const handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+    setPreviewImage(file.url || file.preview);
+    setPreviewOpen(true);
+    setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
+  };
+  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+  const handleUpload = ({ file, onSuccess, onError, onProgress }) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'iylzchgu');
+
+    try {
+      axios.post('https://api.cloudinary.com/v1_1/drllzqbk0/image/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+        onUploadProgress: (progressEvent) => {
+          const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          onProgress({ percent });
+        }
+      })
+        .then(res => {
+          console.log(res);
+          const imageUrl = res.data.secure_url;
+          message.success("Upload Image to Cloud Server " + res.statusText);
+          onSuccess(imageUrl);
+          axios.put('https://drab-jade-haddock-toga.cyclic.app/update_img_mnt/' + record.mnt_id, { imageUrl })
+            .then(res => {
+              message.success(res.data);
+            })
+        })
+
+    } catch (error) {
+      console.error(error);
+      message.error('Image upload failed!');
+      onError();
+    }
+  };
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div
+        style={{
+          marginTop: 8,
+        }}
+      >
+        Upload
+      </div>
+    </div>
+  );
+
+  return (
+    <Modal
+      open={visible1}
+      width={1000}
+      title="Add Data"
+      okText="Save"
+      cancelText="Cancel"
+      onCancel={onCancel}
+      onOk={() => {
+        form
+          .validateFields()
+          .then((values) => {
+            onCreate(values);
+            form.resetFields();
+          })
+          .catch((info) => {
+            console.log('Validate Failed:', info);
+          });
+      }}
+    >
+      <Divider />
+      <Form form={form} name="form_in_modal">
+      <Row gutter={20}>
+          <Col span={12}>
+            <Form.Item name="id" label="SN" >
+              <Input placeholder='Serial Number' allowClear />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={20}>
+          <Col span={12}>
+            <Form.Item label="Brand" name="brand"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your Brand!',
+                },
+              ]}>
+              <Select placeholder="Brand" allowClear>
+                {Brand.map(item => (
+                  <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item name="model" label="Model" >
+              <Input placeholder='Model' allowClear />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={20}>
+          <Col span={4}>
+            <Form.Item label="Size" name="size">
+              <Select placeholder="Size" allowClear>
+                {Size.map(item => (
+                  <Select.Option key={item.val} value={item.mnt_val}>{item.val}"</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={6}>
+            <Form.Item label="Refresh Rate" name="hz">
+              <Select placeholder="Refresh Rate" allowClear>
+                {Hz.map(item => (
+                  <Select.Option key={item.val} value={item.val}>{item.val} Hz</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={6}>
+            <Form.Item label="Panel" name="panel">
+              <Select placeholder="Panel" allowClear  >
+                {Panel.map(item => (
+                  <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item label="Resolution" name="resolution">
+              <Select placeholder="Resolution" allowClear >
+                {Resolution.map(item => (
+                  <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={20}>
+          <Col span={6}>
+            <Form.Item label="Curve" name="curve" >
+              <Checkbox checked={checked} onChange={onCheckboxChange} ></Checkbox>
+            </Form.Item>
+          </Col>
+          <Col span={6}>
+            <Form.Item label="Group" name="group">
+              <Select placeholder="Group" allowClear>
+                {Group.map(item => (
+                  <Select.Option key={item.val} value={item.val}>{item.label}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={6}>
+            <Form.Item label="Price" name="price_srp">
+              <InputNumber
+                formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                min={0}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={6}>
+            <Form.Item label="ราคาพร้อมเครื่อง" name="price_w_com">
+              <InputNumber
+                formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                min={0}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
+
+        <Form.Item label="Status" name="status">
+          <Switch checkedChildren="On" unCheckedChildren="Off" checked={switchValue} onChange={onStatusChange} ></Switch>
+        </Form.Item>
+
+        <Form.Item label="Upload Image" >
+          <Upload listType="picture-card"
+            fileList={fileList}
+            customRequest={handleUpload}
+            onPreview={handlePreview}
+            onChange={handleChange}
+            beforeUpload={beforeUpload}
+          >
+            {fileList.length >= 1 ? null : uploadButton}
+          </Upload>
+          <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
+            <img
+              alt="example"
+              style={{
+                width: '100%',
+              }}
+              src={previewImage}
+            />
+          </Modal>
+        </Form.Item>
+      </Form>
+    </Modal>
+  );
 };
 
 const EditForm = ({ visible, onCreate, onCancel, record }) => {
@@ -346,7 +573,9 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
 const ShowData = () => {
   const [data, setData] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [visible1, setVisible1] = useState(false);
   const [record, setRecord] = useState({});
+  const [record2, setRecord2] = useState({});
   const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState({
     pageSize: 50
@@ -368,8 +597,14 @@ const ShowData = () => {
 
   const showModal = (record) => {
     setVisible(true);
+    setRecord2(record);
+  };
+
+  const addNewProd = (record) => {
+    setVisible1(true);
     setRecord(record);
   };
+
 
   const handleCancel = () => {
     setVisible(false);
@@ -381,6 +616,26 @@ const ShowData = () => {
       .then(res => {
         setData(data.filter(item => item.mnt_id !== id));
         message.success(res.data);
+      });
+  };
+
+  const handleAddNew = (values) => {
+    axios.post('https://drab-jade-haddock-toga.cyclic.app/create_mnt/', values)
+      .then(res => {
+        message.success(res.data);
+        axios.get('https://drab-jade-haddock-toga.cyclic.app/admin_data')
+          .then(res => {
+            setData(res.data);
+            setVisible(false);
+          })
+          .catch(err => {
+            console.log(err);
+            message.error("Error fetching updated data");
+          })
+      })
+      .catch(err => {
+        console.log(err);
+        message.error('Error updating data');
       });
   };
 
@@ -509,10 +764,25 @@ const ShowData = () => {
   ]
   return (
     <div>
+      <Button
+        onClick={() => addNewProd(record2)}
+        type="primary"
+        style={{
+          marginBottom: 16,
+        }}
+      >
+        Add new Monitor
+      </Button>
       <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.mnt_id} pagination={pagination} onChange={onChange} size="small"></Table>
       <EditForm
         visible={visible}
         onCreate={handleCreate}
+        onCancel={handleCancel}
+        record={record}
+      />
+      <AddForm
+        visible={visible1}
+        onCreate={handleAddNew}
         onCancel={handleCancel}
         record={record}
       />
