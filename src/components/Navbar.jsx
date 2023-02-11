@@ -33,16 +33,16 @@ const App = () => {
             label: "HOME",
             key:'/'
           },
-         /*  {
+          {
             icon: <CloudUploadOutlined />,
-            label: "UPLOAD",
-            key:'/upload'
+            label: "UPLOAD MONITOR",
+            key:'/upload_nmt'
           },
           {
             icon: <CloudUploadOutlined />,
             label: "UPLOAD CASE",
             key:'/upload_case'
-          } */
+          }
         ]} />
       </Header>
       <Layout>
@@ -79,13 +79,7 @@ const App = () => {
             ]}
           />
         </Sider>
-        <Layout
-          style={{
-            padding: '0 24px 24px',
-            margin: '16px 0',
-          }}
-        >
-          
+        <Layout>
           <Content
             style={{
               

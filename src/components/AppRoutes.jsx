@@ -8,7 +8,7 @@ function AppRoutes() {
     return (
             <Routes>
                 <Route path="/" element={<MonitorData />}></Route>
-                <Route path="/upload" element={<Upload_data />}></Route>
+                <Route path="/upload_nmt" element={<Upload_data />}></Route>
                 <Route path="/monitor" element={<MonitorData />}></Route>
                 <Route path="/case" element={<CaseData />}></Route>
                 <Route path="/upload_case" element={<Upload_data_case />}></Route>

@@ -5,7 +5,7 @@ import axios from 'axios';
 const props = {
   name: 'file',
   multiple: true,
-  action: 'https://drab-jade-haddock-toga.cyclic.app/upload_case',
+  action: 'http://localhost:3000/upload_case',
   onChange(info) {
     const { status } = info.file;
     if (status !== 'uploading') {
@@ -13,12 +13,8 @@ const props = {
     }
     if (status === 'done') {
       message.success(`${info.file.name} file uploaded successfully.`);
-      const formData = new FormData();
-      formData.append('file', info.file.originFileObj);
-      axios.post('https://drab-jade-haddock-toga.cyclic.app/upload_case', formData)
-        .then(res => console.log(res.data))
-        .catch(err => console.error(err));
-    } else if (status === 'error') {
+    } 
+    else if (status === 'error') {
       message.error(`${info.file.name} file upload failed.`);
     }
   },
