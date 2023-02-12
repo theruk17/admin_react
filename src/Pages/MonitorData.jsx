@@ -116,7 +116,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
   useEffect(() => {
     setChecked(record.mnt_curve === "Y")
     setSwitchValue(record.mnt_status === "Y")
-    setFileList([{url:record.mnt_img}])
+    setFileList([{ url: record.mnt_img }])
     form.setFieldsValue({
       group: record.mnt_group,
       brand: record.mnt_brand,
@@ -129,7 +129,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
       price_w_com: record.mnt_price_w_com,
       curve: record.mnt_curve,
       status: record.mnt_status,
-      
+      href: record.mnt_href,
     });
   }, [record, form]);
 
@@ -225,7 +225,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
               rules={[
                 {
                   required: true,
-                  message: 'Please input your Brand!',
+                  message: 'Please input Brand!',
                 },
               ]}>
               <Select placeholder="Brand" allowClear>
@@ -236,14 +236,26 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item name="model" label="Model" >
+            <Form.Item name="model" label="Model" 
+            rules={[
+              {
+                required: true,
+                message: 'Please input Model!',
+              },
+            ]}>
               <Input placeholder='Model' allowClear />
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={20}>
           <Col span={4}>
-            <Form.Item label="Size" name="size">
+            <Form.Item label="Size" name="size"
+            rules={[
+              {
+                required: true,
+                message: 'Please input Size!',
+              },
+            ]}>
               <Select placeholder="Size" allowClear>
                 {Size.map(item => (
                   <Select.Option key={item.val} value={item.mnt_val}>{item.val}"</Select.Option>
@@ -252,7 +264,13 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item label="Refresh Rate" name="hz">
+            <Form.Item label="Refresh Rate" name="hz"
+            rules={[
+              {
+                required: true,
+                message: 'Please input Refresh Rate!',
+              },
+            ]}>
               <Select placeholder="Refresh Rate" allowClear>
                 {Hz.map(item => (
                   <Select.Option key={item.val} value={item.val}>{item.val} Hz</Select.Option>
@@ -261,7 +279,13 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item label="Panel" name="panel">
+            <Form.Item label="Panel" name="panel"
+            rules={[
+              {
+                required: true,
+                message: 'Please input Panel!',
+              },
+            ]}>
               <Select placeholder="Panel" allowClear  >
                 {Panel.map(item => (
                   <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
@@ -270,7 +294,13 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item label="Resolution" name="resolution">
+            <Form.Item label="Resolution" name="resolution"
+            rules={[
+              {
+                required: true,
+                message: 'Please input Resolation!',
+              },
+            ]}>
               <Select placeholder="Resolution" allowClear >
                 {Resolution.map(item => (
                   <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
@@ -286,7 +316,13 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item label="Group" name="group">
+            <Form.Item label="Group" name="group"
+            rules={[
+              {
+                required: true,
+                message: 'Please input Group!',
+              },
+            ]}>
               <Select placeholder="Group" allowClear>
                 {Group.map(item => (
                   <Select.Option key={item.val} value={item.val}>{item.label}</Select.Option>
@@ -295,7 +331,13 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item label="Price" name="price_srp">
+            <Form.Item label="Price" name="price_srp"
+            rules={[
+              {
+                required: true,
+                message: 'Please input Price!',
+              },
+            ]}>
               <InputNumber
                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
@@ -304,7 +346,13 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item label="ราคาพร้อมเครื่อง" name="price_w_com">
+            <Form.Item label="ราคาพร้อมเครื่อง" name="price_w_com"
+            rules={[
+              {
+                required: true,
+                message: 'Please input Price!',
+              },
+            ]}>
               <InputNumber
                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
@@ -313,11 +361,18 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
         </Row>
-
-        <Form.Item label="Status" name="status">
-          <Switch checkedChildren="On" unCheckedChildren="Off" checked={switchValue} onChange={onStatusChange} ></Switch>
-        </Form.Item>
-
+        <Row gutter={20}>
+          <Col span={6}>
+            <Form.Item label="Status" name="status">
+              <Switch checkedChildren="On" unCheckedChildren="Off" checked={switchValue} onChange={onStatusChange} ></Switch>
+            </Form.Item>
+          </Col>
+          <Col span={18}>
+            <Form.Item name="href" label="Link" >
+              <Input placeholder='Link' allowClear />
+            </Form.Item>
+          </Col>
+        </Row>
         <Form.Item label="Upload Image" >
           <Upload listType="picture-card"
             fileList={fileList}
