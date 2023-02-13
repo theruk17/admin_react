@@ -22,27 +22,27 @@ const Brand = [
 ]
 
 const Size = [
-  { val: '21.5' },
-  { val: '23.8' },
-  { val: '23.6' },
-  { val: '24' },
-  { val: '24.5' },
-  { val: '27' },
-  { val: '28' },
-  { val: '31.5' },
-  { val: '32' },
-  { val: '34' }
+  { val: '21.5"' },
+  { val: '23.8"' },
+  { val: '23.6"' },
+  { val: '24"' },
+  { val: '24.5"' },
+  { val: '27"' },
+  { val: '28"' },
+  { val: '31.5"' },
+  { val: '32"' },
+  { val: '34"' }
 ]
 
 const Hz = [
-  { val: '60' },
-  { val: '75' },
-  { val: '100' },
-  { val: '144' },
-  { val: '165' },
-  { val: '170' },
-  { val: '240' },
-  { val: '280' }
+  { val: '60Hz' },
+  { val: '75Hz' },
+  { val: '100Hz' },
+  { val: '144Hz' },
+  { val: '165Hz' },
+  { val: '170Hz' },
+  { val: '240Hz' },
+  { val: '280Hz' }
 ]
 
 const Panel = [
@@ -259,7 +259,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             ]}>
               <Select placeholder="Size" allowClear>
                 {Size.map(item => (
-                  <Select.Option key={item.val} value={item.mnt_val}>{item.val}"</Select.Option>
+                  <Select.Option key={item.val} value={item.mnt_val}>{item.val}</Select.Option>
                 ))}
               </Select>
             </Form.Item>
@@ -274,7 +274,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             ]}>
               <Select placeholder="Refresh Rate" allowClear>
                 {Hz.map(item => (
-                  <Select.Option key={item.val} value={item.val}>{item.val} Hz</Select.Option>
+                  <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
                 ))}
               </Select>
             </Form.Item>
@@ -506,7 +506,7 @@ const ShowData = () => {
     {
       title: 'Size', dataIndex: 'mnt_size', key: 'mnt_size',
       sorter: (a, b) => a.mnt_size - b.mnt_size,
-      render: (text) => <p>{text}"</p>,
+      render: (text) => <p>{text}</p>,
     },
     {
       title: 'Refresh Rate', dataIndex: 'mnt_refresh_rate', key: 'mnt_refresh_rate',
