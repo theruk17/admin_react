@@ -41,7 +41,8 @@ const Hz = [
   { val: '144' },
   { val: '165' },
   { val: '170' },
-  { val: '240' }
+  { val: '240' },
+  { val: '280' }
 ]
 
 const Panel = [
@@ -73,7 +74,7 @@ const Group = [
   { val: '7', label: '27" 144Hz' },
   { val: '8', label: '27" 165Hz - 170Hz' },
   { val: '9', label: '27" 165Hz 2K' },
-  { val: '10', label: '27" 240Hz' },
+  { val: '10', label: '27" 240Hz - 280Hz' },
   { val: '11', label: '27" - 28" 60Hz 4K' },
   { val: '12', label: '31.5" 75Hz - 165Hz' },
   { val: '13', label: '31.5" 75Hz 2K' },
