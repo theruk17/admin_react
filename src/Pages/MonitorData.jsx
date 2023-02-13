@@ -497,27 +497,194 @@ const ShowData = () => {
     },
     {
       title: 'Brand', dataIndex: 'mnt_brand', key: 'mnt_brand',
+      filters: [
+        {
+          text: 'ACER',
+          value: 'ACER',
+        },
+        {
+          text: 'AOC',
+          value: 'AOC',
+        },
+        {
+          text: 'ASUS',
+          value: 'ASUS',
+        },
+        {
+          text: 'BENQ',
+          value: 'BENQ',
+        },
+        {
+          text: 'COOLER MASTER',
+          value: 'COOLER MASTER',
+        },
+        {
+          text: 'DELL',
+          value: 'DELL',
+        },
+        {
+          text: 'GIGABYTE',
+          value: 'GIGABYTE',
+        },
+        {
+          text: 'LENOVO',
+          value: 'LENOVO',
+        },
+        {
+          text: 'LG',
+          value: 'LG',
+        },
+        {
+          text: 'MSI',
+          value: 'MSI',
+        },
+        {
+          text: 'SAMSUNG',
+          value: 'SAMSUNG',
+        }
+      ],
+      onFilter: (value, record) => record.mnt_brand.indexOf(value) === 0,
       render: (text, record) => <a href={record.mnt_href} target='_blank'>{text}</a>,
 
     },
     {
       title: 'Model', dataIndex: 'mnt_model', key: 'mnt_model',
+      onFilter: (value, record) => record.mnt_model.startsWith(value),
+      filterSearch: true,
     },
     {
       title: 'Size', dataIndex: 'mnt_size', key: 'mnt_size',
-      sorter: (a, b) => a.mnt_size - b.mnt_size,
+      filters: [
+        {
+          text: '21.5"',
+          value: '21.5"',
+        },
+        {
+          text: '23.6"',
+          value: '23.6"',
+        },
+        {
+          text: '23.8"',
+          value: '23.8"',
+        },
+        {
+          text: '24"',
+          value: '24"',
+        },
+        {
+          text: '24.5"',
+          value: '24.5"',
+        },
+        {
+          text: '27"',
+          value: '27"',
+        },
+        {
+          text: '28"',
+          value: '28"',
+        },
+        {
+          text: '31.5"',
+          value: '31.5"',
+        },
+        {
+          text: '32"',
+          value: '32"',
+        },
+        {
+          text: '34"',
+          value: '34"',
+        },
+      ],
+      onFilter: (value, record) => record.mnt_size.indexOf(value) === 0,
       render: (text) => <p>{text}</p>,
     },
     {
       title: 'Refresh Rate', dataIndex: 'mnt_refresh_rate', key: 'mnt_refresh_rate',
-      sorter: (a, b) => a.mnt_refresh_rate - b.mnt_refresh_rate,
+      filters: [
+        {
+          text: '60Hz',
+          value: '60Hz',
+        },
+        {
+          text: '75Hz',
+          value: '75Hz',
+        },
+        {
+          text: '100Hz',
+          value: '100Hz',
+        },
+        {
+          text: '144Hz',
+          value: '144Hz',
+        },
+        {
+          text: '165Hz',
+          value: '165Hz',
+        },
+        {
+          text: '170Hz',
+          value: '170Hz',
+        },
+        {
+          text: '240Hz',
+          value: '240Hz',
+        },
+        {
+          text: '280Hz',
+          value: '280Hz',
+        }
+      ],
+      onFilter: (value, record) => record.mnt_refresh_rate.indexOf(value) === 0,
       render: (text) => <p>{text}</p>,
     },
     {
       title: 'Panel', dataIndex: 'mnt_panel', key: 'mnt_panel',
+      filters: [
+        {
+          text: 'TN',
+          value: 'TN',
+        },
+        {
+          text: 'VA',
+          value: 'VA',
+        },
+        {
+          text: 'IPS',
+          value: 'IPS',
+        },
+        {
+          text: 'NANO IPS',
+          value: 'NANO IPS',
+        },
+        {
+          text: 'WQHD',
+          value: 'WQHD',
+        }
+      ],
+      onFilter: (value, record) => record.mnt_panel.indexOf(value) === 0,
     },
     {
       title: 'Resolution', dataIndex: 'mnt_resolution', key: 'mnt_resolution',
+      filters: [
+        {
+          text: '1920 x 1080 (FHD)',
+          value: '1920 x 1080 (FHD)',
+        },
+        {
+          text: '2560 x 1440 (2K)',
+          value: '2560 x 1440 (2K)',
+        },
+        {
+          text: '3440 x 1440 (2K)',
+          value: '3440 x 1440 (2K)',
+        },
+        {
+          text: '3840 x 2160 (4K)',
+          value: '3840 x 2160 (4K)',
+        }
+      ],
+      onFilter: (value, record) => record.mnt_resolution.indexOf(value) === 0,
     },
     {
       title: 'Curve', dataIndex: 'mnt_curve', key: 'mnt_curve',
