@@ -5,58 +5,40 @@ import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tag } from 'antd';
 import '../App.css';
 
-const API_URL = 'https://drab-jade-haddock-toga.cyclic.app/admin_data_case';
+const API_URL = 'https://drab-jade-haddock-toga.cyclic.app';
 
 const Brand = [
-  { val: 'AEROCOOL' },
-  { val: 'ANTEC' },
+  { val: 'ACER' },
   { val: 'ASUS' },
-  { val: 'AXEL' },
-  { val: 'AZZA' },
-  { val: 'BE QUIET' },
-  { val: 'COOLER MASTER' },
-  { val: 'CORSAIR' },
-  { val: 'DARKFLASH' },
-  { val: 'GIGABYTE' },
-  { val: 'LIAN LI' },
-  { val: 'INWIN' },
-  { val: 'MONTECH' },
+  { val: 'DELL' },
+  { val: 'HP' },
+  { val: 'LENOVO' },
   { val: 'MSI' },
-  { val: 'NZXT' },
-  { val: 'PLENTY' },
-  { val: 'THERMALTAKE' },
-  { val: 'TSUNAMI' },
-  { val: 'XIGMATEK' },
-  { val: 'ZALMAN' },
-
 ]
 
 const Color = [
+  { val: '(OBSIDIAN BLACK)' },
+  { val: '(SLATE GREY)' },
+  { val: '(OFF BLACK)' },
+  { val: '(SHADOW BLACK)'},
+  { val: '(GRAPHITE BLACK)' },
+  { val: '(MECHA GRAY)' },
+  { val: '(QUIET BLUE)' },
+  { val: '(INDIE BLACK)' },
+  { val: '(CARBON BLACK)' },
+  { val: '(DARK SHADOW GREY)' },
+  { val: '(SPECTER GREEN WITH CAMOUFLAG)' },
   { val: '(BLACK)' },
-  { val: '(WHITE)' },
-  { val: '(RED)' },
-  { val: '(SNOW WHITE)' },
-  { val: '(BLACK/RED)' },
-  { val: '(BLACK/WHITE)' },
-  { val: '(GRAY)' },
-  { val: '(CYAN)' },
-  { val: '(PURPLE)' },
-  { val: '(PINK)' },
-  { val: '(SILVER)' },
-  { val: '(MATTE BLACK)' },
-  { val: '(MATTE WHITE)' },
-  { val: '(RAZER EDITION)' },
-  { val: '(YELLOW)' },
+  { val: '(NATURAL SILVER)' },
+  { val: '(STORM GREY)' },
+  { val: '(ONYX GREY)' },
 
 ]
 
 
 const Group = [
-  { val: 'ZONE iHAVECPU' },
-  { val: 'ZONE A' },
-  { val: 'ZONE B' },
-  { val: 'ZONE C' },
-  { val: 'ZONE ITX' },
+  { val: 'Gaming' },
+  { val: 'Non-gaming' },
 ]
 
 const getBase64 = (file) =>
@@ -89,15 +71,16 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const [fileList, setFileList] = useState([]);
 
   useEffect(() => {
-    setSwitchValue(record.case_status === "Y")
-    setFileList([{ url: record.case_img}])
+    setSwitchValue(record.nb_status === "Y")
+    setFileList([{ url: record.nb_img}])
     form.setFieldsValue({
-      group: record.case_group,
-      brand: record.case_brand,
-      model: record.case_model,
-      color: record.case_color,
-      price_srp: record.case_price_srp,
-      status: record.case_status,
+      group: record.nb_group,
+      brand: record.nb_brand,
+      model: record.nb_model,
+      color: record.nb_color,
+      price_srp: record.nb_price_srp,
+      min_price: record.nb_min_price,
+      status: record.nb_status,
     });
   }, [record, form]);
 
@@ -120,7 +103,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const handleUpload = ({ file, onSuccess, onError, onProgress }) => {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', 'xwsut1mj');
+    formData.append('upload_preset', 'osmgat5m');
 
     try {
       axios.post('https://api.cloudinary.com/v1_1/drllzqbk0/image/upload', formData, {
@@ -135,7 +118,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           const imageUrl = res.data.secure_url;
           message.success("Upload Image to Cloud Server " + res.statusText);
           onSuccess(imageUrl);
-          axios.put('https://drab-jade-haddock-toga.cyclic.app/update_img_case/' + record.case_id, { imageUrl })
+          axios.put(API_URL+'/update_img_nb/' + record.nb_id, { imageUrl })
             .then(res => {
               message.success(res.data);
             })
@@ -207,7 +190,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
         <Row gutter={20}>
           <Col span={6}>
             <Form.Item label="Color" name="color">
-              <Select placeholder="Size" allowClear>
+              <Select placeholder="Color" allowClear>
                 {Color.map(item => (
                   <Select.Option key={item.val} value={item.mnt_val}>{item.val}</Select.Option>
                 ))}
@@ -226,7 +209,16 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item label="Price" name="price_srp">
+            <Form.Item label="Price SRP" name="price_srp">
+              <InputNumber
+                formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                min={0}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={6}>
+            <Form.Item label="Min Price" name="min_price">
               <InputNumber
                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
@@ -281,7 +273,7 @@ const CaseData = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(API_URL)
+      .get(API_URL+"/admin_data_nb")
       .then((res) => {
         setLoading(false);
         setData(res.data);
@@ -299,18 +291,18 @@ const CaseData = () => {
 
   const handleDelete = id => {
     axios
-      .delete(`https://drab-jade-haddock-toga.cyclic.app/admin_del_case/${id}`)
+      .delete(API_URL+`/admin_del_nb/${id}`)
       .then(res => {
-        setData(data.filter(item => item.case_id !== id));
+        setData(data.filter(item => item.nb_id !== id));
         message.success(res.data);
       });
   };
 
   const handleCreate = (values) => {
-    axios.put('https://drab-jade-haddock-toga.cyclic.app/edit_case/' + record.case_id, values)
+    axios.put(API_URL+'/edit_nb/' + record.nb_id, values)
       .then(res => {
         message.success(res.data);
-        axios.get('https://drab-jade-haddock-toga.cyclic.app/admin_data_case')
+        axios.get(API_URL+'/admin_data_nb')
           .then(res => {
             setData(res.data);
             setVisible(false);
@@ -331,14 +323,14 @@ const CaseData = () => {
 
   const handleStatusChange = (key) => {
     const newData = [...data];
-    const target = newData.find((item) => item.case_id === key);
+    const target = newData.find((item) => item.nb_id === key);
     if (target) {
-      target.case_status = target.case_status === 'Y' ? 'N' : 'Y';
+      target.nb_status = target.nb_status === 'Y' ? 'N' : 'Y';
       setData(newData);
-      axios.put('https://drab-jade-haddock-toga.cyclic.app/edit_status_case/' + key, { status: target.case_status })
+      axios.put(API_URL+'/edit_status_nb/' + key, { status: target.nb_status })
         .then(res => {
           message.success(res.data);
-          axios.get('https://drab-jade-haddock-toga.cyclic.app/admin_data_case')
+          axios.get(API_URL+'/admin_data_nb')
             .then(res => {
               setData(res.data);
             })
@@ -356,37 +348,63 @@ const CaseData = () => {
 
   const Column = [
     {
-      title: 'SN', dataIndex: 'case_id', key: 'case_id',
+      title: 'SN', dataIndex: 'nb_id', key: 'nb_id',
     },
     {
       title: 'Image',
-      dataIndex: 'case_img',
-      key: 'case_img',
+      dataIndex: 'nb_img',
+      key: 'nb_img',
       render: (imageUrl) => <img src={imageUrl} alt="thumbnail" width="30" height="30" />,
     },
     {
-      title: 'Brand', dataIndex: 'case_brand', key: 'case_brand',
-      render: (text, record) => <a href={record.mnt_href} target='_blank'>{text}</a>,
+      title: 'Brand', dataIndex: 'nb_brand', key: 'nb_brand',
+      render: (text, record) => <a href={record.nb_href} target='_blank'>{text}</a>,
 
     },
     {
-      title: 'Model', dataIndex: 'case_model', key: 'case_model',
+      title: 'Model', dataIndex: 'nb_model', key: 'nb_model',
     },
     {
-      title: 'Color', dataIndex: 'case_color', key: 'case_color',
-      sorter: (a, b) => a.case_color - b.case_color,
-
+      title: 'Color', dataIndex: 'nb_color', key: 'nb_color',
+    },
+    {
+      title: 'CPU', dataIndex: 'nb_cpu', key: 'nb_cpu',
+    },
+    {
+      title: 'VGA', dataIndex: 'nb_vga', key: 'nb_vga',
+    },
+    {
+      title: 'RAM', dataIndex: 'nb_ram', key: 'nb_ram',
+    },
+    {
+      title: 'Size', dataIndex: 'nb_size', key: 'nb_size',
+    },
+    {
+      title: 'Hz', dataIndex: 'nb_hz', key: 'nb_hz',
+    },
+    {
+      title: 'Storage', dataIndex: 'nb_storage', key: 'nb_storge',
+    },
+    {
+      title: 'OS', dataIndex: 'nb_os', key: 'nb_os',
     },
     {
       title: 'Status', dataIndex: 'case_status', key: 'case_status',
       render: (text, record) => (
-        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.case_status === 'Y'} onChange={() => handleStatusChange(record.case_id)}
+        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.nb_status === 'Y'} onChange={() => handleStatusChange(record.nb_id)}
         />
       )
     },
     {
-      title: 'Price SRP', dataIndex: 'case_price_srp', key: 'case_price_srp',
-      sorter: (a, b) => a.case_price_srp - b.case_price_srp,
+      title: 'Price SRP', dataIndex: 'nb_price_srp', key: 'nb_price_srp',
+      sorter: (a, b) => a.nb_price_srp - b.nb_price_srp,
+      render: (value) => (
+        <NumericFormat style={{ color: "#0958d9" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+      )
+    },
+    {
+      title: 'Min Price', dataIndex: 'nb_min_price', key: 'nb_min_price',
+      sorter: (a, b) => a.nb_min_price - b.nb_min_price,
       render: (value) => (
         <NumericFormat style={{ color: "#0958d9" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
@@ -399,7 +417,7 @@ const CaseData = () => {
           <a key={record} onClick={() => showModal(record)}><EditTwoTone twoToneColor="#ffa940" /></a>
           <Popconfirm
             title="Delete the item"
-            onConfirm={() => handleDelete(record.case_id)}
+            onConfirm={() => handleDelete(record.nb_id)}
             placement="topRight"
             description="Are you sure you want to delete this item?"
             okText="Yes"
@@ -413,7 +431,7 @@ const CaseData = () => {
   ]
   return (
     <div>
-      <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.case_id} pagination={pagination} onChange={onChange} size="small"></Table>
+      <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.nb_id} pagination={pagination} onChange={onChange} size="small"></Table>
       <EditForm
         visible={visible}
         onCreate={handleCreate}

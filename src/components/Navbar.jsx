@@ -42,6 +42,11 @@ const App = () => {
             icon: <CloudUploadOutlined />,
             label: "UPLOAD CASE",
             key:'/upload_case'
+          },
+          {
+            icon: <CloudUploadOutlined />,
+            label: "UPLOAD NOTEBOOK",
+            key:'/upload_nb'
           }
         ]} />
       </Header>
@@ -75,6 +80,11 @@ const App = () => {
                 icon: <CloudUploadOutlined />,
                 label: "Case",
                 key:'/case'
+              },
+              {
+                icon: <CloudUploadOutlined />,
+                label: "Notebook",
+                key:'/nb'
               }
             ]}
           />
