@@ -35,19 +35,9 @@ const App = () => {
           },
           {
             icon: <CloudUploadOutlined />,
-            label: "UPLOAD MONITOR",
-            key:'/upload_nmt'
+            label: "UPLOAD DATA",
+            key:'/upload'
           },
-          {
-            icon: <CloudUploadOutlined />,
-            label: "UPLOAD CASE",
-            key:'/upload_case'
-          },
-          {
-            icon: <CloudUploadOutlined />,
-            label: "UPLOAD NOTEBOOK",
-            key:'/upload_nb'
-          }
         ]} />
       </Header>
       <Layout>
