@@ -406,7 +406,7 @@ const CaseData = () => {
       title: 'Dis Price', dataIndex: 'nb_dis_price', key: 'nb_dis_price',
       sorter: (a, b) => a.nb_dis_price - b.nb_dis_price,
       render: (value) => (
-        <NumericFormat style={{ color: "#0958d9" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+        <NumericFormat style={{ color: "#d4001a" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
 
