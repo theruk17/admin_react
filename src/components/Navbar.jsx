@@ -1,4 +1,4 @@
-import { LaptopOutlined, NotificationOutlined, DesktopOutlined, CloudUploadOutlined, HomeOutlined } from '@ant-design/icons';
+import { LaptopOutlined, ContainerOutlined, DesktopOutlined, CloudUploadOutlined, HomeOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import React from 'react';
 import PageContent from '../components/PageContent'
@@ -67,12 +67,12 @@ const App = () => {
                 key:'/monitor'
               },
               {
-                icon: <CloudUploadOutlined />,
+                icon: <ContainerOutlined />,
                 label: "Case",
                 key:'/case'
               },
               {
-                icon: <CloudUploadOutlined />,
+                icon: <LaptopOutlined />,
                 label: "Notebook",
                 key:'/nb'
               }

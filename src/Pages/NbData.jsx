@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NumericFormat } from 'react-number-format';
 import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
-import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tag } from 'antd';
+import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tooltip } from 'antd';
 import '../App.css';
 
 const API_URL = 'https://drab-jade-haddock-toga.cyclic.app';
@@ -349,20 +349,31 @@ const CaseData = () => {
   const Column = [
     {
       title: 'SN', dataIndex: 'nb_id', key: 'nb_id',
+      width: 100, 
+      ellipsis: {
+        showTitle: false,
+      },
+      render: (address) => (
+        <Tooltip placement="topLeft" title={address}>
+          {address}
+        </Tooltip>
+      ),
     },
     {
       title: 'Image',
       dataIndex: 'nb_img',
       key: 'nb_img',
+      width: 60, 
       render: (imageUrl) => <img src={imageUrl} alt="thumbnail" width="30" />,
     },
     {
       title: 'Brand', dataIndex: 'nb_brand', key: 'nb_brand',
+      width: 80, 
       render: (text, record) => <a href={record.nb_href} target='_blank'>{text}</a>,
 
     },
     {
-      title: 'Model', dataIndex: 'nb_model', key: 'nb_model',
+      title: 'Model', dataIndex: 'nb_model', key: 'nb_model', width: 180, 
     },
     {
       title: 'Color', dataIndex: 'nb_color', key: 'nb_color',
