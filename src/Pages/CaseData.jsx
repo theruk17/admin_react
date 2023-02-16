@@ -92,13 +92,14 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
 
   useEffect(() => {
     setSwitchValue(record.case_status === "Y")
-    setFileList([{ url: record.case_img}])
+    setFileList([{ url: record.case_img }])
     form.setFieldsValue({
       group: record.case_group,
       brand: record.case_brand,
       model: record.case_model,
       color: record.case_color,
       price_srp: record.case_price_srp,
+      href: record.case_href,
       status: record.case_status,
     });
   }, [record, form]);
@@ -237,11 +238,18 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
         </Row>
-
-        <Form.Item label="Status" name="status">
-          <Switch checkedChildren="On" unCheckedChildren="Off" checked={switchValue} onChange={onStatusChange} ></Switch>
-        </Form.Item>
-
+        <Row gutter={20}>
+          <Col span={6}>
+            <Form.Item label="Status" name="status">
+              <Switch checkedChildren="On" unCheckedChildren="Off" checked={switchValue} onChange={onStatusChange} ></Switch>
+            </Form.Item>
+          </Col>
+          <Col span={18}>
+            <Form.Item name="href" label="Link" >
+              <Input placeholder='Link' allowClear />
+            </Form.Item>
+          </Col>
+        </Row>
         <Form.Item label="Upload Image">
           <Upload listType="picture-card"
             fileList={fileList}

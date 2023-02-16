@@ -20,7 +20,7 @@ const Color = [
   { val: '(OBSIDIAN BLACK)' },
   { val: '(SLATE GREY)' },
   { val: '(OFF BLACK)' },
-  { val: '(SHADOW BLACK)'},
+  { val: '(SHADOW BLACK)' },
   { val: '(GRAPHITE BLACK)' },
   { val: '(MECHA GRAY)' },
   { val: '(QUIET BLUE)' },
@@ -72,7 +72,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
 
   useEffect(() => {
     setSwitchValue(record.nb_status === "Y")
-    setFileList([{ url: record.nb_img}])
+    setFileList([{ url: record.nb_img }])
     form.setFieldsValue({
       group: record.nb_group,
       brand: record.nb_brand,
@@ -80,6 +80,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
       color: record.nb_color,
       price_srp: record.nb_price_srp,
       dis_price: record.nb_dis_price,
+      href: record.nb_href,
       status: record.nb_status,
     });
   }, [record, form]);
@@ -118,7 +119,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           const imageUrl = res.data.secure_url;
           message.success("Upload Image to Cloud Server " + res.statusText);
           onSuccess(imageUrl);
-          axios.put(API_URL+'/update_img_nb/' + record.nb_id, { imageUrl })
+          axios.put(API_URL + '/update_img_nb/' + record.nb_id, { imageUrl })
             .then(res => {
               message.success(res.data);
             })
@@ -227,11 +228,18 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
         </Row>
-
-        <Form.Item label="Status" name="status">
-          <Switch checkedChildren="On" unCheckedChildren="Off" checked={switchValue} onChange={onStatusChange} ></Switch>
-        </Form.Item>
-
+        <Row gutter={20}>
+          <Col span={6}>
+            <Form.Item label="Status" name="status">
+              <Switch checkedChildren="On" unCheckedChildren="Off" checked={switchValue} onChange={onStatusChange} ></Switch>
+            </Form.Item>
+          </Col>
+          <Col span={18}>
+            <Form.Item name="href" label="Link" >
+              <Input placeholder='Link' allowClear />
+            </Form.Item>
+          </Col>
+        </Row>
         <Form.Item label="Upload Image">
           <Upload listType="picture-card"
             fileList={fileList}
@@ -273,7 +281,7 @@ const CaseData = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(API_URL+"/admin_data_nb")
+      .get(API_URL + "/admin_data_nb")
       .then((res) => {
         setLoading(false);
         setData(res.data);
@@ -291,7 +299,7 @@ const CaseData = () => {
 
   const handleDelete = id => {
     axios
-      .delete(API_URL+`/admin_del_nb/${id}`)
+      .delete(API_URL + `/admin_del_nb/${id}`)
       .then(res => {
         setData(data.filter(item => item.nb_id !== id));
         message.success(res.data);
@@ -299,10 +307,10 @@ const CaseData = () => {
   };
 
   const handleCreate = (values) => {
-    axios.put(API_URL+'/edit_nb/' + record.nb_id, values)
+    axios.put(API_URL + '/edit_nb/' + record.nb_id, values)
       .then(res => {
         message.success(res.data);
-        axios.get(API_URL+'/admin_data_nb')
+        axios.get(API_URL + '/admin_data_nb')
           .then(res => {
             setData(res.data);
             setVisible(false);
@@ -327,10 +335,10 @@ const CaseData = () => {
     if (target) {
       target.nb_status = target.nb_status === 'Y' ? 'N' : 'Y';
       setData(newData);
-      axios.put(API_URL+'/edit_status_nb/' + key, { status: target.nb_status })
+      axios.put(API_URL + '/edit_status_nb/' + key, { status: target.nb_status })
         .then(res => {
           message.success(res.data);
-          axios.get(API_URL+'/admin_data_nb')
+          axios.get(API_URL + '/admin_data_nb')
             .then(res => {
               setData(res.data);
             })
@@ -349,7 +357,7 @@ const CaseData = () => {
   const Column = [
     {
       title: 'SN', dataIndex: 'nb_id', key: 'nb_id',
-      width: 100, 
+      width: 100,
       ellipsis: {
         showTitle: false,
       },
@@ -363,17 +371,17 @@ const CaseData = () => {
       title: 'Image',
       dataIndex: 'nb_img',
       key: 'nb_img',
-      width: 60, 
+      width: 60,
       render: (imageUrl) => <img src={imageUrl} alt="thumbnail" width="30" />,
     },
     {
       title: 'Brand', dataIndex: 'nb_brand', key: 'nb_brand',
-      width: 80, 
+      width: 80,
       render: (text, record) => <a href={record.nb_href} target='_blank'>{text}</a>,
 
     },
     {
-      title: 'Model', dataIndex: 'nb_model', key: 'nb_model', width: 180, 
+      title: 'Model', dataIndex: 'nb_model', key: 'nb_model', width: 180,
     },
     {
       title: 'Color', dataIndex: 'nb_color', key: 'nb_color',
