@@ -354,7 +354,7 @@ const CaseData = () => {
       title: 'Image',
       dataIndex: 'nb_img',
       key: 'nb_img',
-      render: (imageUrl) => <img src={imageUrl} alt="thumbnail" width="30" height="30" />,
+      render: (imageUrl) => <img src={imageUrl} alt="thumbnail" width="30" />,
     },
     {
       title: 'Brand', dataIndex: 'nb_brand', key: 'nb_brand',
