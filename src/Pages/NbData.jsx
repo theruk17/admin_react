@@ -79,7 +79,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
       model: record.nb_model,
       color: record.nb_color,
       price_srp: record.nb_price_srp,
-      min_price: record.nb_min_price,
+      dis_price: record.nb_dis_price,
       status: record.nb_status,
     });
   }, [record, form]);
@@ -218,7 +218,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item label="Min Price" name="min_price">
+            <Form.Item label="Discount Price" name="dis_price">
               <InputNumber
                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
@@ -403,8 +403,8 @@ const CaseData = () => {
       )
     },
     {
-      title: 'Min Price', dataIndex: 'nb_min_price', key: 'nb_min_price',
-      sorter: (a, b) => a.nb_min_price - b.nb_min_price,
+      title: 'Dis Price', dataIndex: 'nb_dis_price', key: 'nb_dis_price',
+      sorter: (a, b) => a.nb_dis_price - b.nb_dis_price,
       render: (value) => (
         <NumericFormat style={{ color: "#0958d9" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
