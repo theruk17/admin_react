@@ -5,7 +5,7 @@ import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Button } from 'antd';
 import '../App.css';
 
-const API_URL = 'https://drab-jade-haddock-toga.cyclic.app/admin_data';
+const API_URL = 'https://drab-jade-haddock-toga.cyclic.app';
 
 const Brand = [
   { val: 'AOC' },
@@ -173,7 +173,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           const imageUrl = res.data.secure_url;
           message.success("Upload Image to Cloud Server " + res.statusText);
           onSuccess(imageUrl);
-          axios.put('https://drab-jade-haddock-toga.cyclic.app/update_img_mnt/' + record.mnt_id, { imageUrl })
+          axios.put(API_URL+'/update_img_mnt/' + record.mnt_id, { imageUrl })
             .then(res => {
               message.success(res.data);
             })
@@ -415,11 +415,16 @@ const ShowData = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(API_URL)
+      .get(API_URL+"/admin_data")
       .then((res) => {
         setLoading(false);
         setData(res.data);
       });
+    axios
+    .put(API_URL+"/update_stock_mnt")
+    .then((res) => {
+      message.success(res.data);
+    })
   }, []);
 
   const showModal = (record) => {
@@ -433,7 +438,7 @@ const ShowData = () => {
 
   const handleDelete = id => {
     axios
-      .delete(`https://drab-jade-haddock-toga.cyclic.app/admin_del/${id}`)
+      .delete(API_URL+`/admin_del/${id}`)
       .then(res => {
         setData(data.filter(item => item.mnt_id !== id));
         message.success(res.data);
@@ -441,10 +446,10 @@ const ShowData = () => {
   };
 
   const handleCreate = (values) => {
-    axios.put('https://drab-jade-haddock-toga.cyclic.app/edit/' + record.mnt_id, values)
+    axios.put(API_URL+'/edit/' + record.mnt_id, values)
       .then(res => {
         message.success(res.data);
-        axios.get('https://drab-jade-haddock-toga.cyclic.app/admin_data')
+        axios.get(API_URL+'/admin_data')
           .then(res => {
             setData(res.data);
             setVisible(false);
@@ -466,10 +471,10 @@ const ShowData = () => {
     if (target) {
       target.mnt_status = target.mnt_status === 'Y' ? 'N' : 'Y';
       setData(newData);
-      axios.put('https://drab-jade-haddock-toga.cyclic.app/edit_status/' + key, { status: target.mnt_status })
+      axios.put(API_URL+'/edit_status/' + key, { status: target.mnt_status })
         .then(res => {
           message.success(res.data);
-          axios.get('https://drab-jade-haddock-toga.cyclic.app/admin_data')
+          axios.get(API_URL+'/admin_data')
             .then(res => {
               setData(res.data);
             })
@@ -690,17 +695,21 @@ const ShowData = () => {
       title: 'Curve', dataIndex: 'mnt_curve', key: 'mnt_curve',
     },
     {
-      title: 'Status', dataIndex: 'mnt_status', key: 'mnt_status',
-      render: (text, record) => (
-        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.mnt_status === 'Y'} onChange={() => handleStatusChange(record.mnt_id)}
-        />
-      )
+      title: 'STOCK', dataIndex: 'mnt_stock', key: 'mnt_stock', sorter: (a, b) => a.mnt_stock - b.mnt_stock,
+      render(text, record) {
+        return {
+          props: {
+            style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+          },
+          children: <div>{text}</div>
+        };
+      }
     },
     {
       title: 'Price SRP', dataIndex: 'mnt_price_srp', key: 'mnt_price_srp',
       sorter: (a, b) => a.mnt_price_srp - b.mnt_price_srp,
       render: (value) => (
-        <NumericFormat value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+        <NumericFormat style={{ color: "#0958d9" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
     {
@@ -710,7 +719,13 @@ const ShowData = () => {
         <NumericFormat style={{ color: "#f5222d" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
-
+    {
+      title: 'Status', dataIndex: 'mnt_status', key: 'mnt_status',
+      render: (text, record) => (
+        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.mnt_status === 'Y'} onChange={() => handleStatusChange(record.mnt_id)}
+        />
+      )
+    },
     {
       title: 'Action', dataIndex: 'action', key: 'action',
       render: (text, record) => (
@@ -732,7 +747,7 @@ const ShowData = () => {
   ]
   return (
     <div>
-      <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.mnt_id} pagination={pagination} onChange={onChange} size="small"></Table>
+      <Table bordered loading={loading} dataSource={data} columns={Column} rowKey={record => record.mnt_id} pagination={pagination} onChange={onChange} size="small"></Table>
       <EditForm
         visible={visible}
         onCreate={handleCreate}

@@ -387,13 +387,7 @@ const CaseData = () => {
       sorter: (a, b) => a.case_color - b.case_color,
 
     },
-    {
-      title: 'Status', dataIndex: 'case_status', key: 'case_status',
-      render: (text, record) => (
-        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.case_status === 'Y'} onChange={() => handleStatusChange(record.case_id)}
-        />
-      )
-    },
+    
     {
       title: 'Price SRP', dataIndex: 'case_price_srp', key: 'case_price_srp',
       sorter: (a, b) => a.case_price_srp - b.case_price_srp,
@@ -401,7 +395,13 @@ const CaseData = () => {
         <NumericFormat style={{ color: "#0958d9" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
-
+    {
+      title: 'Status', dataIndex: 'case_status', key: 'case_status',
+      render: (text, record) => (
+        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.case_status === 'Y'} onChange={() => handleStatusChange(record.case_id)}
+        />
+      )
+    },
     {
       title: 'Action', dataIndex: 'action', key: 'action',
       render: (text, record) => (
@@ -423,7 +423,7 @@ const CaseData = () => {
   ]
   return (
     <div>
-      <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.case_id} pagination={pagination} onChange={onChange} size="small"></Table>
+      <Table bordered loading={loading} dataSource={data} columns={Column} rowKey={record => record.case_id} pagination={pagination} onChange={onChange} size="small"></Table>
       <EditForm
         visible={visible}
         onCreate={handleCreate}
