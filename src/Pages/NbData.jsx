@@ -219,7 +219,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item label="Discount Price" name="dis_price">
+            <Form.Item label="Discount" name="dis_price">
               <InputNumber
                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
@@ -265,7 +265,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
   );
 };
 
-const CaseData = () => {
+const NbData = () => {
   const [data, setData] = useState([]);
   const [visible, setVisible] = useState(false);
   const [record, setRecord] = useState({});
@@ -286,6 +286,11 @@ const CaseData = () => {
         setLoading(false);
         setData(res.data);
       });
+    axios
+      .put(API_URL + "/update_stock_nb")
+      .then((res) => {
+        message.success(res.data);
+      })
   }, []);
 
   const showModal = (record) => {
@@ -326,9 +331,6 @@ const CaseData = () => {
       });
   };
 
-
-
-
   const handleStatusChange = (key) => {
     const newData = [...data];
     const target = newData.find((item) => item.nb_id === key);
@@ -355,24 +357,13 @@ const CaseData = () => {
   };
 
   const Column = [
-    {
-      title: 'SN', dataIndex: 'nb_id', key: 'nb_id',
-      width: 100,
-      ellipsis: {
-        showTitle: false,
-      },
-      render: (address) => (
-        <Tooltip placement="topLeft" title={address}>
-          {address}
-        </Tooltip>
-      ),
-    },
+    
     {
       title: 'Image',
       dataIndex: 'nb_img',
       key: 'nb_img',
       width: 60,
-      render: (imageUrl) => <img src={imageUrl} alt="thumbnail" width="30" />,
+      render: (imageUrl) => <img src={imageUrl} alt="thumbnail" height="30" />,
     },
     {
       title: 'Brand', dataIndex: 'nb_brand', key: 'nb_brand',
@@ -381,39 +372,41 @@ const CaseData = () => {
 
     },
     {
-      title: 'Model', dataIndex: 'nb_model', key: 'nb_model', width: 180,
+      title: 'Model', dataIndex: 'nb_model', key: 'nb_model', width: 400,
     },
     {
-      title: 'Color', dataIndex: 'nb_color', key: 'nb_color',
+      title: 'Color', dataIndex: 'nb_color', key: 'nb_color', width: 190,
     },
+    
     {
-      title: 'CPU', dataIndex: 'nb_cpu', key: 'nb_cpu',
+      title: 'STOCK',
+      children: [
+        {
+          title: 'นครนายก', dataIndex: 'nb_stock_nny', key: 'nb_stock_nny',
+        },
+        {
+          title: 'รามอินทรา', dataIndex: 'nb_stock_ramintra', key: 'nb_stock_ramintra',
+        },
+        {
+          title: 'บางพลัด', dataIndex: 'nb_stock_bangphlat', key: 'nb_stock_bangphlat',
+        },
+        {
+          title: 'เดอะโฟล์ท', dataIndex: 'nb_stock_thefloat', key: 'nb_stock_thefloat',
+        },
+        {
+          title: 'รวม', dataIndex: 'nb_stock_sum', key: 'nb_stock_sum', sorter: (a, b) => a.nb_stock_sum - b.nb_stock_sum,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+      ]
     },
-    {
-      title: 'VGA', dataIndex: 'nb_vga', key: 'nb_vga',
-    },
-    {
-      title: 'RAM', dataIndex: 'nb_ram', key: 'nb_ram',
-    },
-    {
-      title: 'Size', dataIndex: 'nb_size', key: 'nb_size',
-    },
-    {
-      title: 'Hz', dataIndex: 'nb_hz', key: 'nb_hz',
-    },
-    {
-      title: 'Storage', dataIndex: 'nb_storage', key: 'nb_storge',
-    },
-    {
-      title: 'OS', dataIndex: 'nb_os', key: 'nb_os',
-    },
-    {
-      title: 'Status', dataIndex: 'case_status', key: 'case_status',
-      render: (text, record) => (
-        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.nb_status === 'Y'} onChange={() => handleStatusChange(record.nb_id)}
-        />
-      )
-    },
+    
     {
       title: 'Price SRP', dataIndex: 'nb_price_srp', key: 'nb_price_srp',
       sorter: (a, b) => a.nb_price_srp - b.nb_price_srp,
@@ -422,13 +415,19 @@ const CaseData = () => {
       )
     },
     {
-      title: 'Dis Price', dataIndex: 'nb_dis_price', key: 'nb_dis_price',
+      title: 'Discount', dataIndex: 'nb_dis_price', key: 'nb_dis_price',
       sorter: (a, b) => a.nb_dis_price - b.nb_dis_price,
       render: (value) => (
         <NumericFormat style={{ color: "#d4001a" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
-
+    {
+      title: 'Status', dataIndex: 'case_status', key: 'case_status',
+      render: (text, record) => (
+        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.nb_status === 'Y'} onChange={() => handleStatusChange(record.nb_id)}
+        />
+      )
+    },
     {
       title: 'Action', dataIndex: 'action', key: 'action',
       render: (text, record) => (
@@ -450,7 +449,20 @@ const CaseData = () => {
   ]
   return (
     <div>
-      <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.nb_id} pagination={pagination} onChange={onChange} size="small"></Table>
+      <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.nb_id} pagination={pagination} onChange={onChange} bordered 
+      expandable={{
+        expandedRowRender: (record) => (
+          <p
+            style={{
+              margin: 0,
+            }}
+          >
+            {record.nb_size} {record.nb_hz} {record.nb_cpu} {record.nb_vga} {record.nb_ram} {record.nb_storage} {record.nb_os}
+          </p>
+        ),
+        
+      }}
+      ></Table>
       <EditForm
         visible={visible}
         onCreate={handleCreate}
@@ -461,4 +473,4 @@ const CaseData = () => {
   );
 };
 
-export default CaseData;
+export default NbData;
