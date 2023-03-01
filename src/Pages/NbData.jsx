@@ -17,21 +17,25 @@ const Brand = [
 ]
 
 const Color = [
+  { val: '(BLACK)' },
+  { val: '(BONFIRE BLACK)' },
   { val: '(OBSIDIAN BLACK)' },
-  { val: '(SLATE GREY)' },
   { val: '(OFF BLACK)' },
   { val: '(SHADOW BLACK)' },
   { val: '(GRAPHITE BLACK)' },
-  { val: '(MECHA GRAY)' },
-  { val: '(QUIET BLUE)' },
   { val: '(INDIE BLACK)' },
   { val: '(CARBON BLACK)' },
-  { val: '(DARK SHADOW GREY)' },
-  { val: '(SPECTER GREEN WITH CAMOUFLAG)' },
-  { val: '(BLACK)' },
-  { val: '(NATURAL SILVER)' },
+  { val: '(SLATE GREY)' },
+  { val: '(MECHA GRAY)' },
+  { val: '(ECLIPSE GRAY)' },
   { val: '(STORM GREY)' },
   { val: '(ONYX GREY)' },
+  { val: '(DARK SHADOW GREY)' },
+  { val: '(QUIET BLUE)' },
+  { val: '(NATURAL SILVER)' },
+  { val: '(SPECTER GREEN WITH CAMOUFLAG)' },
+
+
 
 ]
 
