@@ -374,12 +374,14 @@ const LcData = () => {
 
     },
     {
-      title: 'Model', dataIndex: 'lc_model', key: 'lc_model', width: 400,
+      title: 'Model', dataIndex: 'lc_model', key: 'lc_model', width: 350,
     },
     {
       title: 'Color', dataIndex: 'lc_color', key: 'lc_color', width: 190,
     },
-    
+    {
+      title: 'Size', dataIndex: 'lc_group', key: 'lc_group',
+    },
     {
       title: 'STOCK',
       children: [
