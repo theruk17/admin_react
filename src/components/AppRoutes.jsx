@@ -3,6 +3,7 @@ import MonitorData from "../Pages/MonitorData";
 import Upload_data from "../Pages/Upload_data";
 import CaseData from "../Pages/CaseData";
 import NbData from "../Pages/NbData";
+import LcData from "../Pages/LcData";
 
 function AppRoutes() {
     return (
@@ -12,6 +13,7 @@ function AppRoutes() {
                 <Route path="/monitor" element={<MonitorData />}></Route>
                 <Route path="/case" element={<CaseData />}></Route>
                 <Route path="/nb" element={<NbData />}></Route>
+                <Route path="/lc" element={<LcData />}></Route>
             </Routes> 
     )
 }

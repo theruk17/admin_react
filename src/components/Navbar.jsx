@@ -75,6 +75,11 @@ const App = () => {
                 icon: <LaptopOutlined />,
                 label: "Notebook",
                 key:'/nb'
+              },
+              {
+                icon: <LaptopOutlined />,
+                label: "Liquid Cooling",
+                key:'/lc'
               }
             ]}
           />
