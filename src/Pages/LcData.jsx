@@ -29,6 +29,7 @@ const Brand = [
 
 const Color = [
   { val: '(BLACK)' },
+  { val: '(WHITE)' },
   { val: '(WHITE EDITION)' },
   { val: '(SNOW EDITION)' },
 
