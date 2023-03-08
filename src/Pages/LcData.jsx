@@ -365,6 +365,7 @@ const LcData = () => {
       dataIndex: 'lc_img',
       key: 'lc_img',
       width: 60,
+      align: 'center',
       render: (imageUrl) => <img src={imageUrl} alt="thumbnail" height="30" />,
     },
     {
@@ -442,7 +443,9 @@ const LcData = () => {
 
       ],
       onFilter: (value, record) => record.lc_brand.indexOf(value) === 0,
-
+      sorter: (a, b) => a.lc_brand.localeCompare(b.lc_brand),
+      sortDirections: ['descend'],
+      
     },
     {
       title: 'Model', dataIndex: 'lc_model', key: 'lc_model', width: 350,
@@ -451,7 +454,7 @@ const LcData = () => {
       title: 'Color', dataIndex: 'lc_color', key: 'lc_color', width: 140,
     },
     {
-      title: 'Size', dataIndex: 'lc_group', key: 'lc_group',
+      title: 'Size', dataIndex: 'lc_group', key: 'lc_group', align: 'center',
       filters: [
         {
           text: '120MM',
@@ -471,24 +474,30 @@ const LcData = () => {
         }
       ],
       onFilter: (value, record) => record.lc_group.indexOf(value) === 0,
+      sorter: (a, b) => a.lc_group.localeCompare(b.lc_group),
+      sortDirections: ['ascend','descend'],
     },
     {
       title: 'STOCK',
       children: [
         {
-          title: 'นครนายก', dataIndex: 'lc_stock_nny', key: 'lc_stock_nny',
+          title: 'นครนายก', dataIndex: 'lc_stock_nny', key: 'lc_stock_nny', align: 'center',
+          sorter: (a, b) => a.lc_stock_nny - b.lc_stock_nny,
         },
         {
-          title: 'รามอินทรา', dataIndex: 'lc_stock_ramintra', key: 'lc_stock_ramintra',
+          title: 'รามอินทรา', dataIndex: 'lc_stock_ramintra', key: 'lc_stock_ramintra', align: 'center',
+          sorter: (a, b) => a.lc_stock_ramintra - b.lc_stock_ramintra,
         },
         {
-          title: 'บางพลัด', dataIndex: 'lc_stock_bangphlat', key: 'lc_stock_bangphlat',
+          title: 'บางพลัด', dataIndex: 'lc_stock_bangphlat', key: 'lc_stock_bangphlat', align: 'center',
+          sorter: (a, b) => a.lc_stock_bangphlat - b.lc_stock_bangphlat,
         },
         {
-          title: 'เดอะโฟล์ท', dataIndex: 'lc_stock_thefloat', key: 'lc_stock_thefloat',
+          title: 'เดอะโฟล์ท', dataIndex: 'lc_stock_thefloat', key: 'lc_stock_thefloat', align: 'center',
+          sorter: (a, b) => a.lc_stock_thefloat - b.lc_stock_thefloat,
         },
         {
-          title: 'รวม', dataIndex: 'lc_stock_sum', key: 'lc_stock_sum', sorter: (a, b) => a.lc_stock_sum - b.lc_stock_sum,
+          title: 'รวม', dataIndex: 'lc_stock_sum', key: 'lc_stock_sum', align: 'center', sorter: (a, b) => a.lc_stock_sum - b.lc_stock_sum,
           render(text, record) {
             return {
               props: {
@@ -502,21 +511,21 @@ const LcData = () => {
     },
     
     {
-      title: 'Price SRP', dataIndex: 'lc_price_srp', key: 'lc_price_srp',
+      title: 'Price SRP', dataIndex: 'lc_price_srp', key: 'lc_price_srp', align: 'right',
       sorter: (a, b) => a.lc_price_srp - b.lc_price_srp,
       render: (value) => (
         <NumericFormat style={{ color: "#0958d9" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
     {
-      title: 'Discount', dataIndex: 'lc_discount', key: 'lc_discount',
+      title: 'Discount', dataIndex: 'lc_discount', key: 'lc_discount', align: 'right',
       sorter: (a, b) => a.lc_discount - b.lc_discount,
       render: (value) => (
         <NumericFormat style={{ color: "#d4001a" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
     {
-      title: 'Status', dataIndex: 'lc_status', key: 'lc_status',
+      title: 'Status', dataIndex: 'lc_status', key: 'lc_status', align: 'center',
       render: (text, record) => (
         <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.lc_status === 'Y'} onChange={() => handleStatusChange(record.lc_id)}
         />

@@ -368,13 +368,44 @@ const NbData = () => {
       dataIndex: 'nb_img',
       key: 'nb_img',
       width: 60,
+      align: 'center',
       render: (imageUrl) => <img src={imageUrl} alt="thumbnail" height="30" />,
     },
     {
       title: 'Brand', dataIndex: 'nb_brand', key: 'nb_brand',
       width: 80,
       render: (text, record) => <a href={record.nb_href} target='_blank'>{text}</a>,
+      filters: [
+        {
+          text: 'ACER',
+          value: 'ACER',
+        },
+        {
+          text: 'ASUS',
+          value: 'ASUS',
+        },
+        {
+          text: 'DELL',
+          value: 'DELL',
+        },
+        {
+          text: 'HP',
+          value: 'HP',
+        },
+        {
+          text: 'LENOVO',
+          value: 'LENOVO',
+        },
+        {
+          text: 'MSI',
+          value: 'MSI',
+        },
+        
 
+      ],
+      onFilter: (value, record) => record.nb_brand.indexOf(value) === 0,
+      sorter: (a, b) => a.nb_brand.localeCompare(b.nb_brand),
+      sortDirections: ['descend'],
     },
     {
       title: 'Model', dataIndex: 'nb_model', key: 'nb_model', width: 400,
@@ -387,19 +418,23 @@ const NbData = () => {
       title: 'STOCK',
       children: [
         {
-          title: 'นครนายก', dataIndex: 'nb_stock_nny', key: 'nb_stock_nny',
+          title: 'นครนายก', dataIndex: 'nb_stock_nny', key: 'nb_stock_nny', align: 'center',
+          sorter: (a, b) => a.nb_stock_nny - b.nb_stock_nny,
         },
         {
-          title: 'รามอินทรา', dataIndex: 'nb_stock_ramintra', key: 'nb_stock_ramintra',
+          title: 'รามอินทรา', dataIndex: 'nb_stock_ramintra', key: 'nb_stock_ramintra', align: 'center',
+          sorter: (a, b) => a.nb_stock_ramintra - b.nb_stock_ramintra,
         },
         {
-          title: 'บางพลัด', dataIndex: 'nb_stock_bangphlat', key: 'nb_stock_bangphlat',
+          title: 'บางพลัด', dataIndex: 'nb_stock_bangphlat', key: 'nb_stock_bangphlat', align: 'center',
+          sorter: (a, b) => a.nb_stock_bangphlat - b.nb_stock_bangphlat,
         },
         {
-          title: 'เดอะโฟล์ท', dataIndex: 'nb_stock_thefloat', key: 'nb_stock_thefloat',
+          title: 'เดอะโฟล์ท', dataIndex: 'nb_stock_thefloat', key: 'nb_stock_thefloat', align: 'center',
+          sorter: (a, b) => a.nb_stock_thefloat - b.nb_stock_thefloat,
         },
         {
-          title: 'รวม', dataIndex: 'nb_stock_sum', key: 'nb_stock_sum', sorter: (a, b) => a.nb_stock_sum - b.nb_stock_sum,
+          title: 'รวม', dataIndex: 'nb_stock_sum', key: 'nb_stock_sum', align: 'center', sorter: (a, b) => a.nb_stock_sum - b.nb_stock_sum,
           render(text, record) {
             return {
               props: {
@@ -413,21 +448,21 @@ const NbData = () => {
     },
     
     {
-      title: 'Price SRP', dataIndex: 'nb_price_srp', key: 'nb_price_srp',
+      title: 'Price SRP', dataIndex: 'nb_price_srp', key: 'nb_price_srp', align: 'right',
       sorter: (a, b) => a.nb_price_srp - b.nb_price_srp,
       render: (value) => (
         <NumericFormat style={{ color: "#0958d9" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
     {
-      title: 'Discount', dataIndex: 'nb_dis_price', key: 'nb_dis_price',
+      title: 'Discount', dataIndex: 'nb_dis_price', key: 'nb_dis_price', align: 'right',
       sorter: (a, b) => a.nb_dis_price - b.nb_dis_price,
       render: (value) => (
         <NumericFormat style={{ color: "#d4001a" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
     {
-      title: 'Status', dataIndex: 'case_status', key: 'case_status',
+      title: 'Status', dataIndex: 'case_status', key: 'case_status', align: 'center',
       render: (text, record) => (
         <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.nb_status === 'Y'} onChange={() => handleStatusChange(record.nb_id)}
         />

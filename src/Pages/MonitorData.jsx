@@ -9,6 +9,7 @@ const API_URL = 'https://drab-jade-haddock-toga.cyclic.app';
 
 const Brand = [
   { val: 'AOC' },
+  { val: 'DAHUA' },
   { val: 'MSI' },
   { val: 'LENOVO' },
   { val: 'LG' },
@@ -495,6 +496,8 @@ const ShowData = () => {
       title: 'Image',
       dataIndex: 'mnt_img',
       key: 'mnt_img',
+      width: 80,
+      align: 'center',
       render: (imageUrl) => <img src={imageUrl} alt="thumbnail" width="30" height="30" />,
     },
     {
@@ -519,6 +522,10 @@ const ShowData = () => {
         {
           text: 'COOLER MASTER',
           value: 'COOLER MASTER',
+        },
+        {
+          text: 'DAHUA',
+          value: 'DAHUA',
         },
         {
           text: 'DELL',
@@ -547,7 +554,8 @@ const ShowData = () => {
       ],
       onFilter: (value, record) => record.mnt_brand.indexOf(value) === 0,
       render: (text, record) => <a href={record.mnt_href} target='_blank'>{text}</a>,
-
+      sorter: (a, b) => a.mnt_brand.localeCompare(b.mnt_brand),
+      sortDirections: ['descend'],
     },
     {
       title: 'Model', dataIndex: 'mnt_model', key: 'mnt_model',
@@ -555,7 +563,7 @@ const ShowData = () => {
       filterSearch: true,
     },
     {
-      title: 'Size', dataIndex: 'mnt_size', key: 'mnt_size',
+      title: 'Size', dataIndex: 'mnt_size', key: 'mnt_size', align: 'right',
       filters: [
         {
           text: '21.5"',
@@ -600,9 +608,11 @@ const ShowData = () => {
       ],
       onFilter: (value, record) => record.mnt_size.indexOf(value) === 0,
       render: (text) => <p>{text}</p>,
+      sorter: (a, b) => a.mnt_size.localeCompare(b.mnt_size),
+      sortDirections: ['ascend','descend'],
     },
     {
-      title: 'Refresh Rate', dataIndex: 'mnt_refresh_rate', key: 'mnt_refresh_rate',
+      title: 'Refresh Rate', dataIndex: 'mnt_refresh_rate', key: 'mnt_refresh_rate', align: 'right',
       filters: [
         {
           text: '60Hz',
@@ -639,9 +649,11 @@ const ShowData = () => {
       ],
       onFilter: (value, record) => record.mnt_refresh_rate.indexOf(value) === 0,
       render: (text) => <p>{text}</p>,
+      sorter: (a, b) => a.mnt_refresh_rate.localeCompare(b.mnt_refresh_rate),
+      sortDirections: ['ascend','descend'],
     },
     {
-      title: 'Panel', dataIndex: 'mnt_panel', key: 'mnt_panel',
+      title: 'Panel', dataIndex: 'mnt_panel', key: 'mnt_panel', align: 'right',
       filters: [
         {
           text: 'TN',
@@ -665,9 +677,11 @@ const ShowData = () => {
         }
       ],
       onFilter: (value, record) => record.mnt_panel.indexOf(value) === 0,
+      sorter: (a, b) => a.mnt_panel.localeCompare(b.mnt_panel),
+      sortDirections: ['ascend','descend'],
     },
     {
-      title: 'Resolution', dataIndex: 'mnt_resolution', key: 'mnt_resolution',
+      title: 'Resolution', dataIndex: 'mnt_resolution', key: 'mnt_resolution', align: 'right',
       filters: [
         {
           text: '1920 x 1080 (FHD)',
@@ -687,12 +701,14 @@ const ShowData = () => {
         }
       ],
       onFilter: (value, record) => record.mnt_resolution.indexOf(value) === 0,
+      sorter: (a, b) => a.mnt_resolution.localeCompare(b.mnt_resolution),
+      sortDirections: ['ascend','descend'],
     },
     {
-      title: 'Curve', dataIndex: 'mnt_curve', key: 'mnt_curve',
+      title: 'Curve', dataIndex: 'mnt_curve', key: 'mnt_curve', align: 'center',
     },
     {
-      title: 'STOCK', dataIndex: 'mnt_stock', key: 'mnt_stock', sorter: (a, b) => a.mnt_stock - b.mnt_stock,
+      title: 'STOCK', dataIndex: 'mnt_stock', key: 'mnt_stock', align: 'center', sorter: (a, b) => a.mnt_stock - b.mnt_stock,
       render(text, record) {
         return {
           props: {
@@ -703,28 +719,28 @@ const ShowData = () => {
       }
     },
     {
-      title: 'Price SRP', dataIndex: 'mnt_price_srp', key: 'mnt_price_srp',
+      title: 'Price SRP', dataIndex: 'mnt_price_srp', key: 'mnt_price_srp', align: 'right', width: 130,
       sorter: (a, b) => a.mnt_price_srp - b.mnt_price_srp,
       render: (value) => (
         <NumericFormat style={{ color: "#0958d9" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
     {
-      title: 'ซื้อพร้อมเครื่อง', dataIndex: 'mnt_price_w_com', key: 'mnt_price_w_com',
+      title: 'ซื้อพร้อมเครื่อง', dataIndex: 'mnt_price_w_com', key: 'mnt_price_w_com', align: 'right', width: 130,
       sorter: (a, b) => a.mnt_price_w_com - b.mnt_price_w_com,
       render: (value) => (
         <NumericFormat style={{ color: "#f5222d" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
     {
-      title: 'Status', dataIndex: 'mnt_status', key: 'mnt_status',
+      title: 'Status', dataIndex: 'mnt_status', key: 'mnt_status', align: 'center',
       render: (text, record) => (
         <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.mnt_status === 'Y'} onChange={() => handleStatusChange(record.mnt_id)}
         />
       )
     },
     {
-      title: 'Action', dataIndex: 'action', key: 'action',
+      title: 'Action', dataIndex: 'action', key: 'action', align: 'center',
       render: (text, record) => (
         <Space size="middle">
           <a key={record} onClick={() => showModal(record)}><EditTwoTone twoToneColor="#ffa940" /></a>

@@ -365,38 +365,38 @@ const CaseData = () => {
   };
 
   const Column = [
-    {
-      title: 'SN', dataIndex: 'case_id', key: 'case_id',
-    },
+    
     {
       title: 'Image',
       dataIndex: 'case_img',
       key: 'case_img',
+      width: 80,
+      align: 'center',
       render: (imageUrl) => <img src={imageUrl} alt="thumbnail" width="30" height="30" />,
     },
     {
       title: 'Brand', dataIndex: 'case_brand', key: 'case_brand',
       render: (text, record) => <a href={record.mnt_href} target='_blank'>{text}</a>,
-
+      sorter: (a, b) => a.case_brand.localeCompare(b.case_brand),
+      sortDirections: ['descend'],
     },
     {
       title: 'Model', dataIndex: 'case_model', key: 'case_model',
     },
     {
       title: 'Color', dataIndex: 'case_color', key: 'case_color',
-      sorter: (a, b) => a.case_color - b.case_color,
 
     },
     
     {
-      title: 'Price SRP', dataIndex: 'case_price_srp', key: 'case_price_srp',
+      title: 'Price SRP', dataIndex: 'case_price_srp', key: 'case_price_srp', align: 'right',
       sorter: (a, b) => a.case_price_srp - b.case_price_srp,
       render: (value) => (
         <NumericFormat style={{ color: "#0958d9" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
     {
-      title: 'Status', dataIndex: 'case_status', key: 'case_status',
+      title: 'Status', dataIndex: 'case_status', key: 'case_status', align: 'center',
       render: (text, record) => (
         <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.case_status === 'Y'} onChange={() => handleStatusChange(record.case_id)}
         />
