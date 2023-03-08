@@ -552,7 +552,7 @@ const LcData = () => {
   ]
   return (
     <div>
-      <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.lc_id} pagination={pagination} onChange={onChange} bordered 
+      <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.lc_id} pagination={pagination} onChange={onChange} bordered size="small"
       
       ></Table>
       <EditForm

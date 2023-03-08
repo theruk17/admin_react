@@ -489,7 +489,7 @@ const NbData = () => {
   ]
   return (
     <div>
-      <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.nb_id} pagination={pagination} onChange={onChange} bordered 
+      <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.nb_id} pagination={pagination} onChange={onChange} bordered size="small"
       expandable={{
         expandedRowRender: (record) => (
           <p
