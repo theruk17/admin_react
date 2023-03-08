@@ -1,10 +1,10 @@
-import { LaptopOutlined, ContainerOutlined, DesktopOutlined, CloudUploadOutlined, HomeOutlined } from '@ant-design/icons';
-import { Layout, Menu, theme } from 'antd';
+import { Layout, Menu, theme} from 'antd';
 import React from 'react';
 import PageContent from '../components/PageContent'
 import '../index.css';
 import LogoIHC from '../assets/logo_ihc.svg'
 import { useNavigate } from 'react-router-dom';
+import { LaptopOutlined, ContainerOutlined, DesktopOutlined, CloudUploadOutlined, HomeOutlined, FileOutlined } from '@ant-design/icons';
 const { Header, Content, Sider, Footer } = Layout;
 
 const App = () => {
@@ -77,7 +77,7 @@ const App = () => {
                 key:'/nb'
               },
               {
-                icon: <LaptopOutlined />,
+                icon: <FileOutlined />,
                 label: "Liquid Cooling",
                 key:'/lc'
               }
