@@ -368,20 +368,95 @@ const LcData = () => {
       render: (imageUrl) => <img src={imageUrl} alt="thumbnail" height="30" />,
     },
     {
-      title: 'Brand', dataIndex: 'lc_brand', key: 'lc_brand',
-      width: 80,
+      title: 'Brand', dataIndex: 'lc_brand', key: 'lc_brand', width: 150,
       render: (text, record) => <a href={record.lc_href} target='_blank'>{text}</a>,
+      filters: [
+        {
+          text: 'ALPHACOOL',
+          value: 'ALPHACOOL',
+        },
+        {
+          text: 'ARCTIC',
+          value: 'ARCTIC',
+        },
+        {
+          text: 'ASUS',
+          value: 'ASUS',
+        },
+        {
+          text: 'COOLER MASTER',
+          value: 'COOLER MASTER',
+        },
+        {
+          text: 'CORSAIR',
+          value: 'CORSAIR',
+        },
+        {
+          text: 'DARKFLASH',
+          value: 'DARKFLASH',
+        },
+        {
+          text: 'EK',
+          value: 'EK',
+        },
+        {
+          text: 'ENERMAX',
+          value: 'ENERMAX',
+        },
+        {
+          text: 'EVGA',
+          value: 'EVGA',
+        },
+        {
+          text: 'ID-COOLING',
+          value: 'ID-COOLING',
+        },
+        {
+          text: 'LIANLI',
+          value: 'LIANLI',
+        },
+        {
+          text: 'MSI',
+          value: 'MSI',
+        },
+        {
+          text: 'NZXT',
+          value: 'NZXT',
+        },
+        {
+          text: 'SAPPHIRE',
+          value: 'SAPPHIRE',
+        },
+        {
+          text: 'SILVERSTONE',
+          value: 'SILVERSTONE',
+        },
+        {
+          text: 'THERMALTAKE',
+          value: 'THERMALTAKE',
+        },
+        {
+          text: 'ZADAK',
+          value: 'ZADAK',
+        },
+
+      ],
+      onFilter: (value, record) => record.lc_brand.indexOf(value) === 0,
 
     },
     {
       title: 'Model', dataIndex: 'lc_model', key: 'lc_model', width: 350,
     },
     {
-      title: 'Color', dataIndex: 'lc_color', key: 'lc_color', width: 190,
+      title: 'Color', dataIndex: 'lc_color', key: 'lc_color', width: 140,
     },
     {
       title: 'Size', dataIndex: 'lc_group', key: 'lc_group',
       filters: [
+        {
+          text: '120MM',
+          value: '120MM',
+        },
         {
           text: '240MM',
           value: '240MM',

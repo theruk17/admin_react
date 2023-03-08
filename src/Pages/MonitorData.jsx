@@ -492,9 +492,6 @@ const ShowData = () => {
 
   const Column = [
     {
-      title: 'SN', dataIndex: 'mnt_id', key: 'mnt_id',
-    },
-    {
       title: 'Image',
       dataIndex: 'mnt_img',
       key: 'mnt_img',
