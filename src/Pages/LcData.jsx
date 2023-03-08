@@ -381,6 +381,21 @@ const LcData = () => {
     },
     {
       title: 'Size', dataIndex: 'lc_group', key: 'lc_group',
+      filters: [
+        {
+          text: '240MM',
+          value: '240MM',
+        },
+        {
+          text: '280MM',
+          value: '280MM',
+        },
+        {
+          text: '360MM',
+          value: '360MM',
+        }
+      ],
+      onFilter: (value, record) => record.lc_group.indexOf(value) === 0,
     },
     {
       title: 'STOCK',
