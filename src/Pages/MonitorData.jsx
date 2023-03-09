@@ -8,24 +8,24 @@ import '../App.css';
 const API_URL = 'https://drab-jade-haddock-toga.cyclic.app';
 
 const Brand = [
+  { val: 'ACER' },
   { val: 'AOC' },
-  { val: 'DAHUA' },
-  { val: 'MSI' },
-  { val: 'LENOVO' },
-  { val: 'LG' },
-  { val: 'DELL' },
   { val: 'ASUS' },
   { val: 'BENQ' },
-  { val: 'ACER' },
-  { val: 'SAMSUNG' },
+  { val: 'COOLER MASTER' },
+  { val: 'DAHUA' },
+  { val: 'DELL' },
   { val: 'GIGABYTE' },
-  { val: 'COOLER MASTER' }
+  { val: 'LENOVO' },
+  { val: 'LG' },
+  { val: 'MSI' },
+  { val: 'SAMSUNG' },
 ]
 
 const Size = [
   { val: '21.5"' },
-  { val: '23.8"' },
   { val: '23.6"' },
+  { val: '23.8"' },
   { val: '24"' },
   { val: '24.5"' },
   { val: '27"' },
