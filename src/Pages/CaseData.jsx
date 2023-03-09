@@ -5,7 +5,7 @@ import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tag } from 'antd';
 import '../App.css';
 
-const API_URL = 'https://drab-jade-haddock-toga.cyclic.app/admin_data_case';
+const API_URL = 'https://drab-jade-haddock-toga.cyclic.app';
 
 const Brand = [
   { val: 'AEROCOOL' },
@@ -291,11 +291,16 @@ const CaseData = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(API_URL)
+      .get(API_URL + "/admin_data_case")
       .then((res) => {
         setLoading(false);
         setData(res.data);
       });
+    axios
+    .put(API_URL + "/update_stock_case")
+    .then((res) => {
+      message.success(res.data);
+    })
   }, []);
 
   const showModal = (record) => {
@@ -386,6 +391,38 @@ const CaseData = () => {
     {
       title: 'Color', dataIndex: 'case_color', key: 'case_color',
 
+    },
+    {
+      title: 'STOCK',
+      children: [
+        {
+          title: 'นครนายก', dataIndex: 'case_stock_nny', key: 'case_stock_nny', align: 'center',
+          sorter: (a, b) => a.case_stock_nny - b.case_stock_nny,
+        },
+        {
+          title: 'รามอินทรา', dataIndex: 'case_stock_ramintra', key: 'case_stock_ramintra', align: 'center',
+          sorter: (a, b) => a.case_stock_ramintra - b.case_stock_ramintra,
+        },
+        {
+          title: 'บางพลัด', dataIndex: 'case_stock_bangphlat', key: 'case_stock_bangphlat', align: 'center',
+          sorter: (a, b) => a.case_stock_bangphlat - b.case_stock_bangphlat,
+        },
+        {
+          title: 'เดอะโฟล์ท', dataIndex: 'case_stock_thefloat', key: 'case_stock_thefloat', align: 'center',
+          sorter: (a, b) => a.case_stock_thefloat - b.case_stock_thefloat,
+        },
+        {
+          title: 'รวม', dataIndex: 'case_stock_sum', key: 'case_stock_sum', align: 'center', sorter: (a, b) => a.case_stock_sum - b.case_stock_sum,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+      ]
     },
     
     {
