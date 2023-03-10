@@ -28,6 +28,7 @@ const Brand = [
   { val: 'PLENTY' },
   { val: 'THERMALTAKE' },
   { val: 'TSUNAMI' },
+  { val: 'VENUS' },
   { val: 'XIGMATEK' },
   { val: 'ZALMAN' },
 
