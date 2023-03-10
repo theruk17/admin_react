@@ -483,18 +483,50 @@ const LcData = () => {
         {
           title: 'นครนายก', dataIndex: 'lc_stock_nny', key: 'lc_stock_nny', align: 'center',
           sorter: (a, b) => a.lc_stock_nny - b.lc_stock_nny,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
         },
         {
           title: 'รามอินทรา', dataIndex: 'lc_stock_ramintra', key: 'lc_stock_ramintra', align: 'center',
           sorter: (a, b) => a.lc_stock_ramintra - b.lc_stock_ramintra,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
         },
         {
           title: 'บางพลัด', dataIndex: 'lc_stock_bangphlat', key: 'lc_stock_bangphlat', align: 'center',
           sorter: (a, b) => a.lc_stock_bangphlat - b.lc_stock_bangphlat,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
         },
         {
           title: 'เดอะโฟล์ท', dataIndex: 'lc_stock_thefloat', key: 'lc_stock_thefloat', align: 'center',
           sorter: (a, b) => a.lc_stock_thefloat - b.lc_stock_thefloat,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
         },
         {
           title: 'รวม', dataIndex: 'lc_stock_sum', key: 'lc_stock_sum', align: 'center', sorter: (a, b) => a.lc_stock_sum - b.lc_stock_sum,
