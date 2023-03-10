@@ -32,6 +32,7 @@ const Color = [
   { val: '(STORM GREY)' },
   { val: '(ONYX GREY)' },
   { val: '(DARK SHADOW GREY)' },
+  { val: '(SPRUCE BLUE)' },
   { val: '(QUIET BLUE)' },
   { val: '(NATURAL SILVER)' },
   { val: '(SPECTER GREEN WITH CAMOUFLAG)' },
