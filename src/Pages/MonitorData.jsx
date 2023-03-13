@@ -501,7 +501,7 @@ const ShowData = () => {
       render: (imageUrl) => <img src={imageUrl} alt="thumbnail" width="30" height="30" />,
     },
     {
-      title: 'Brand', dataIndex: 'mnt_brand', key: 'mnt_brand',
+      title: 'Brand', dataIndex: 'mnt_brand', key: 'mnt_brand', width: 130,
       filters: [
         {
           text: 'ACER',
@@ -563,7 +563,7 @@ const ShowData = () => {
       filterSearch: true,
     },
     {
-      title: 'Size', dataIndex: 'mnt_size', key: 'mnt_size', align: 'right',
+      title: 'Size', dataIndex: 'mnt_size', key: 'mnt_size', align: 'right', width: 80,
       filters: [
         {
           text: '21.5"',
@@ -612,7 +612,7 @@ const ShowData = () => {
       sortDirections: ['ascend','descend'],
     },
     {
-      title: 'Refresh Rate', dataIndex: 'mnt_refresh_rate', key: 'mnt_refresh_rate', align: 'right',
+      title: 'Refresh Rate', dataIndex: 'mnt_refresh_rate', key: 'mnt_refresh_rate', align: 'right', width: 80,
       filters: [
         {
           text: '60Hz',
@@ -653,7 +653,7 @@ const ShowData = () => {
       sortDirections: ['ascend','descend'],
     },
     {
-      title: 'Panel', dataIndex: 'mnt_panel', key: 'mnt_panel', align: 'right',
+      title: 'Panel', dataIndex: 'mnt_panel', key: 'mnt_panel', align: 'right', width: 80,
       filters: [
         {
           text: 'TN',
@@ -681,7 +681,7 @@ const ShowData = () => {
       sortDirections: ['ascend','descend'],
     },
     {
-      title: 'Resolution', dataIndex: 'mnt_resolution', key: 'mnt_resolution', align: 'right',
+      title: 'Resolution', dataIndex: 'mnt_resolution', key: 'mnt_resolution', align: 'right', width: 140,
       filters: [
         {
           text: '1920 x 1080 (FHD)',
@@ -705,42 +705,95 @@ const ShowData = () => {
       sortDirections: ['ascend','descend'],
     },
     {
-      title: 'Curve', dataIndex: 'mnt_curve', key: 'mnt_curve', align: 'center',
+      title: 'Curve', dataIndex: 'mnt_curve', key: 'mnt_curve', align: 'center', width: 50,
     },
     {
-      title: 'STOCK', dataIndex: 'mnt_stock', key: 'mnt_stock', align: 'center', sorter: (a, b) => a.mnt_stock - b.mnt_stock,
-      render(text, record) {
-        return {
-          props: {
-            style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
-          },
-          children: <div>{text}</div>
-        };
-      }
+      title: 'STOCK',
+      children: [
+        {
+          title: 'นครนายก', dataIndex: 'mnt_stock_nny', key: 'mnt_stock_nny', align: 'center', width: 60,
+          sorter: (a, b) => a.mnt_stock_nny - b.mnt_stock_nny,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+        {
+          title: 'รามอินทรา', dataIndex: 'mnt_stock_ramintra', key: 'mnt_stock_ramintra', align: 'center', width: 60,
+          sorter: (a, b) => a.mnt_stock_ramintra - b.mnt_stock_ramintra,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+        {
+          title: 'บางพลัด', dataIndex: 'mnt_stock_bangphlat', key: 'mnt_stock_bangphlat', align: 'center', width: 60,
+          sorter: (a, b) => a.mnt_stock_bangphlat - b.mnt_stock_bangphlat,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+        {
+          title: 'เดอะโฟล์ท', dataIndex: 'mnt_stock_thefloat', key: 'mnt_stock_thefloat', align: 'center' , width: 60,
+          sorter: (a, b) => a.mnt_stock_thefloat - b.mnt_stock_thefloat,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+        {
+          title: 'รวม', dataIndex: 'mnt_stock_sum', key: 'mnt_stock_sum', align: 'center', width: 60, sorter: (a, b) => a.mnt_stock_sum - b.mnt_stock_sum,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+      ]
     },
     {
-      title: 'Price SRP', dataIndex: 'mnt_price_srp', key: 'mnt_price_srp', align: 'right', width: 130,
+      title: 'Price SRP', dataIndex: 'mnt_price_srp', key: 'mnt_price_srp', align: 'right', width: 100,
       sorter: (a, b) => a.mnt_price_srp - b.mnt_price_srp,
       render: (value) => (
         <NumericFormat style={{ color: "#0958d9" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
     {
-      title: 'ซื้อพร้อมเครื่อง', dataIndex: 'mnt_price_w_com', key: 'mnt_price_w_com', align: 'right', width: 130,
+      title: 'ซื้อพร้อมเครื่อง', dataIndex: 'mnt_price_w_com', key: 'mnt_price_w_com', align: 'right', width: 100,
       sorter: (a, b) => a.mnt_price_w_com - b.mnt_price_w_com,
       render: (value) => (
         <NumericFormat style={{ color: "#f5222d" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
     {
-      title: 'Status', dataIndex: 'mnt_status', key: 'mnt_status', align: 'center',
+      title: 'Status', dataIndex: 'mnt_status', key: 'mnt_status', align: 'center', width: 100,
       render: (text, record) => (
         <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.mnt_status === 'Y'} onChange={() => handleStatusChange(record.mnt_id)}
         />
       )
     },
     {
-      title: 'Action', dataIndex: 'action', key: 'action', align: 'center',
+      title: 'Action', dataIndex: 'action', key: 'action', align: 'center', width: 80,
       render: (text, record) => (
         <Space size="middle">
           <a key={record} onClick={() => showModal(record)}><EditTwoTone twoToneColor="#ffa940" /></a>
