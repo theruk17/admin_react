@@ -38,6 +38,7 @@ const Color = [
   { val: '(BLACK)' },
   { val: '(WHITE)' },
   { val: '(RED)' },
+  { val: '(BLUE)' },
   { val: '(SNOW WHITE)' },
   { val: '(BLACK/RED)' },
   { val: '(BLACK/WHITE)' },
