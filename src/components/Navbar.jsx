@@ -80,6 +80,11 @@ const App = () => {
                 icon: <FileOutlined />,
                 label: "Liquid Cooling",
                 key:'/lc'
+              },
+              {
+                icon: <FileOutlined />,
+                label: "FAN",
+                key:'/fan'
               }
             ]}
           />

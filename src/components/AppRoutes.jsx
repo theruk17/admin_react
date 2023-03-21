@@ -4,6 +4,7 @@ import Upload_data from "../Pages/Upload_data";
 import CaseData from "../Pages/CaseData";
 import NbData from "../Pages/NbData";
 import LcData from "../Pages/LcData";
+import FanData from "../Pages/FanData";
 
 function AppRoutes() {
     return (
@@ -14,6 +15,7 @@ function AppRoutes() {
                 <Route path="/case" element={<CaseData />}></Route>
                 <Route path="/nb" element={<NbData />}></Route>
                 <Route path="/lc" element={<LcData />}></Route>
+                <Route path="/fan" element={<FanData />}></Route>
             </Routes> 
     )
 }
