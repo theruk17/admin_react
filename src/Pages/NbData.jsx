@@ -278,7 +278,7 @@ const NbData = () => {
   const [record, setRecord] = useState({});
   const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState({
-    pageSize: 50
+    pageSize: 100
   });
 
   const onChange = (pagination, filters, sorter, extra) => {
