@@ -24,13 +24,13 @@ const Brand = [
 ]
 
 const Color = [
-  { val: '(BLACK)' },
-  { val: '(WHITE)' },
-  { val: '(BLUE)' },
-  { val: '(RED)' },
-  { val: '(PINK)' },
-  { val: '(RACING GREEN)' },
-  { val: '(TURQUOISE)' },
+  { val: 'BLACK' },
+  { val: 'WHITE' },
+  { val: 'BLUE' },
+  { val: 'RED' },
+  { val: 'PINK' },
+  { val: 'RACING GREEN' },
+  { val: 'TURQUOISE' },
 ]
 
 
