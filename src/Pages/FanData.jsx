@@ -432,9 +432,9 @@ const FanData = () => {
       title: 'Model', dataIndex: 'f_model', key: 'f_model', width: 350,
     },
     {
-      title: 'Color', dataIndex: 'f_color', key: 'f_color', width: 140,
+      title: 'Color', dataIndex: 'f_color', key: 'f_color', width: 120, align: 'center',
     },
-    /* {
+    {
       title: 'Size', dataIndex: 'f_group', key: 'f_group', align: 'center',
       filters: [
         {
@@ -450,7 +450,7 @@ const FanData = () => {
       onFilter: (value, record) => record.f_group.indexOf(value) === 0,
       sorter: (a, b) => a.f_group.localeCompare(b.f_group),
       sortDirections: ['ascend','descend'],
-    }, */
+    },
     {
       title: 'STOCK',
       children: [
