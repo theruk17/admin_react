@@ -48,6 +48,8 @@ const Color = [
   { val: '(PINK)' },
   { val: '(SILVER)' },
   { val: '(MATTE BLACK)' },
+  { val: '(MESH BLACK)' },
+  { val: '(MESH WHITE)' },
   { val: '(MATTE WHITE)' },
   { val: '(RAZER EDITION)' },
   { val: '(YELLOW)' },
