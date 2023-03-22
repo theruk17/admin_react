@@ -29,6 +29,8 @@ const Color = [
   { val: 'BLUE' },
   { val: 'RED' },
   { val: 'PINK' },
+  { val: 'MATTE BLACK' },
+  { val: 'MATTE WHITE' },
   { val: 'RACING GREEN' },
   { val: 'TURQUOISE' },
 ]
