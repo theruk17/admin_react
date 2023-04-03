@@ -28,6 +28,7 @@ const Color = [
   { val: '(CARBON BLACK)' },
   { val: '(ARCTIC GREY)' },
   { val: '(PLATINUM GREY)' },
+  { val: '(TITAN GREY)' },
   { val: '(STORM GREY)' },
   { val: '(ONYX GREY)' },
   { val: '(SLATE GREY)' },
@@ -38,6 +39,7 @@ const Color = [
   { val: '(QUIET BLUE)' },
   { val: '(PERFOMANCE BLUE)' },
   { val: '(NATURAL SILVER)' },
+  { val: '(PLATINUM SILVER)' },
   { val: '(SPECTER GREEN WITH CAMOUFLAG)' },
 
 
