@@ -26,6 +26,7 @@ const Brand = [
   { val: 'OCPC' },
   { val: 'NZXT' },
   { val: 'PLENTY' },
+  { val: 'SILVERSTONE' },
   { val: 'THERMALTAKE' },
   { val: 'TSUNAMI' },
   { val: 'VENUS' },
