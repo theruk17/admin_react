@@ -12,7 +12,7 @@ const Brand = [
   { val: 'CORSAIR' },
   { val: 'EPOS' },
   { val: 'GALAX' },
-  { val: 'HYPER X' },
+  { val: 'HyperX' },
   { val: 'KZ' },
   { val: 'LOGITECH' },
   { val: 'NUBWO' },
@@ -365,8 +365,8 @@ const FanData = () => {
           value: 'GALAX',
         },
         {
-          text: 'HYPER X',
-          value: 'HYPER X',
+          text: 'HyperX',
+          value: 'HyperX',
         },
         {
           text: 'KZ',
