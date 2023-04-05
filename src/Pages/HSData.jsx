@@ -27,6 +27,7 @@ const Brand = [
 const Group = [
   { val: 'Over-ear' },
   { val: 'In-Ear' },
+  { val: 'Full-Size' },
 
 ]
 
@@ -407,9 +408,7 @@ const FanData = () => {
     {
       title: 'Model', dataIndex: 'hs_model', key: 'hs_model',
     },
-    {
-      title: 'Color', dataIndex: 'hs_color', key: 'hs_color', width: 120, align: 'center',
-    },
+    
     {
       title: 'Group', dataIndex: 'hs_group', key: 'hs_group', align: 'center',
       filters: [
@@ -420,6 +419,10 @@ const FanData = () => {
         {
           text: 'Over-ear',
           value: 'Over-ear',
+        },
+        {
+          text: 'Full-Size',
+          value: 'Full-Size',
         },
 
       ],
