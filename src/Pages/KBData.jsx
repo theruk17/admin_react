@@ -423,19 +423,9 @@ const FanData = () => {
     
     {
       title: 'Switch', dataIndex: 'kb_switch', key: 'kb_switch', align: 'center',
-      filters: SW,
-      
-      onFilter: (value, record) => record.kb_switch.indexOf(value) === 0,
-      sorter: (a, b) => a.kb_switch.localeCompare(b.kb_switch),
-      sortDirections: ['descend'],
     },
     {
       title: 'Color', dataIndex: 'kb_color', key: 'kb_color', align: 'center',
-      filters: Color,
-      
-      onFilter: (value, record) => record.kb_switch.indexOf(value) === 0,
-      sorter: (a, b) => a.kb_switch.localeCompare(b.kb_switch),
-      sortDirections: ['descend'],
     },
     {
       title: 'STOCK',
