@@ -80,6 +80,27 @@ const Color = [
   { text: 'WHITE CASE/STEEL PLATE', value: 'WHITE CASE/STEEL PLATE' },
 ]
 
+const Type = [
+  { text: 'Wired', value: 'Wired' },
+  { text: 'Wireless', value: 'Wireless' },
+  { text: 'Bluetooth', value: 'Bluetooth' },
+  { text: 'Wired/Barebone', value: 'Wired/Barebone' },
+  { text: 'Wireless/Wire', value: 'Wireless/Wire' },
+  { text: 'Wireless/Bluetooth/Wired', value: 'Wireless/Bluetooth/Wired' },
+]
+
+const Group = [
+  { text: 'FULL SIZE 100%', value: 'FULL SIZE 100%' },
+  { text: 'TKL 80%', value: 'TKL 80%' },
+  { text: '98%', value: '98%' },
+  { text: '96%', value: '96%' },
+  { text: '75%', value: '75%' },
+  { text: '65%', value: '65%' },
+  { text: '60%', value: '60%' },
+  { text: 'NUMPAD', value: 'NUMPAD' },
+
+]
+
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -116,6 +137,8 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
       sw: record.kb_switch,
       color: record.kb_color,
       brand: record.kb_brand,
+      group: record.kb_group,
+      connect: record.kb_connect,
       model: record.kb_model,
       price_srp: record.kb_price_srp,
       discount: record.kb_discount,
@@ -247,8 +270,28 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
               </Select>
             </Form.Item>
           </Col>
-          </Row>
-          <Row gutter={20}>
+        </Row>
+        <Row gutter={20}>
+          <Col span={12}>
+            <Form.Item label="Group" name="group">
+              <Select placeholder="Group" allowClear>
+                {Group.map(item => (
+                  <Select.Option key={item.value} value={item.value}>{item.value}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item label="Type" name="connect">
+              <Select placeholder="Color" allowClear>
+                {Type.map(item => (
+                  <Select.Option key={item.value} value={item.value}>{item.value}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={20}>
           <Col span={6}>
             <Form.Item label="Price SRP" name="price_srp">
               <InputNumber
@@ -426,6 +469,16 @@ const FanData = () => {
     },
     {
       title: 'Color', dataIndex: 'kb_color', key: 'kb_color', align: 'center',
+    },
+    {
+      title: 'Type', dataIndex: 'kb_connect', key: 'kb_connect', align: 'center',
+      filters: Type,
+      onFilter: (value, record) => record.kb_connect.indexOf(value) === 0,
+    },
+    {
+      title: 'Group', dataIndex: 'kb_group', key: 'kb_group', align: 'center',
+      filters: Group,
+      onFilter: (value, record) => record.kb_group.indexOf(value) === 0,
     },
     {
       title: 'STOCK',
