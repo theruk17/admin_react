@@ -57,6 +57,7 @@ const SW = [
   { text: 'GX LINEAR RED', value: 'GX LINEAR RED' },
   { text: 'KAILH PIXEL L', value: 'KAILH PIXEL L' },
   { text: 'KAILH PIXEL T', value: 'KAILH PIXEL T' },
+  { text: 'TACTILE SWITCH', value: 'TACTILE SWITCH' },
 ]
 
 const Color = [
