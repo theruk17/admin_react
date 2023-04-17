@@ -95,6 +95,11 @@ const App = () => {
                 icon: <FileOutlined />,
                 label: "Keyboard",
                 key:'/kb'
+              },
+              {
+                icon: <FileOutlined />,
+                label: "Chair",
+                key:'/ch'
               }
             ]}
           />

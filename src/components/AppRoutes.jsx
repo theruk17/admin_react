@@ -7,6 +7,7 @@ import LcData from "../Pages/LcData";
 import FanData from "../Pages/FanData";
 import HSData from "../Pages/HSData";
 import KBData from "../Pages/KBData";
+import CHData from "../Pages/CHData";
 
 function AppRoutes() {
     return (
@@ -20,6 +21,7 @@ function AppRoutes() {
                 <Route path="/fan" element={<FanData />}></Route>
                 <Route path="/headset" element={<HSData />}></Route>
                 <Route path="/kb" element={<KBData />}></Route>
+                <Route path="/ch" element={<CHData />}></Route>
             </Routes> 
     )
 }
