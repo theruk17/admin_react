@@ -12,7 +12,7 @@ const Brand = [
   { text: 'CORSAIR', value: 'CORSAIR' },
   { text: 'MSI', value: 'MSI' },
   { text: 'NOBLECHAIRS', value: 'NOBLECHAIRS' },
-  { text: 'THUNDER', value: 'THUNDER' },
+  { text: 'THUNDERX3', value: 'THUNDERX3' },
 ]
 
 
