@@ -100,6 +100,16 @@ const App = () => {
                 icon: <FileOutlined />,
                 label: "Chair",
                 key:'/ch'
+              },
+              {
+                icon: <FileOutlined />,
+                label: "Mouse",
+                key:'/mouse'
+              },
+              {
+                icon: <FileOutlined />,
+                label: "Mousepad",
+                key:'/mousepad'
               }
             ]}
           />

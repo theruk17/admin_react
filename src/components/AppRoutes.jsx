@@ -8,6 +8,8 @@ import FanData from "../Pages/FanData";
 import HSData from "../Pages/HSData";
 import KBData from "../Pages/KBData";
 import CHData from "../Pages/CHData";
+import MouseData from "../Pages/MouseData";
+import MousePadData from "../Pages/MousePadData";
 
 function AppRoutes() {
     return (
@@ -22,6 +24,8 @@ function AppRoutes() {
                 <Route path="/headset" element={<HSData />}></Route>
                 <Route path="/kb" element={<KBData />}></Route>
                 <Route path="/ch" element={<CHData />}></Route>
+                <Route path="/mouse" element={<MouseData />}></Route>
+                <Route path="/mousepad" element={<MousePadData />}></Route>
             </Routes> 
     )
 }
