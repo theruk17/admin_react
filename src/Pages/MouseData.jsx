@@ -22,19 +22,24 @@ const Brand = [
   { text: 'RAPOO', value: 'RAPOO' },
   { text: 'RAZER', value: 'RAZER' },
   { text: 'ROCCAT', value: 'ROCCAT' },
-  { text: 'THUNDER', value: 'THUNDER' },
+  { text: 'THUNDERX3', value: 'THUNDERX3' },
 ]
 
 
 const Color = [
   { text: 'BLACk', value: 'BLACK' },
   { text: 'WHITE', value: 'WHITE' },
+  { text: 'WHITE EDITION', value: 'WHITE EDITION' },
   { text: 'RED', value: 'RED' },
   { text: 'GREEN', value: 'GREEN' },
   { text: 'BLUE', value: 'BLUE' },
   { text: 'PINK', value: 'PINK' },
+  { text: 'GREY', value: 'GREY' },
+  { text: 'BLACK-TRANSPARENT', value: 'BLACK-TRANSPARENT' },
   { text: 'BLACK-RED', value: 'BLACK-RED' },
   { text: 'WHITE-PINK', value: 'WHITE-PINK' },
+  { text: 'MATTE NEON MINT', value: 'MATTE NEON MINT' },
+  { text: 'MATTE NEON PINK', value: 'MATTE NEON PINK' },
 ]
 
 const Type = [
