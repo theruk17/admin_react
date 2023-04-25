@@ -48,6 +48,11 @@ const Type = [
   { text: '320x270x4mm', value: '320x270x4mm' },
 ]
 
+const Group = [
+  { text: 'MOUSE PAD', value: 'MOUSE PAD' },
+  { text: 'MOUSE FEET', value: 'MOUSE FEET' },
+]
+
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -218,6 +223,15 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           </Col>
         </Row>
         <Row gutter={20}>
+        <Col span={6}>
+            <Form.Item label="Group" name="group">
+              <Select placeholder="Group" allowClear>
+                {Group.map(item => (
+                  <Select.Option key={item.value} value={item.value}>{item.value}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
           <Col span={6}>
             <Form.Item label="Price SRP" name="price_srp">
               <InputNumber
@@ -392,6 +406,11 @@ const FanData = () => {
     
     {
       title: 'Color', dataIndex: 'mp_color', key: 'mp_color', align: 'center',
+    },
+    {
+      title: 'Group', dataIndex: 'mp_group', key: 'mp_group', align: 'center',
+      filters: Group,
+      onFilter: (value, record) => record.mp_group.indexOf(value) === 0,
     },
     {
       title: 'Dimentions', dataIndex: 'mp_dimentions', key: 'mp_dimentions', align: 'center',
