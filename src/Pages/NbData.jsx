@@ -474,6 +474,18 @@ const NbData = () => {
           }
         },
         {
+          title: 'รังสิต', dataIndex: 'nb_stock_rangsit', key: 'nb_stock_rangsit', align: 'center',
+          sorter: (a, b) => a.nb_stock_rangsit - b.nb_stock_rangsit,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+        {
           title: 'รวม', dataIndex: 'nb_stock_sum', key: 'nb_stock_sum', align: 'center', sorter: (a, b) => a.nb_stock_sum - b.nb_stock_sum,
           render(text, record) {
             return {

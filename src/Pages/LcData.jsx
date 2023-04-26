@@ -529,6 +529,18 @@ const LcData = () => {
           }
         },
         {
+          title: 'รังสิต', dataIndex: 'lc_stock_rangsit', key: 'lc_stock_rangsit', align: 'center',
+          sorter: (a, b) => a.lc_stock_rangsit - b.lc_stock_rangsit,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+        {
           title: 'รวม', dataIndex: 'lc_stock_sum', key: 'lc_stock_sum', align: 'center', sorter: (a, b) => a.lc_stock_sum - b.lc_stock_sum,
           render(text, record) {
             return {

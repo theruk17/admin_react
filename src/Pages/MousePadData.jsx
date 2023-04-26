@@ -469,6 +469,18 @@ const FanData = () => {
           }
         },
         {
+          title: 'รังสิต', dataIndex: 'mp_stock_rangsit', key: 'mp_stock_rangsit', align: 'center',
+          sorter: (a, b) => a.mp_stock_rangsit - b.mp_stock_rangsit,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+        {
           title: 'รวม', dataIndex: 'mp_stock_sum', key: 'mp_stock_sum', align: 'center', sorter: (a, b) => a.mp_stock_sum - b.mp_stock_sum,
           render(text, record) {
             return {

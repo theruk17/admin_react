@@ -38,7 +38,11 @@ const Color = [
 
 const Group = [
   { val: '120MM' },
-  { val: '140MM' },
+  { val: '120MMX1' },
+  { val: '120MMX2' },
+  { val: '120MMX3' },
+  { val: '140MMX1' },
+  { val: '140MMX2' },
 
 ]
 
@@ -495,6 +499,18 @@ const FanData = () => {
         {
           title: 'เดอะโฟล์ท', dataIndex: 'f_stock_thefloat', key: 'f_stock_thefloat', align: 'center',
           sorter: (a, b) => a.f_stock_thefloat - b.f_stock_thefloat,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+        {
+          title: 'รังสิต', dataIndex: 'f_stock_rangsit', key: 'f_stock_rangsit', align: 'center',
+          sorter: (a, b) => a.f_stock_rangsit - b.f_stock_rangsit,
           render(text, record) {
             return {
               props: {

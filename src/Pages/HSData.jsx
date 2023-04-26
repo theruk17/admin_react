@@ -482,6 +482,18 @@ const FanData = () => {
           }
         },
         {
+          title: 'รังสิต', dataIndex: 'hs_stock_rangsit', key: 'hs_stock_rangsit', align: 'center',
+          sorter: (a, b) => a.hs_stock_rangsit - b.hs_stock_rangsit,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+        {
           title: 'รวม', dataIndex: 'hs_stock_sum', key: 'hs_stock_sum', align: 'center', sorter: (a, b) => a.hs_stock_sum - b.hs_stock_sum,
           render(text, record) {
             return {

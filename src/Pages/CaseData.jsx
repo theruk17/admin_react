@@ -449,6 +449,18 @@ const CaseData = () => {
           }
         },
         {
+          title: 'รังสิต', dataIndex: 'case_stock_rangsit', key: 'case_stock_rangsit', align: 'center',
+          sorter: (a, b) => a.case_stock_rangsit - b.case_stock_rangsit,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+        {
           title: 'รวม', dataIndex: 'case_stock_sum', key: 'case_stock_sum', align: 'center', sorter: (a, b) => a.case_stock_sum - b.case_stock_sum,
           render(text, record) {
             return {

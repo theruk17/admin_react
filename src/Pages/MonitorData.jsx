@@ -760,6 +760,18 @@ const ShowData = () => {
           }
         },
         {
+          title: 'รังสิต', dataIndex: 'mnt_stock_rangsit', key: 'mnt_stock_rangsit', align: 'center',
+          sorter: (a, b) => a.mnt_stock_rangsit - b.mnt_stock_rangsit,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+        {
           title: 'รวม', dataIndex: 'mnt_stock_sum', key: 'mnt_stock_sum', align: 'center', width: 60, sorter: (a, b) => a.mnt_stock_sum - b.mnt_stock_sum,
           render(text, record) {
             return {
