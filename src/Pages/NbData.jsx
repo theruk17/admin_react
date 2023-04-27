@@ -19,6 +19,7 @@ const Brand = [
 const Color = [
   { val: '(BLACK)' },
   { val: '(BONFIRE BLACK)' },
+  { val: '(CLASSIC BLACK)' },
   { val: '(MIDNIGHT BLACK)' },
   { val: '(OBSIDIAN BLACK)' },
   { val: '(OFF BLACK)' },
