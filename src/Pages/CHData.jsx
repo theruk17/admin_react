@@ -20,6 +20,8 @@ const Color = [
   { text: 'BLACk', value: 'BLACK' },
   { text: 'WHITE', value: 'WHITE' },
   { text: 'RED', value: 'RED' },
+  { text: 'GREEN', value: 'GREEN' },
+  { text: 'PINK', value: 'PINK' },
   { text: 'CHARCOAL', value: 'CHARCOAL' },
   { text: 'RED MAROON', value: 'RED MAROON' },
   { text: 'GRAY-CHARCOAL', value: 'GRAY-CHARCOAL' },
