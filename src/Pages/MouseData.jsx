@@ -32,6 +32,7 @@ const Color = [
   { text: 'WHITE EDITION', value: 'WHITE EDITION' },
   { text: 'RED', value: 'RED' },
   { text: 'GREEN', value: 'GREEN' },
+  { text: 'GRADIENT GREEN', value: 'GRADIENT GREEN' },
   { text: 'BLUE', value: 'BLUE' },
   { text: 'PINK', value: 'PINK' },
   { text: 'GREY', value: 'GREY' },
