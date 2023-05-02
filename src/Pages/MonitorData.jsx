@@ -310,12 +310,12 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           </Col>
         </Row>
         <Row gutter={20}>
-          <Col span={6}>
+          <Col span={3}>
             <Form.Item label="Curve" name="curve" >
               <Checkbox checked={checked} onChange={onCheckboxChange} ></Checkbox>
             </Form.Item>
           </Col>
-          <Col span={6}>
+          <Col span={9}>
             <Form.Item label="Group" name="group"
             rules={[
               {
