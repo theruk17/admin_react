@@ -20,6 +20,7 @@ const Brand = [
   { val: 'LG' },
   { val: 'MSI' },
   { val: 'SAMSUNG' },
+  { val: 'VIEWSONIC' },
 ]
 
 const Size = [
