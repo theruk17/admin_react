@@ -70,20 +70,17 @@ const Group = [
   { val: '2', label: '24" 75Hz - 100Hz' },
   { val: '3', label: '24" 144Hz' },
   { val: '4', label: '24" 165Hz - 170Hz' },
-  { val: '5', label: '24" 240Hz' },
-  { val: '6', label: '27" 75Hz' },
+  { val: '5', label: '24" 240Hz - 360Hz' },
+  { val: '6', label: '27" 75Hz - 100Hz' },
   { val: '7', label: '27" 75Hz 2K' },
-  { val: '8', label: '27" 144Hz' },
-  { val: '9', label: '27" 165Hz - 170Hz' },
-  { val: '10', label: '27" 165Hz - 170Hz 2K' },
-  { val: '11', label: '27" 240Hz - 280Hz' },
-  { val: '12', label: '27" - 28" 60Hz - 144Hz 4K' },
-  { val: '13', label: '31.5" 75Hz - 165Hz' },
-  { val: '14', label: '31.5" 75Hz 2K' },
-  { val: '15', label: '32" 144Hz - 165Hz 2K' },
-  { val: '16', label: '32" 240Hz' },
-  { val: '17', label: '34" 144Hz' },
-  { val: '18', label: '34" 100Hz - 144Hz 2K' }
+  { val: '8', label: '27" 144Hz - 170Hz' },
+  { val: '9', label: '27" 165Hz - 280Hz 2K' },
+  { val: '10', label: '27" - 28" 60Hz - 144Hz 4K' },
+  { val: '11', label: '31.5" 75Hz - 240Hz' },
+  { val: '12', label: '31.5" 75Hz 2K' },
+  { val: '13', label: '32" 144Hz - 165Hz 2K - 4K' },
+  { val: '14', label: '34" 144Hz' },
+  { val: '15', label: '34" 100Hz - 144Hz 2K' }
 ]
 
 const getBase64 = (file) =>
