@@ -4,7 +4,7 @@ const { Dragger } = Upload;
 const props = {
   name: 'file',
   multiple: true,
-  action: 'https://drab-jade-haddock-toga.cyclic.app/upload',
+  action: 'https://backend-admin-ihc.up.railway.app/upload',
   onChange(info) {
     const { status } = info.file;
     if (status !== 'uploading') {
