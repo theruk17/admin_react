@@ -11,7 +11,7 @@ const Upload_data = () => {
   const syncData = async () => {
     try {
       setLoading(true)
-      await axios.get('https://fierce-parka-clam.cyclic.app/getdatasheet')
+      await axios.get('http://localhost:3000/getdatasheet')
       .then(res => {
         if (res.statusText === 'OK') {
           setProgress(100);
@@ -29,7 +29,7 @@ const Upload_data = () => {
   return (
     <Space direction="vertical" size={16}>
     <Card
-      title="Sync data google sheet"
+      title="Sync data from google sheet"
       
       style={{
         width: 500,
