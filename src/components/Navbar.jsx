@@ -4,7 +4,7 @@ import PageContent from '../components/PageContent'
 import '../index.css';
 import LogoIHC from '../assets/logo_ihc.svg'
 import { useNavigate } from 'react-router-dom';
-import { LaptopOutlined, ContainerOutlined, DesktopOutlined, CloudUploadOutlined, HomeOutlined, FileOutlined } from '@ant-design/icons';
+import { LaptopOutlined, ContainerOutlined, DesktopOutlined, RedoOutlined, HomeOutlined, FileOutlined } from '@ant-design/icons';
 const { Header, Content, Sider, Footer } = Layout;
 
 const App = () => {
@@ -34,8 +34,8 @@ const App = () => {
             key:'/'
           },
           {
-            icon: <CloudUploadOutlined />,
-            label: "UPLOAD DATA",
+            icon: <RedoOutlined />,
+            label: "SYNC DATA",
             key:'/upload'
           },
         ]} />
