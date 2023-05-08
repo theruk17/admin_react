@@ -41,6 +41,7 @@ const Group = [
   { val: '120MMX1' },
   { val: '120MMX2' },
   { val: '120MMX3' },
+  { val: '120MMX5' },
   { val: '140MMX1' },
   { val: '140MMX2' },
 
