@@ -74,7 +74,7 @@ const Group = [
   { val: '5', label: '24" 240Hz - 360Hz' },
   { val: '6', label: '27" 75Hz - 100Hz' },
   { val: '7', label: '27" 75Hz 2K' },
-  { val: '8', label: '27" 144Hz - 170Hz' },
+  { val: '8', label: '27" 144Hz - 250Hz' },
   { val: '9', label: '27" 100Hz - 280Hz 2K' },
   { val: '10', label: '27" - 28" 60Hz - 144Hz 4K' },
   { val: '11', label: '31.5" 75Hz - 240Hz' },
