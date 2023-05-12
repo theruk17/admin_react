@@ -11,6 +11,7 @@ const Brand = [
   { text: 'AKKO', value: 'AKKO' },
   { text: 'ASUS', value: 'ASUS' },
   { text: 'CORSAIR', value: 'CORSAIR' },
+  { text: 'EGA', value: 'EGA' },
   { text: 'GLORIOUS', value: 'GLORIOUS' },
   { text: 'HyperX', value: 'HyperX' },
   { text: 'KEYDOUS', value: 'KEYDOUS' },
@@ -29,7 +30,15 @@ const Brand = [
 
 const SW = [
   { text: 'RED SWITCH', value: 'RED SWITCH' },
+  { text: 'RED SWITCH A', value: 'RED SWITCH A' },
+  { text: 'RED SWITCH B', value: 'RED SWITCH B' },
+  { text: 'RED SWITCH C', value: 'RED SWITCH C' },
+  { text: 'RED SWITCH D', value: 'RED SWITCH D' },
   { text: 'BLUE SWITCH', value: 'BLUE SWITCH' },
+  { text: 'BLUE SWITCH A', value: 'BLUE SWITCH A' },
+  { text: 'BLUE SWITCH B', value: 'BLUE SWITCH B' },
+  { text: 'BLUE SWITCH C', value: 'BLUE SWITCH C' },
+  { text: 'BLUE SWITCH D', value: 'BLUE SWITCH D' },
   { text: 'BROWN SWITCH', value: 'BROWN SWITCH' },
   { text: 'SKY CYAN SWITCH', value: 'SKY CYAN SWITCH' },
   { text: 'PINK RED SWITCH', value: 'PINK RED SWITCH' },
