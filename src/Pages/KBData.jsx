@@ -58,6 +58,7 @@ const SW = [
   { text: 'ROG NX BROWN', value: 'ROG NX BROWN' },
   { text: 'ROG NX BLUE', value: 'ROG NX BLUE' },
   { text: 'GATERON BROWN PRO SW', value: 'GATERON BROWN PRO SW' },
+  { text: 'GATERON YELLOW PRO SW', value: 'GATERON YELLOW PRO SW' },
   { text: 'JWK RED SW', value: 'JWK RED SW' },
   { text: 'RAZER YELLOW SWITCH', value: 'RAZER YELLOW SWITCH' },
   { text: 'RAZER GREEN SWITCH', value: 'RAZER GREEN SWITCH' },
