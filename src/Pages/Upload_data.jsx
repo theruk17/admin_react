@@ -11,7 +11,7 @@ const Upload_data = () => {
   const syncData = async () => {
     try {
       setLoading(true)
-      await axios.get('http://192.168.1.75:3000/getdatasheet')
+      await axios.get('http://localhost:3000/getdatasheet')
       .then(res => {
         if (res.statusText === 'OK') {
           setProgress(100);
