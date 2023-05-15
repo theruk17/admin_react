@@ -105,9 +105,12 @@ const Type = [
 
 const Group = [
   { text: 'FULL SIZE 100%', value: 'FULL SIZE 100%' },
+  { text: 'BAREBONE/100%', value: 'BAREBONE/100%' },
   { text: 'TKL 80%', value: 'TKL 80%' },
+  { text: 'BAREBONE/98%', value: 'BAREBONE/98%' },
   { text: '98%', value: '98%' },
   { text: '96%', value: '96%' },
+  { text: 'BAREBONE/75%', value: 'BAREBONE/75%' },
   { text: '75%', value: '75%' },
   { text: '65%', value: '65%' },
   { text: '60%', value: '60%' },
