@@ -19,6 +19,7 @@ const Brand = [
   { val: 'LENOVO' },
   { val: 'LG' },
   { val: 'MSI' },
+  { val: 'PHILIPS' },
   { val: 'SAMSUNG' },
   { val: 'VIEWSONIC' },
 ]
