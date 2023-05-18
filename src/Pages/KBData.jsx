@@ -79,6 +79,7 @@ const Color = [
   { text: 'BLACK', value: 'BLACK' },
   { text: 'PINK', value: 'PINK' },
   { text: 'GRAY', value: 'GRAY' },
+  { text: 'SILVER', value: 'SILVER' },
   { text: 'PURPLE', value: 'PURPLE' },
   { text: 'LAVENDER', value: 'LAVENDER' },
   { text: 'RED WINE', value: 'RED WINE' },
