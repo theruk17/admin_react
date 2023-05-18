@@ -106,7 +106,7 @@ const Type = [
   { text: 'Wireless', value: 'Wireless' },
   { text: 'Bluetooth', value: 'Bluetooth' },
   { text: 'Wired/Barebone', value: 'Wired/Barebone' },
-  { text: 'Wireless/Wire', value: 'Wireless/Wire' },
+  { text: 'Wireless/Wired', value: 'Wireless/Wired' },
   { text: 'Wireless/Bluetooth/Wired', value: 'Wireless/Bluetooth/Wired' },
 ]
 
