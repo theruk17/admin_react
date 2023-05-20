@@ -36,6 +36,7 @@ const Color = [
   { text: 'DIVA PINK', value: 'DIVA PINK' },
   { text: 'JET BLACK', value: 'JET BLACK' },
   { text: 'SAKURA BLACK', value: 'SAKURA BLACK' },
+  { text: 'MESH BLACK', value: 'MESH BLACK' },
 ]
 
 
