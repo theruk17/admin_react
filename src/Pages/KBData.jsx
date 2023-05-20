@@ -68,9 +68,11 @@ const SW = [
   { text: 'CORSAIR OPX OPTICAL SWITCH', value: 'CORSAIR OPX OPTICAL SWITCH' },
   { text: 'GX BLUE CLICKY', value: 'GX BLUE CLICKY' },
   { text: 'GX RED LINEAR', value: 'GX RED LINEAR' },
+  { text: 'GX BROWN TACTILE', value: 'GX BROWN TACTILE' },
   { text: 'KAILH PIXEL L', value: 'KAILH PIXEL L' },
   { text: 'KAILH PIXEL T', value: 'KAILH PIXEL T' },
   { text: 'TACTILE SWITCH', value: 'TACTILE SWITCH' },
+  { text: 'TITAN SWITCH', value: 'TITAN SWITCH' },
 ]
 
 const Color = [
