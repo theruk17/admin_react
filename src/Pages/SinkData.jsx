@@ -13,7 +13,7 @@ const Brand = [
   { text: 'COOLER MASTER', value: 'COOLER MASTER' },
   { text: 'CORSAIR', value: 'CORSAIR' },
   { text: 'DEEPCOOL', value: 'DEEPCOOL' },
-  { text: 'ID-COOLING', value: 'ID-COOLING' },
+  { text: 'ID COOLING', value: 'ID COOLING' },
   { text: 'NOCTUA', value: 'NOCTUA' },
   { text: 'NZXT', value: 'NZXT' },
   { text: 'ZALMAN', value: 'ZALMAN' },
