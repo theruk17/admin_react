@@ -16,6 +16,8 @@ const Brand = [
   { text: 'ID COOLING', value: 'ID COOLING' },
   { text: 'NOCTUA', value: 'NOCTUA' },
   { text: 'NZXT', value: 'NZXT' },
+  { text: 'PC COOLER', value: 'PC COOLER' },
+  { text: 'TSUNAMI', value: 'TSUNAMI' },
   { text: 'ZALMAN', value: 'ZALMAN' },
 ]
 
