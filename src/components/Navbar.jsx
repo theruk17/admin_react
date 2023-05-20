@@ -110,7 +110,17 @@ const App = () => {
                 icon: <FileOutlined />,
                 label: "Mousepad",
                 key:'/mousepad'
-              }
+              },
+              {
+                icon: <FileOutlined />,
+                label: "MIC",
+                key:'/mic'
+              },
+              {
+                icon: <FileOutlined />,
+                label: "SINK",
+                key:'/sink'
+              },
             ]}
           />
         </Sider>

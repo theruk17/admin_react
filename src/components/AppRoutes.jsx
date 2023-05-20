@@ -10,6 +10,8 @@ import KBData from "../Pages/KBData";
 import CHData from "../Pages/CHData";
 import MouseData from "../Pages/MouseData";
 import MousePadData from "../Pages/MousePadData";
+import MICData from "../Pages/MICData";
+import SinkData from "../Pages/SinkData";
 
 function AppRoutes() {
     return (
@@ -26,6 +28,8 @@ function AppRoutes() {
                 <Route path="/ch" element={<CHData />}></Route>
                 <Route path="/mouse" element={<MouseData />}></Route>
                 <Route path="/mousepad" element={<MousePadData />}></Route>
+                <Route path="/mic" element={<MICData />}></Route>
+                <Route path="/sink" element={<SinkData />}></Route>
             </Routes> 
     )
 }
