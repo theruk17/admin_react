@@ -11,7 +11,7 @@ const Upload_data = () => {
   const syncData = async () => {
     try {
       setLoading(true)
-      await axios.get('http://localhost:3000/getdatasheet')
+      await axios.get('https://backendgooglesheet-production.up.railway.app/getdatasheet')
       .then(res => {
         if (res.statusText === 'OK') {
           setProgress(100);
