@@ -13,7 +13,7 @@ const Upload_data = () => {
       setLoading(true)
       await axios.get('https://backendgooglesheet-production.up.railway.app/getdatasheet')
       .then(res => {
-        if (res.statusText === 'OK') {
+        if (res.data != '') {
           setProgress(100);
           setLoading(false)
           message.success(res.data);
