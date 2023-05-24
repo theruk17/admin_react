@@ -41,6 +41,7 @@ const Color = [
   { val: '(SPRUCE BLUE)' },
   { val: '(QUIET BLUE)' },
   { val: '(PERFOMANCE BLUE)' },
+  { val: '(MICA SILVER)' },
   { val: '(NATURAL SILVER)' },
   { val: '(PLATINUM SILVER)' },
   { val: '(SPECTER GREEN WITH CAMOUFLAG)' },
