@@ -4,7 +4,7 @@ import PageContent from '../components/PageContent'
 import '../index.css';
 import LogoIHC from '../assets/logo_ihc.svg'
 import { useNavigate } from 'react-router-dom';
-import { LaptopOutlined, ContainerOutlined, DesktopOutlined, RedoOutlined, HomeOutlined, FileOutlined } from '@ant-design/icons';
+import { HouseDoor, ArrowRepeat, Laptop, Display, Pc, Fan, Headset, Keyboard, Mouse2, Mic, SquareFill, Snow, FileEarmark } from 'react-bootstrap-icons';
 const { Header, Content, Sider, Footer } = Layout;
 
 const App = () => {
@@ -29,12 +29,12 @@ const App = () => {
         }}
         items={[
           {
-            icon: <HomeOutlined />,
+            icon: <HouseDoor />,
             label: "HOME",
             key:'/'
           },
           {
-            icon: <RedoOutlined />,
+            icon: <ArrowRepeat />,
             label: "SYNC DATA",
             key:'/upload'
           },
@@ -62,62 +62,62 @@ const App = () => {
             }}
             items={[
               {
-                icon: <DesktopOutlined />,
+                icon: <Display />,
                 label: "Monitor",
                 key:'/monitor'
               },
               {
-                icon: <ContainerOutlined />,
+                icon: <Pc />,
                 label: "Case",
                 key:'/case'
               },
               {
-                icon: <LaptopOutlined />,
+                icon: <Laptop />,
                 label: "Notebook",
                 key:'/nb'
               },
               {
-                icon: <FileOutlined />,
+                icon: <Snow />,
                 label: "Liquid Cooling",
                 key:'/lc'
               },
               {
-                icon: <FileOutlined />,
+                icon: <Fan />,
                 label: "FAN",
                 key:'/fan'
               },
               {
-                icon: <FileOutlined />,
+                icon: <Headset />,
                 label: "HeadSet",
                 key:'/headset'
               },
               {
-                icon: <FileOutlined />,
+                icon: <Keyboard />,
                 label: "Keyboard",
                 key:'/kb'
               },
               {
-                icon: <FileOutlined />,
+                icon: <FileEarmark />,
                 label: "Chair",
                 key:'/ch'
               },
               {
-                icon: <FileOutlined />,
+                icon: <Mouse2 />,
                 label: "Mouse",
                 key:'/mouse'
               },
               {
-                icon: <FileOutlined />,
+                icon: <SquareFill />,
                 label: "Mousepad",
                 key:'/mousepad'
               },
               {
-                icon: <FileOutlined />,
+                icon: <Mic />,
                 label: "MIC",
                 key:'/mic'
               },
               {
-                icon: <FileOutlined />,
+                icon: <FileEarmark />,
                 label: "SINK",
                 key:'/sink'
               },
