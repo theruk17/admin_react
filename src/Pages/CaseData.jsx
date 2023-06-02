@@ -4,6 +4,8 @@ import { NumericFormat } from 'react-number-format';
 import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tag } from 'antd';
 import 'dotenv/config'
+require('dotenv').config()
+
 import '../App.css';
 
 const API_URL = process.env.API_URL
