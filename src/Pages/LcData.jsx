@@ -5,7 +5,7 @@ import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tooltip } from 'antd';
 import '../App.css';
 
-const API_URL = 'https://drab-jade-haddock-toga.cyclic.app';
+const API_URL = process.env.API_URL
 
 const Brand = [
   { val: 'ASUS' },
@@ -359,7 +359,7 @@ const LcData = () => {
   };
 
   const Column = [
-    
+
     {
       title: 'Image',
       dataIndex: 'lc_img',
@@ -445,7 +445,7 @@ const LcData = () => {
       onFilter: (value, record) => record.lc_brand.indexOf(value) === 0,
       sorter: (a, b) => a.lc_brand.localeCompare(b.lc_brand),
       sortDirections: ['descend'],
-      
+
     },
     {
       title: 'Model', dataIndex: 'lc_model', key: 'lc_model', width: 350,
@@ -475,7 +475,7 @@ const LcData = () => {
       ],
       onFilter: (value, record) => record.lc_group.indexOf(value) === 0,
       sorter: (a, b) => a.lc_group.localeCompare(b.lc_group),
-      sortDirections: ['ascend','descend'],
+      sortDirections: ['ascend', 'descend'],
     },
     {
       title: 'STOCK',
@@ -553,7 +553,7 @@ const LcData = () => {
         },
       ]
     },
-    
+
     {
       title: 'Price SRP', dataIndex: 'lc_price_srp', key: 'lc_price_srp', align: 'right',
       sorter: (a, b) => a.lc_price_srp - b.lc_price_srp,
@@ -597,7 +597,7 @@ const LcData = () => {
   return (
     <div>
       <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.lc_id} pagination={pagination} onChange={onChange} bordered size="small"
-      
+
       ></Table>
       <EditForm
         visible={visible}

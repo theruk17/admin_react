@@ -5,7 +5,7 @@ import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tooltip } from 'antd';
 import '../App.css';
 
-const API_URL = 'https://drab-jade-haddock-toga.cyclic.app';
+const API_URL = process.env.API_URL
 
 const Brand = [
   { val: 'ASUS' },
@@ -111,8 +111,8 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           axios.put(API_URL + '/update_img_hs/' + record.hs_id, { imageUrl })
             .then(res => {
               message.success(res.data);
-            }) 
-            
+            })
+
         })
 
     } catch (error) {
@@ -336,7 +336,7 @@ const FanData = () => {
   };
 
   const Column = [
-    
+
     {
       title: 'Image',
       dataIndex: 'hs_img',
@@ -403,12 +403,12 @@ const FanData = () => {
       onFilter: (value, record) => record.hs_brand.indexOf(value) === 0,
       sorter: (a, b) => a.hs_brand.localeCompare(b.hs_brand),
       sortDirections: ['descend'],
-      
+
     },
     {
       title: 'Model', dataIndex: 'hs_model', key: 'hs_model',
     },
-    
+
     {
       title: 'Group', dataIndex: 'hs_group', key: 'hs_group', align: 'center',
       filters: [
@@ -428,7 +428,7 @@ const FanData = () => {
       ],
       onFilter: (value, record) => record.hs_group.indexOf(value) === 0,
       sorter: (a, b) => a.hs_group.localeCompare(b.hs_group),
-      sortDirections: ['ascend','descend'],
+      sortDirections: ['ascend', 'descend'],
     },
     {
       title: 'STOCK',
@@ -506,7 +506,7 @@ const FanData = () => {
         },
       ]
     },
-    
+
     {
       title: 'Price SRP', dataIndex: 'hs_price_srp', key: 'hs_price_srp', align: 'right',
       sorter: (a, b) => a.hs_price_srp - b.hs_price_srp,
@@ -550,7 +550,7 @@ const FanData = () => {
   return (
     <div>
       <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.hs_id} pagination={pagination} onChange={onChange} bordered size="small"
-      
+
       ></Table>
       <EditForm
         visible={visible}

@@ -5,7 +5,7 @@ import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tooltip } from 'antd';
 import '../App.css';
 
-const API_URL = 'https://drab-jade-haddock-toga.cyclic.app';
+const API_URL = process.env.API_URL
 
 const Brand = [
   { val: 'ACER' },
@@ -372,7 +372,7 @@ const NbData = () => {
   };
 
   const Column = [
-    
+
     {
       title: 'Image',
       dataIndex: 'nb_img',
@@ -410,7 +410,7 @@ const NbData = () => {
           text: 'MSI',
           value: 'MSI',
         },
-        
+
 
       ],
       onFilter: (value, record) => record.nb_brand.indexOf(value) === 0,
@@ -423,7 +423,7 @@ const NbData = () => {
     {
       title: 'Color', dataIndex: 'nb_color', key: 'nb_color', width: 190,
     },
-    
+
     {
       title: 'STOCK',
       children: [
@@ -500,7 +500,7 @@ const NbData = () => {
         },
       ]
     },
-    
+
     {
       title: 'Price SRP', dataIndex: 'nb_price_srp', key: 'nb_price_srp', align: 'right',
       sorter: (a, b) => a.nb_price_srp - b.nb_price_srp,
@@ -544,18 +544,18 @@ const NbData = () => {
   return (
     <div>
       <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.nb_id} pagination={pagination} onChange={onChange} bordered size="small"
-      expandable={{
-        expandedRowRender: (record) => (
-          <p
-            style={{
-              margin: 0,
-            }}
-          >
-            {record.nb_size} {record.nb_hz} {record.nb_cpu} {record.nb_vga} {record.nb_ram} {record.nb_storage} {record.nb_os}
-          </p>
-        ),
-        
-      }}
+        expandable={{
+          expandedRowRender: (record) => (
+            <p
+              style={{
+                margin: 0,
+              }}
+            >
+              {record.nb_size} {record.nb_hz} {record.nb_cpu} {record.nb_vga} {record.nb_ram} {record.nb_storage} {record.nb_os}
+            </p>
+          ),
+
+        }}
       ></Table>
       <EditForm
         visible={visible}

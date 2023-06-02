@@ -5,7 +5,7 @@ import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tooltip } from 'antd';
 import '../App.css';
 
-const API_URL = 'https://drab-jade-haddock-toga.cyclic.app';
+const API_URL = process.env.API_URL
 
 const Brand = [
   { val: 'ANTEC' },
@@ -363,7 +363,7 @@ const FanData = () => {
   };
 
   const Column = [
-    
+
     {
       title: 'Image',
       dataIndex: 'f_img',
@@ -433,7 +433,7 @@ const FanData = () => {
       onFilter: (value, record) => record.f_brand.indexOf(value) === 0,
       sorter: (a, b) => a.f_brand.localeCompare(b.f_brand),
       sortDirections: ['descend'],
-      
+
     },
     {
       title: 'Model', dataIndex: 'f_model', key: 'f_model', width: 350,
@@ -456,7 +456,7 @@ const FanData = () => {
       ],
       onFilter: (value, record) => record.f_group.indexOf(value) === 0,
       sorter: (a, b) => a.f_group.localeCompare(b.f_group),
-      sortDirections: ['ascend','descend'],
+      sortDirections: ['ascend', 'descend'],
     },
     {
       title: 'STOCK',
@@ -534,7 +534,7 @@ const FanData = () => {
         },
       ]
     },
-    
+
     {
       title: 'Price SRP', dataIndex: 'f_price_srp', key: 'f_price_srp', align: 'right',
       sorter: (a, b) => a.f_price_srp - b.f_price_srp,
@@ -578,7 +578,7 @@ const FanData = () => {
   return (
     <div>
       <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.f_id} pagination={pagination} onChange={onChange} bordered size="small"
-      
+
       ></Table>
       <EditForm
         visible={visible}

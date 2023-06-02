@@ -5,7 +5,7 @@ import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Button } from 'antd';
 import '../App.css';
 
-const API_URL = 'https://drab-jade-haddock-toga.cyclic.app';
+const API_URL = process.env.API_URL
 
 const Brand = [
   { val: 'ACER' },
@@ -174,7 +174,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           const imageUrl = res.data.secure_url;
           message.success("Upload Image to Cloud Server " + res.statusText);
           onSuccess(imageUrl);
-          axios.put(API_URL+'/update_img_mnt/' + record.mnt_id, { imageUrl })
+          axios.put(API_URL + '/update_img_mnt/' + record.mnt_id, { imageUrl })
             .then(res => {
               message.success(res.data);
             })
@@ -238,13 +238,13 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item name="model" label="Model" 
-            rules={[
-              {
-                required: true,
-                message: 'Please input Model!',
-              },
-            ]}>
+            <Form.Item name="model" label="Model"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input Model!',
+                },
+              ]}>
               <Input placeholder='Model' allowClear />
             </Form.Item>
           </Col>
@@ -252,12 +252,12 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
         <Row gutter={20}>
           <Col span={4}>
             <Form.Item label="Size" name="size"
-            rules={[
-              {
-                required: true,
-                message: 'Please input Size!',
-              },
-            ]}>
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input Size!',
+                },
+              ]}>
               <Select placeholder="Size" allowClear>
                 {Size.map(item => (
                   <Select.Option key={item.val} value={item.mnt_val}>{item.val}</Select.Option>
@@ -267,12 +267,12 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           </Col>
           <Col span={6}>
             <Form.Item label="Refresh Rate" name="hz"
-            rules={[
-              {
-                required: true,
-                message: 'Please input Refresh Rate!',
-              },
-            ]}>
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input Refresh Rate!',
+                },
+              ]}>
               <Select placeholder="Refresh Rate" allowClear>
                 {Hz.map(item => (
                   <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
@@ -282,12 +282,12 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           </Col>
           <Col span={6}>
             <Form.Item label="Panel" name="panel"
-            rules={[
-              {
-                required: true,
-                message: 'Please input Panel!',
-              },
-            ]}>
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input Panel!',
+                },
+              ]}>
               <Select placeholder="Panel" allowClear  >
                 {Panel.map(item => (
                   <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
@@ -297,12 +297,12 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           </Col>
           <Col span={8}>
             <Form.Item label="Resolution" name="resolution"
-            rules={[
-              {
-                required: true,
-                message: 'Please input Resolation!',
-              },
-            ]}>
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input Resolation!',
+                },
+              ]}>
               <Select placeholder="Resolution" allowClear >
                 {Resolution.map(item => (
                   <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
@@ -319,12 +319,12 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           </Col>
           <Col span={9}>
             <Form.Item label="Group" name="group"
-            rules={[
-              {
-                required: true,
-                message: 'Please input Group!',
-              },
-            ]}>
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input Group!',
+                },
+              ]}>
               <Select placeholder="Group" allowClear>
                 {Group.map(item => (
                   <Select.Option key={item.val} value={item.val}>{item.label}</Select.Option>
@@ -334,12 +334,12 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           </Col>
           <Col span={6}>
             <Form.Item label="Price" name="price_srp"
-            rules={[
-              {
-                required: true,
-                message: 'Please input Price!',
-              },
-            ]}>
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input Price!',
+                },
+              ]}>
               <InputNumber
                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
@@ -349,12 +349,12 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           </Col>
           <Col span={6}>
             <Form.Item label="ราคาพร้อมเครื่อง" name="price_w_com"
-            rules={[
-              {
-                required: true,
-                message: 'Please input Price!',
-              },
-            ]}>
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input Price!',
+                },
+              ]}>
               <InputNumber
                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
@@ -416,16 +416,16 @@ const ShowData = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(API_URL+"/admin_data")
+      .get(API_URL + "/admin_data")
       .then((res) => {
         setLoading(false);
         setData(res.data);
       });
     axios
-    .put(API_URL+"/update_stock_mnt")
-    .then((res) => {
-      message.success(res.data);
-    })
+      .put(API_URL + "/update_stock_mnt")
+      .then((res) => {
+        message.success(res.data);
+      })
   }, []);
 
   const showModal = (record) => {
@@ -439,7 +439,7 @@ const ShowData = () => {
 
   const handleDelete = id => {
     axios
-      .delete(API_URL+`/admin_del/${id}`)
+      .delete(API_URL + `/admin_del/${id}`)
       .then(res => {
         setData(data.filter(item => item.mnt_id !== id));
         message.success(res.data);
@@ -447,10 +447,10 @@ const ShowData = () => {
   };
 
   const handleCreate = (values) => {
-    axios.put(API_URL+'/edit/' + record.mnt_id, values)
+    axios.put(API_URL + '/edit/' + record.mnt_id, values)
       .then(res => {
         message.success(res.data);
-        axios.get(API_URL+'/admin_data')
+        axios.get(API_URL + '/admin_data')
           .then(res => {
             setData(res.data);
             setVisible(false);
@@ -472,10 +472,10 @@ const ShowData = () => {
     if (target) {
       target.mnt_status = target.mnt_status === 'Y' ? 'N' : 'Y';
       setData(newData);
-      axios.put(API_URL+'/edit_status/' + key, { status: target.mnt_status })
+      axios.put(API_URL + '/edit_status/' + key, { status: target.mnt_status })
         .then(res => {
           message.success(res.data);
-          axios.get(API_URL+'/admin_data')
+          axios.get(API_URL + '/admin_data')
             .then(res => {
               setData(res.data);
             })
@@ -609,7 +609,7 @@ const ShowData = () => {
       onFilter: (value, record) => record.mnt_size.indexOf(value) === 0,
       render: (text) => <p>{text}</p>,
       sorter: (a, b) => a.mnt_size.localeCompare(b.mnt_size),
-      sortDirections: ['ascend','descend'],
+      sortDirections: ['ascend', 'descend'],
     },
     {
       title: 'Refresh Rate', dataIndex: 'mnt_refresh_rate', key: 'mnt_refresh_rate', align: 'right', width: 80,
@@ -650,7 +650,7 @@ const ShowData = () => {
       onFilter: (value, record) => record.mnt_refresh_rate.indexOf(value) === 0,
       render: (text) => <p>{text}</p>,
       sorter: (a, b) => a.mnt_refresh_rate.localeCompare(b.mnt_refresh_rate),
-      sortDirections: ['ascend','descend'],
+      sortDirections: ['ascend', 'descend'],
     },
     {
       title: 'Panel', dataIndex: 'mnt_panel', key: 'mnt_panel', align: 'right', width: 80,
@@ -678,7 +678,7 @@ const ShowData = () => {
       ],
       onFilter: (value, record) => record.mnt_panel.indexOf(value) === 0,
       sorter: (a, b) => a.mnt_panel.localeCompare(b.mnt_panel),
-      sortDirections: ['ascend','descend'],
+      sortDirections: ['ascend', 'descend'],
     },
     {
       title: 'Resolution', dataIndex: 'mnt_resolution', key: 'mnt_resolution', align: 'right', width: 140,
@@ -702,7 +702,7 @@ const ShowData = () => {
       ],
       onFilter: (value, record) => record.mnt_resolution.indexOf(value) === 0,
       sorter: (a, b) => a.mnt_resolution.localeCompare(b.mnt_resolution),
-      sortDirections: ['ascend','descend'],
+      sortDirections: ['ascend', 'descend'],
     },
     {
       title: 'Curve', dataIndex: 'mnt_curve', key: 'mnt_curve', align: 'center', width: 50,
@@ -747,7 +747,7 @@ const ShowData = () => {
           }
         },
         {
-          title: 'เดอะโฟล์ท', dataIndex: 'mnt_stock_thefloat', key: 'mnt_stock_thefloat', align: 'center' , width: 60,
+          title: 'เดอะโฟล์ท', dataIndex: 'mnt_stock_thefloat', key: 'mnt_stock_thefloat', align: 'center', width: 60,
           sorter: (a, b) => a.mnt_stock_thefloat - b.mnt_stock_thefloat,
           render(text, record) {
             return {

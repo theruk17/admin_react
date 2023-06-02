@@ -5,7 +5,7 @@ import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tooltip } from 'antd';
 import '../App.css';
 
-const API_URL = 'https://drab-jade-haddock-toga.cyclic.app';
+const API_URL = process.env.API_URL
 
 const Brand = [
   { text: 'ANTEC', value: 'ANTEC' },
@@ -109,8 +109,8 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           axios.put(API_URL + '/update_img_s/' + record.s_id, { imageUrl })
             .then(res => {
               message.success(res.data);
-            }) 
-            
+            })
+
         })
 
     } catch (error) {
@@ -206,8 +206,8 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
               />
             </Form.Item>
           </Col>
-          </Row>
-        
+        </Row>
+
         <Row gutter={20}>
           <Col span={6}>
             <Form.Item label="Status" name="status">
@@ -337,7 +337,7 @@ const FanData = () => {
   };
 
   const Column = [
-    
+
     {
       title: 'Image',
       dataIndex: 's_img',
@@ -349,17 +349,17 @@ const FanData = () => {
     {
       title: 'Brand', dataIndex: 's_brand', key: 's_brand', width: 100,
       render: (text, record) => <a href={record.s_href} target='_blank'>{text}</a>,
-      
+
       filters: Brand,
       onFilter: (value, record) => record.s_brand.indexOf(value) === 0,
       sorter: (a, b) => a.s_brand.localeCompare(b.s_brand),
       sortDirections: ['descend'],
-      
+
     },
     {
       title: 'Model', dataIndex: 's_model', key: 's_model',
     },
-    
+
     {
       title: 'Color', dataIndex: 's_color', key: 's_color', align: 'center',
     },
@@ -439,7 +439,7 @@ const FanData = () => {
         },
       ]
     },
-    
+
     {
       title: 'Price SRP', dataIndex: 's_price_srp', key: 's_price_srp', align: 'right',
       sorter: (a, b) => a.s_price_srp - b.s_price_srp,
@@ -483,7 +483,7 @@ const FanData = () => {
   return (
     <div>
       <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.s_id} pagination={pagination} onChange={onChange} bordered size="small"
-      
+
       ></Table>
       <EditForm
         visible={visible}

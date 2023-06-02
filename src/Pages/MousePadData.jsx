@@ -5,7 +5,7 @@ import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tooltip } from 'antd';
 import '../App.css';
 
-const API_URL = 'https://drab-jade-haddock-toga.cyclic.app';
+const API_URL = process.env.API_URL
 
 const Brand = [
   { text: 'AMD', value: 'AMD' },
@@ -135,8 +135,8 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           axios.put(API_URL + '/update_img_mp/' + record.mp_id, { imageUrl })
             .then(res => {
               message.success(res.data);
-            }) 
-            
+            })
+
         })
 
     } catch (error) {
@@ -223,7 +223,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           </Col>
         </Row>
         <Row gutter={20}>
-        <Col span={6}>
+          <Col span={6}>
             <Form.Item label="Group" name="group">
               <Select placeholder="Group" allowClear>
                 {Group.map(item => (
@@ -250,8 +250,8 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
               />
             </Form.Item>
           </Col>
-          </Row>
-        
+        </Row>
+
         <Row gutter={20}>
           <Col span={6}>
             <Form.Item label="Status" name="status">
@@ -381,7 +381,7 @@ const FanData = () => {
   };
 
   const Column = [
-    
+
     {
       title: 'Image',
       dataIndex: 'mp_img',
@@ -393,17 +393,17 @@ const FanData = () => {
     {
       title: 'Brand', dataIndex: 'mp_brand', key: 'mp_brand', width: 100,
       render: (text, record) => <a href={record.mp_href} target='_blank'>{text}</a>,
-      
+
       filters: Brand,
       onFilter: (value, record) => record.mp_brand.indexOf(value) === 0,
       sorter: (a, b) => a.mp_brand.localeCompare(b.mp_brand),
       sortDirections: ['descend'],
-      
+
     },
     {
       title: 'Model', dataIndex: 'mp_model', key: 'mp_model',
     },
-    
+
     {
       title: 'Color', dataIndex: 'mp_color', key: 'mp_color', align: 'center',
     },
@@ -493,7 +493,7 @@ const FanData = () => {
         },
       ]
     },
-    
+
     {
       title: 'Price SRP', dataIndex: 'mp_price_srp', key: 'mp_price_srp', align: 'right',
       sorter: (a, b) => a.mp_price_srp - b.mp_price_srp,
@@ -537,7 +537,7 @@ const FanData = () => {
   return (
     <div>
       <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.mp_id} pagination={pagination} onChange={onChange} bordered size="small"
-      
+
       ></Table>
       <EditForm
         visible={visible}

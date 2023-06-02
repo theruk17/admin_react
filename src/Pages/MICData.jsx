@@ -5,7 +5,7 @@ import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tooltip } from 'antd';
 import '../App.css';
 
-const API_URL = 'https://drab-jade-haddock-toga.cyclic.app';
+const API_URL = process.env.API_URL
 
 const Brand = [
   { text: 'AVERMEDIA', value: 'AVERMEDIA' },
@@ -112,8 +112,8 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           axios.put(API_URL + '/update_img_mic/' + record.mic_id, { imageUrl })
             .then(res => {
               message.success(res.data);
-            }) 
-            
+            })
+
         })
 
     } catch (error) {
@@ -209,8 +209,8 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
               />
             </Form.Item>
           </Col>
-          </Row>
-        
+        </Row>
+
         <Row gutter={20}>
           <Col span={6}>
             <Form.Item label="Status" name="status">
@@ -340,7 +340,7 @@ const FanData = () => {
   };
 
   const Column = [
-    
+
     {
       title: 'Image',
       dataIndex: 'mic_img',
@@ -352,17 +352,17 @@ const FanData = () => {
     {
       title: 'Brand', dataIndex: 'mic_brand', key: 'mic_brand', width: 100,
       render: (text, record) => <a href={record.mic_href} target='_blank'>{text}</a>,
-      
+
       filters: Brand,
       onFilter: (value, record) => record.mic_brand.indexOf(value) === 0,
       sorter: (a, b) => a.mic_brand.localeCompare(b.mic_brand),
       sortDirections: ['descend'],
-      
+
     },
     {
       title: 'Model', dataIndex: 'mic_model', key: 'mic_model',
     },
-    
+
     {
       title: 'Color', dataIndex: 'mic_color', key: 'mic_color', align: 'center',
     },
@@ -442,7 +442,7 @@ const FanData = () => {
         },
       ]
     },
-    
+
     {
       title: 'Price SRP', dataIndex: 'mic_price_srp', key: 'mic_price_srp', align: 'right',
       sorter: (a, b) => a.mic_price_srp - b.mic_price_srp,
@@ -486,7 +486,7 @@ const FanData = () => {
   return (
     <div>
       <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.mic_id} pagination={pagination} onChange={onChange} bordered size="small"
-      
+
       ></Table>
       <EditForm
         visible={visible}
