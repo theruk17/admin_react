@@ -6,7 +6,7 @@ import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox
 
 import '../App.css';
 
-const API_URL = 'd1hcfk5kl1j97j.cloudfront.net';
+const API_URL = 'https://d1hcfk5kl1j97j.cloudfront.net';
 
 const Brand = [
   { val: 'AEROCOOL' },
