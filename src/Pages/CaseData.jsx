@@ -21,6 +21,7 @@ const Brand = [
   { val: 'GIGABYTE' },
   { val: 'LIAN LI' },
   { val: 'INWIN' },
+  { val: 'iHAVECPU' },
   { val: 'MONTECH' },
   { val: 'NEOLUTION' },
   { val: 'MSI' },
@@ -144,7 +145,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           const imageUrl = res.data.secure_url;
           message.success("Upload Image to Cloud Server " + res.statusText);
           onSuccess(imageUrl);
-          axios.put('https://drab-jade-haddock-toga.cyclic.app/update_img_case/' + record.case_id, { imageUrl })
+          axios.put(API_URL + '/update_img_case/' + record.case_id, { imageUrl })
             .then(res => {
               message.success(res.data);
             })
@@ -320,7 +321,7 @@ const CaseData = () => {
 
   const handleDelete = id => {
     axios
-      .delete(`https://drab-jade-haddock-toga.cyclic.app/admin_del_case/${id}`)
+      .delete(API_URL + `/admin_del_case/${id}`)
       .then(res => {
         setData(data.filter(item => item.case_id !== id));
         message.success(res.data);
@@ -328,10 +329,10 @@ const CaseData = () => {
   };
 
   const handleCreate = (values) => {
-    axios.put('https://drab-jade-haddock-toga.cyclic.app/edit_case/' + record.case_id, values)
+    axios.put(API_URL + '/edit_case/' + record.case_id, values)
       .then(res => {
         message.success(res.data);
-        axios.get('https://drab-jade-haddock-toga.cyclic.app/admin_data_case')
+        axios.get(API_URL + '/admin_data_case')
           .then(res => {
             setData(res.data);
             setVisible(false);
@@ -356,10 +357,10 @@ const CaseData = () => {
     if (target) {
       target.case_status = target.case_status === 'Y' ? 'N' : 'Y';
       setData(newData);
-      axios.put('https://drab-jade-haddock-toga.cyclic.app/edit_status_case/' + key, { status: target.case_status })
+      axios.put(API_URL + '/edit_status_case/' + key, { status: target.case_status })
         .then(res => {
           message.success(res.data);
-          axios.get('https://drab-jade-haddock-toga.cyclic.app/admin_data_case')
+          axios.get(API_URL + '/admin_data_case')
             .then(res => {
               setData(res.data);
             })
