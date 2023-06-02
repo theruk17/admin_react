@@ -2,6 +2,7 @@ import { RedoOutlined } from '@ant-design/icons';
 import { message, Card, Space, Button, Progress } from 'antd';
 import axios from 'axios';
 import { useState } from 'react';
+import 'dotenv/config'
 
 const API_URL = process.env.API_URL
 
