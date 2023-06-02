@@ -2,11 +2,8 @@ import { RedoOutlined } from '@ant-design/icons';
 import { message, Card, Space, Button, Progress } from 'antd';
 import axios from 'axios';
 import { useState } from 'react';
-import 'dotenv/config'
-require('dotenv').config()
 
-
-const API_URL = process.env.API_URL
+const API_URL = 'http://13.213.77.186:3000';
 
 const Upload_data = () => {
   const [loading, setLoading] = useState(false);

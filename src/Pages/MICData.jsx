@@ -3,10 +3,9 @@ import axios from 'axios';
 import { NumericFormat } from 'react-number-format';
 import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tooltip } from 'antd';
-import 'dotenv/config'
 import '../App.css';
 
-const API_URL = process.env.API_URL
+const API_URL = 'http://13.213.77.186:3000';
 
 const Brand = [
   { text: 'AVERMEDIA', value: 'AVERMEDIA' },
