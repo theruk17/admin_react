@@ -5,7 +5,7 @@ import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tooltip } from 'antd';
 import '../App.css';
 
-const API_URL = 'http://13.213.77.186:3000';
+const API_URL = 'https://d1hcfk5kl1j97j.cloudfront.net';
 
 const Brand = [
   { val: 'ASUS' },
