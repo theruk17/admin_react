@@ -3,7 +3,7 @@ import { message, Card, Space, Button, Progress } from 'antd';
 import axios from 'axios';
 import { useState } from 'react';
 
-const API_URL = 'https://d1hcfk5kl1j97j.cloudfront.net';
+const API_URL = import.meta.env.VITE_API_URL
 
 const Upload_data = () => {
   const [loading, setLoading] = useState(false);

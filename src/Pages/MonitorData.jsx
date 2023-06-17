@@ -5,7 +5,7 @@ import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Button } from 'antd';
 import '../App.css';
 
-const API_URL = 'https://d1hcfk5kl1j97j.cloudfront.net';
+const API_URL = import.meta.env.VITE_API_URL
 
 const Brand = [
   { val: 'ACER' },
@@ -95,13 +95,13 @@ const getBase64 = (file) =>
   });
 
 const beforeUpload = (file) => {
-  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+  const isJpgOrPng = file.type === 'image/jpeg';
   if (!isJpgOrPng) {
-    message.error('You can only upload JPG/PNG file!');
+    message.error('You can only upload JPG file!');
   }
-  const isLt2M = file.size / 1024 / 1024 < 2;
+  const isLt2M = file.size / 1024 / 1024 < 1;
   if (!isLt2M) {
-    message.error('Image must smaller than 2MB!');
+    message.error('Image must smaller than 1MB!');
   }
   return isJpgOrPng && isLt2M;
 };
