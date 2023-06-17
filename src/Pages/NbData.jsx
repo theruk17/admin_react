@@ -11,6 +11,7 @@ const Brand = [
   { val: 'ACER' },
   { val: 'ASUS' },
   { val: 'DELL' },
+  { val: 'GIGABYTE' },
   { val: 'HP' },
   { val: 'LENOVO' },
   { val: 'MSI' },
@@ -46,6 +47,7 @@ const Color = [
   { val: '(MICA SILVER)' },
   { val: '(NATURAL SILVER)' },
   { val: '(PLATINUM SILVER)' },
+  { val: '(PURE SILVER)' },
   { val: '(SPECTER GREEN WITH CAMOUFLAG)' },
 
 

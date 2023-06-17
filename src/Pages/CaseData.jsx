@@ -18,6 +18,7 @@ const Brand = [
   { val: 'COOLER MASTER' },
   { val: 'CORSAIR' },
   { val: 'DARKFLASH' },
+  { val: 'FRACTAL' },
   { val: 'GIGABYTE' },
   { val: 'LIAN LI' },
   { val: 'INWIN' },

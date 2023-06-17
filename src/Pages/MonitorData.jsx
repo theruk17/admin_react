@@ -82,7 +82,8 @@ const Group = [
   { val: '12', label: '31.5" 75Hz 2K' },
   { val: '13', label: '32" 144Hz - 165Hz 2K - 4K' },
   { val: '14', label: '34" 144Hz' },
-  { val: '15', label: '34" 100Hz - 144Hz 2K' }
+  { val: '15', label: '34" 100Hz - 144Hz 2K' },
+  { val: '16', label: '30" 200Hz 2K' }
 ]
 
 const getBase64 = (file) =>
