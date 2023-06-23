@@ -8,20 +8,20 @@ import '../App.css';
 const API_URL = import.meta.env.VITE_API_URL
 
 const Brand = [
-  { val: 'ACER' },
-  { val: 'AOC' },
-  { val: 'ASUS' },
-  { val: 'BENQ' },
-  { val: 'COOLER MASTER' },
-  { val: 'DAHUA' },
-  { val: 'DELL' },
-  { val: 'GIGABYTE' },
-  { val: 'LENOVO' },
-  { val: 'LG' },
-  { val: 'MSI' },
-  { val: 'PHILIPS' },
-  { val: 'SAMSUNG' },
-  { val: 'VIEWSONIC' },
+  { text: 'ACER', value: 'ACER' },
+  { text: 'AOC', value: 'AOC' },
+  { text: 'ASUS', value: 'ASUS' },
+  { text: 'BENQ', value: 'BENQ' },
+  { text: 'COOLER MASTER', value: 'COOLER MASTER' },
+  { text: 'DAHUA', value: 'DAHUA' },
+  { text: 'DELL', value: 'DELL' },
+  { text: 'GIGABYTE', value: 'GIGABYTE' },
+  { text: 'LENOVO', value: 'LENOVO' },
+  { text: 'LG', value: 'LG' },
+  { text: 'MSI', value: 'MSI' },
+  { text: 'PHILIPS', value: 'PHILIPS' },
+  { text: 'SAMSUNG', value: 'SAMSUNG' },
+  { text: 'VIEWSONIC', value: 'VIEWSONIC' },
 ]
 
 const Size = [
@@ -67,25 +67,6 @@ const Resolution = [
   { val: '3440 x 1440 (2K)' }
 ]
 
-const Group = [
-  { val: '1', label: '21.5" 75Hz' },
-  { val: '2', label: '24" 75Hz - 100Hz' },
-  { val: '3', label: '24" 144Hz' },
-  { val: '4', label: '24" 165Hz - 170Hz' },
-  { val: '5', label: '24" 240Hz - 360Hz' },
-  { val: '6', label: '27" 75Hz - 100Hz' },
-  { val: '7', label: '27" 75Hz 2K' },
-  { val: '8', label: '27" 144Hz - 250Hz' },
-  { val: '9', label: '27" 100Hz - 280Hz 2K' },
-  { val: '10', label: '27" - 28" 60Hz - 144Hz 4K' },
-  { val: '11', label: '31.5" 75Hz - 240Hz' },
-  { val: '12', label: '31.5" 75Hz 2K' },
-  { val: '13', label: '32" 144Hz - 165Hz 2K - 4K' },
-  { val: '14', label: '34" 144Hz' },
-  { val: '15', label: '34" 100Hz - 144Hz 2K' },
-  { val: '16', label: '30" 200Hz 2K' }
-]
-
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -116,7 +97,15 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState(['']);
 
+  const [dataMntGroup, setDataMntGroup] = useState([]);
+
   useEffect(() => {
+    axios
+      .get(API_URL + "/monitor_group")
+      .then((res) => {
+        setDataMntGroup(res.data);
+      });
+
     setChecked(record.mnt_curve === "Y")
     setSwitchValue(record.mnt_status === "Y")
     setFileList([{ url: record.mnt_img }])
@@ -327,8 +316,8 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
                 },
               ]}>
               <Select placeholder="Group" allowClear>
-                {Group.map(item => (
-                  <Select.Option key={item.val} value={item.val}>{item.label}</Select.Option>
+                {dataMntGroup.map(item => (
+                  <Select.Option key={item.mnt_group_id} value={item.mnt_group_id}>{item.mnt_group}</Select.Option>
                 ))}
               </Select>
             </Form.Item>
@@ -427,6 +416,7 @@ const ShowData = () => {
       .then((res) => {
         message.success(res.data);
       })
+
   }, []);
 
   const showModal = (record) => {
@@ -503,56 +493,7 @@ const ShowData = () => {
     },
     {
       title: 'Brand', dataIndex: 'mnt_brand', key: 'mnt_brand', width: 130,
-      filters: [
-        {
-          text: 'ACER',
-          value: 'ACER',
-        },
-        {
-          text: 'AOC',
-          value: 'AOC',
-        },
-        {
-          text: 'ASUS',
-          value: 'ASUS',
-        },
-        {
-          text: 'BENQ',
-          value: 'BENQ',
-        },
-        {
-          text: 'COOLER MASTER',
-          value: 'COOLER MASTER',
-        },
-        {
-          text: 'DAHUA',
-          value: 'DAHUA',
-        },
-        {
-          text: 'DELL',
-          value: 'DELL',
-        },
-        {
-          text: 'GIGABYTE',
-          value: 'GIGABYTE',
-        },
-        {
-          text: 'LENOVO',
-          value: 'LENOVO',
-        },
-        {
-          text: 'LG',
-          value: 'LG',
-        },
-        {
-          text: 'MSI',
-          value: 'MSI',
-        },
-        {
-          text: 'SAMSUNG',
-          value: 'SAMSUNG',
-        }
-      ],
+      filters: Brand,
       onFilter: (value, record) => record.mnt_brand.indexOf(value) === 0,
       render: (text, record) => <a href={record.mnt_href} target='_blank'>{text}</a>,
       sorter: (a, b) => a.mnt_brand.localeCompare(b.mnt_brand),
