@@ -430,6 +430,18 @@ const FanData = () => {
           }
         },
         {
+          title: 'บางแสน', dataIndex: 'mic_stock_bangsaen', key: 'mic_stock_bangsaen', align: 'center',
+          sorter: (a, b) => a.mic_stock_bangsaen - b.mic_stock_bangsaen,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+        {
           title: 'รวม', dataIndex: 'mic_stock_sum', key: 'mic_stock_sum', align: 'center', sorter: (a, b) => a.mic_stock_sum - b.mic_stock_sum,
           render(text, record) {
             return {

@@ -492,6 +492,18 @@ const NbData = () => {
           }
         },
         {
+          title: 'บางแสน', dataIndex: 'nb_stock_bangsaen', key: 'nb_stock_bangsaen', align: 'center',
+          sorter: (a, b) => a.nb_stock_bangsaen - b.nb_stock_bangsaen,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+        {
           title: 'รวม', dataIndex: 'nb_stock_sum', key: 'nb_stock_sum', align: 'center', sorter: (a, b) => a.nb_stock_sum - b.nb_stock_sum,
           render(text, record) {
             return {
@@ -520,7 +532,7 @@ const NbData = () => {
       )
     },
     {
-      title: 'Status', dataIndex: 'case_status', key: 'case_status', align: 'center',
+      title: 'Status', dataIndex: 'nb_status', key: 'nb_status', align: 'center',
       render: (text, record) => (
         <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.nb_status === 'Y'} onChange={() => handleStatusChange(record.nb_id)}
         />

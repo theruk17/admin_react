@@ -464,6 +464,18 @@ const CaseData = () => {
           }
         },
         {
+          title: 'บางแสน', dataIndex: 'case_stock_bangsaen', key: 'case_stock_bangsaen', align: 'center',
+          sorter: (a, b) => a.case_stock_bangsaen - b.case_stock_bangsaen,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+        {
           title: 'รวม', dataIndex: 'case_stock_sum', key: 'case_stock_sum', align: 'center', sorter: (a, b) => a.case_stock_sum - b.case_stock_sum,
           render(text, record) {
             return {
