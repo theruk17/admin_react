@@ -91,14 +91,14 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
 
   useEffect(() => {
     setSwitchValue(record.nb_status === "Y")
-    setFileList([{ url: record.nb_img }])
+    setFileList([{ url: API_URL + '/' + record.nb_img }])
     form.setFieldsValue({
       group: record.nb_group,
       brand: record.nb_brand,
       model: record.nb_model,
       color: record.nb_color,
-      price_srp: record.nb_price_srp,
-      dis_price: record.nb_dis_price,
+      price_srp: record.product_price,
+      dis_price: record.product_minprice,
       href: record.nb_href,
       status: record.nb_status,
     });
@@ -123,11 +123,12 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const handleUpload = ({ file, onSuccess, onError, onProgress }) => {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', 'osmgat5m');
+    formData.append('id', record.nb_id);
+    formData.append('t_name', 'nb');
+    formData.append('c_name', 'nb');
 
     try {
-      axios.post('https://api.cloudinary.com/v1_1/drllzqbk0/image/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+      axios.post(API_URL + '/uploadimg', formData, {
         onUploadProgress: (progressEvent) => {
           const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
           onProgress({ percent });
@@ -136,12 +137,9 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
         .then(res => {
           console.log(res);
           const imageUrl = res.data.secure_url;
-          message.success("Upload Image to Cloud Server " + res.statusText);
+          message.success("Upload Image to Server " + res.statusText);
           onSuccess(imageUrl);
-          axios.put(API_URL + '/update_img_nb/' + record.nb_id, { imageUrl })
-            .then(res => {
-              message.success(res.data);
-            })
+
         })
 
     } catch (error) {
@@ -233,7 +231,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
               <InputNumber
                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                min={0}
+                min={0} readOnly
               />
             </Form.Item>
           </Col>
@@ -242,7 +240,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
               <InputNumber
                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                min={0}
+                min={0} readOnly
               />
             </Form.Item>
           </Col>
@@ -297,19 +295,19 @@ const NbData = () => {
     console.log('params', pagination, filters, sorter, extra);
   };
 
+  const init = () => {
+    axios
+      .post(API_URL + "/admin_data", { t_name: 'nb', c_name: 'nb' })
+      .then((res) => {
+        setData(res.data);
+        setLoading(false)
+      });
+  }
+
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(API_URL + "/admin_data_nb")
-      .then((res) => {
-        setLoading(false);
-        setData(res.data);
-      });
-    axios
-      .put(API_URL + "/update_stock_nb")
-      .then((res) => {
-        message.success(res.data);
-      })
+    init()
+
   }, []);
 
   const showModal = (record) => {
@@ -333,16 +331,9 @@ const NbData = () => {
   const handleCreate = (values) => {
     axios.put(API_URL + '/edit_nb/' + record.nb_id, values)
       .then(res => {
+        setVisible(false)
         message.success(res.data);
-        axios.get(API_URL + '/admin_data_nb')
-          .then(res => {
-            setData(res.data);
-            setVisible(false);
-          })
-          .catch(err => {
-            console.log(err);
-            message.error("Error fetching updated data");
-          })
+        init()
       })
       .catch(err => {
         console.log(err);
@@ -351,6 +342,7 @@ const NbData = () => {
   };
 
   const handleStatusChange = (key) => {
+    setLoading(true)
     const newData = [...data];
     const target = newData.find((item) => item.nb_id === key);
     if (target) {
@@ -359,14 +351,8 @@ const NbData = () => {
       axios.put(API_URL + '/edit_status_nb/' + key, { status: target.nb_status })
         .then(res => {
           message.success(res.data);
-          axios.get(API_URL + '/admin_data_nb')
-            .then(res => {
-              setData(res.data);
-            })
-            .catch(err => {
-              console.log(err);
-              message.error("Error fetching updated data");
-            })
+          setLoading(false)
+          init()
         })
         .catch(err => {
           console.log(err);
@@ -383,7 +369,7 @@ const NbData = () => {
       key: 'nb_img',
       width: 60,
       align: 'center',
-      render: (imageUrl) => <img src={imageUrl} alt="thumbnail" height="30" />,
+      render: (imageUrl) => <img src={API_URL + '/' + imageUrl} alt="thumbnail" height="30" />,
     },
     {
       title: 'Brand', dataIndex: 'nb_brand', key: 'nb_brand',
@@ -432,8 +418,8 @@ const NbData = () => {
       title: 'STOCK',
       children: [
         {
-          title: 'นครนายก', dataIndex: 'nb_stock_nny', key: 'nb_stock_nny', align: 'center',
-          sorter: (a, b) => a.nb_stock_nny - b.nb_stock_nny,
+          title: 'นครนายก', dataIndex: 'stock_nny', key: 'stock_nny', align: 'center',
+          sorter: (a, b) => a.stock_nny - b.stock_nny,
           render(text, record) {
             return {
               props: {
@@ -444,8 +430,8 @@ const NbData = () => {
           }
         },
         {
-          title: 'รามอินทรา', dataIndex: 'nb_stock_ramintra', key: 'nb_stock_ramintra', align: 'center',
-          sorter: (a, b) => a.nb_stock_ramintra - b.nb_stock_ramintra,
+          title: 'รามอินทรา', dataIndex: 'stock_ramintra', key: 'stock_ramintra', align: 'center',
+          sorter: (a, b) => a.stock_ramintra - b.stock_ramintra,
           render(text, record) {
             return {
               props: {
@@ -456,8 +442,8 @@ const NbData = () => {
           }
         },
         {
-          title: 'บางพลัด', dataIndex: 'nb_stock_bangphlat', key: 'nb_stock_bangphlat', align: 'center',
-          sorter: (a, b) => a.nb_stock_bangphlat - b.nb_stock_bangphlat,
+          title: 'บางพลัด', dataIndex: 'stock_bangphlat', key: 'stock_bangphlat', align: 'center',
+          sorter: (a, b) => a.stock_bangphlat - b.stock_bangphlat,
           render(text, record) {
             return {
               props: {
@@ -468,8 +454,8 @@ const NbData = () => {
           }
         },
         {
-          title: 'เดอะโฟล์ท', dataIndex: 'nb_stock_thefloat', key: 'nb_stock_thefloat', align: 'center',
-          sorter: (a, b) => a.nb_stock_thefloat - b.nb_stock_thefloat,
+          title: 'เดอะโฟล์ท', dataIndex: 'stock_thefloat', key: 'stock_thefloat', align: 'center',
+          sorter: (a, b) => a.stock_thefloat - b.stock_thefloat,
           render(text, record) {
             return {
               props: {
@@ -480,8 +466,8 @@ const NbData = () => {
           }
         },
         {
-          title: 'รังสิต', dataIndex: 'nb_stock_rangsit', key: 'nb_stock_rangsit', align: 'center',
-          sorter: (a, b) => a.nb_stock_rangsit - b.nb_stock_rangsit,
+          title: 'รังสิต', dataIndex: 'stock_rangsit', key: 'stock_rangsit', align: 'center',
+          sorter: (a, b) => a.stock_rangsit - b.stock_rangsit,
           render(text, record) {
             return {
               props: {
@@ -492,8 +478,8 @@ const NbData = () => {
           }
         },
         {
-          title: 'บางแสน', dataIndex: 'nb_stock_bangsaen', key: 'nb_stock_bangsaen', align: 'center',
-          sorter: (a, b) => a.nb_stock_bangsaen - b.nb_stock_bangsaen,
+          title: 'บางแสน', dataIndex: 'stock_bangsaen', key: 'stock_bangsaen', align: 'center',
+          sorter: (a, b) => a.stock_bangsaen - b.stock_bangsaen,
           render(text, record) {
             return {
               props: {
@@ -504,7 +490,7 @@ const NbData = () => {
           }
         },
         {
-          title: 'รวม', dataIndex: 'nb_stock_sum', key: 'nb_stock_sum', align: 'center', sorter: (a, b) => a.nb_stock_sum - b.nb_stock_sum,
+          title: 'รวม', dataIndex: 'sumstock', key: 'sumstock', align: 'center', sorter: (a, b) => a.sumstock - b.sumstock,
           render(text, record) {
             return {
               props: {
@@ -518,15 +504,15 @@ const NbData = () => {
     },
 
     {
-      title: 'Price SRP', dataIndex: 'nb_price_srp', key: 'nb_price_srp', align: 'right',
-      sorter: (a, b) => a.nb_price_srp - b.nb_price_srp,
+      title: 'Price SRP', dataIndex: 'product_price', key: 'product_price', align: 'right',
+      sorter: (a, b) => a.product_price - b.product_price,
       render: (value) => (
         <NumericFormat style={{ color: "#0958d9" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
     {
-      title: 'Discount', dataIndex: 'nb_dis_price', key: 'nb_dis_price', align: 'right',
-      sorter: (a, b) => a.nb_dis_price - b.nb_dis_price,
+      title: 'Discount', dataIndex: 'product_minprice', key: 'product_minprice', align: 'right',
+      sorter: (a, b) => a.product_minprice - b.product_minprice,
       render: (value) => (
         <NumericFormat style={{ color: "#d4001a" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )

@@ -108,7 +108,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
 
     setChecked(record.mnt_curve === "Y")
     setSwitchValue(record.mnt_status === "Y")
-    setFileList([{ url: record.mnt_img }])
+    setFileList([{ url: API_URL + '/' + record.mnt_img }])
     form.setFieldsValue({
       group: record.mnt_group,
       brand: record.mnt_brand,
@@ -117,8 +117,8 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
       hz: record.mnt_refresh_rate,
       panel: record.mnt_panel,
       resolution: record.mnt_resolution,
-      price_srp: record.mnt_price_srp,
-      price_w_com: record.mnt_price_w_com,
+      price_srp: record.product_price,
+      price_w_com: record.product_minprice,
       curve: record.mnt_curve,
       status: record.mnt_status,
       href: record.mnt_href,
@@ -149,11 +149,12 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const handleUpload = ({ file, onSuccess, onError, onProgress }) => {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', 'iylzchgu');
+    formData.append('id', record.mnt_id);
+    formData.append('t_name', 'monitor');
+    formData.append('c_name', 'mnt');
 
     try {
-      axios.post('https://api.cloudinary.com/v1_1/drllzqbk0/image/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+      axios.post(API_URL + '/uploadimg', formData, {
         onUploadProgress: (progressEvent) => {
           const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
           onProgress({ percent });
@@ -162,12 +163,9 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
         .then(res => {
           console.log(res);
           const imageUrl = res.data.secure_url;
-          message.success("Upload Image to Cloud Server " + res.statusText);
+          message.success("Upload Image to Server " + res.statusText);
           onSuccess(imageUrl);
-          axios.put(API_URL + '/update_img_mnt/' + record.mnt_id, { imageUrl })
-            .then(res => {
-              message.success(res.data);
-            })
+
         })
 
     } catch (error) {
@@ -333,7 +331,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
               <InputNumber
                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                min={0}
+                min={0} readOnly
               />
             </Form.Item>
           </Col>
@@ -348,7 +346,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
               <InputNumber
                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                min={0}
+                min={0} readOnly
               />
             </Form.Item>
           </Col>
@@ -403,19 +401,19 @@ const ShowData = () => {
     console.log('params', pagination, filters, sorter, extra);
   };
 
+  const init = () => {
+    axios
+      .post(API_URL + "/admin_data", { t_name: 'monitor', c_name: 'mnt' })
+      .then((res) => {
+        setData(res.data);
+        setLoading(false);
+      });
+  }
+
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(API_URL + "/admin_data")
-      .then((res) => {
-        setLoading(false);
-        setData(res.data);
-      });
-    axios
-      .put(API_URL + "/update_stock_mnt")
-      .then((res) => {
-        message.success(res.data);
-      })
+    init()
+
 
   }, []);
 
@@ -440,16 +438,10 @@ const ShowData = () => {
   const handleCreate = (values) => {
     axios.put(API_URL + '/edit/' + record.mnt_id, values)
       .then(res => {
+        setVisible(false)
         message.success(res.data);
-        axios.get(API_URL + '/admin_data')
-          .then(res => {
-            setData(res.data);
-            setVisible(false);
-          })
-          .catch(err => {
-            console.log(err);
-            message.error("Error fetching updated data");
-          })
+        init()
+
       })
       .catch(err => {
         console.log(err);
@@ -458,6 +450,7 @@ const ShowData = () => {
   };
 
   const handleStatusChange = (key) => {
+    setLoading(true)
     const newData = [...data];
     const target = newData.find((item) => item.mnt_id === key);
     if (target) {
@@ -466,14 +459,8 @@ const ShowData = () => {
       axios.put(API_URL + '/edit_status/' + key, { status: target.mnt_status })
         .then(res => {
           message.success(res.data);
-          axios.get(API_URL + '/admin_data')
-            .then(res => {
-              setData(res.data);
-            })
-            .catch(err => {
-              console.log(err);
-              message.error("Error fetching updated data");
-            })
+          setLoading(false)
+          init()
         })
         .catch(err => {
           console.log(err);
@@ -489,7 +476,7 @@ const ShowData = () => {
       key: 'mnt_img',
       width: 80,
       align: 'center',
-      render: (imageUrl) => <img src={imageUrl} alt="thumbnail" width="30" height="30" />,
+      render: (imageUrl) => <img src={API_URL + '/' + imageUrl} alt="thumbnail" width="30" height="30" />,
     },
     {
       title: 'Brand', dataIndex: 'mnt_brand', key: 'mnt_brand', width: 130,
@@ -653,8 +640,8 @@ const ShowData = () => {
       title: 'STOCK',
       children: [
         {
-          title: 'นครนายก', dataIndex: 'mnt_stock_nny', key: 'mnt_stock_nny', align: 'center', width: 60,
-          sorter: (a, b) => a.mnt_stock_nny - b.mnt_stock_nny,
+          title: 'นครนายก', dataIndex: 'stock_nny', key: 'stock_nny', align: 'center', width: 60,
+          sorter: (a, b) => a.stock_nny - b.stock_nny,
           render(text, record) {
             return {
               props: {
@@ -665,8 +652,8 @@ const ShowData = () => {
           }
         },
         {
-          title: 'รามอินทรา', dataIndex: 'mnt_stock_ramintra', key: 'mnt_stock_ramintra', align: 'center', width: 60,
-          sorter: (a, b) => a.mnt_stock_ramintra - b.mnt_stock_ramintra,
+          title: 'รามอินทรา', dataIndex: 'stock_ramintra', key: 'stock_ramintra', align: 'center', width: 60,
+          sorter: (a, b) => a.stock_ramintra - b.stock_ramintra,
           render(text, record) {
             return {
               props: {
@@ -677,8 +664,8 @@ const ShowData = () => {
           }
         },
         {
-          title: 'บางพลัด', dataIndex: 'mnt_stock_bangphlat', key: 'mnt_stock_bangphlat', align: 'center', width: 60,
-          sorter: (a, b) => a.mnt_stock_bangphlat - b.mnt_stock_bangphlat,
+          title: 'บางพลัด', dataIndex: 'stock_bangphlat', key: 'stock_bangphlat', align: 'center', width: 60,
+          sorter: (a, b) => a.stock_bangphlat - b.stock_bangphlat,
           render(text, record) {
             return {
               props: {
@@ -689,8 +676,8 @@ const ShowData = () => {
           }
         },
         {
-          title: 'เดอะโฟล์ท', dataIndex: 'mnt_stock_thefloat', key: 'mnt_stock_thefloat', align: 'center', width: 60,
-          sorter: (a, b) => a.mnt_stock_thefloat - b.mnt_stock_thefloat,
+          title: 'เดอะโฟล์ท', dataIndex: 'stock_thefloat', key: 'stock_thefloat', align: 'center', width: 60,
+          sorter: (a, b) => a.stock_thefloat - b.stock_thefloat,
           render(text, record) {
             return {
               props: {
@@ -701,8 +688,8 @@ const ShowData = () => {
           }
         },
         {
-          title: 'รังสิต', dataIndex: 'mnt_stock_rangsit', key: 'mnt_stock_rangsit', align: 'center',
-          sorter: (a, b) => a.mnt_stock_rangsit - b.mnt_stock_rangsit,
+          title: 'รังสิต', dataIndex: 'stock_rangsit', key: 'stock_rangsit', align: 'center',
+          sorter: (a, b) => a.stock_rangsit - b.stock_rangsit,
           render(text, record) {
             return {
               props: {
@@ -713,8 +700,8 @@ const ShowData = () => {
           }
         },
         {
-          title: 'บางแสน', dataIndex: 'mnt_stock_bangsaen', key: 'mnt_stock_bangsaen', align: 'center',
-          sorter: (a, b) => a.mnt_stock_bangsaen - b.mnt_stock_bangsaen,
+          title: 'บางแสน', dataIndex: 'stock_bangsaen', key: 'stock_bangsaen', align: 'center',
+          sorter: (a, b) => a.stock_bangsaen - b.stock_bangsaen,
           render(text, record) {
             return {
               props: {
@@ -725,7 +712,7 @@ const ShowData = () => {
           }
         },
         {
-          title: 'รวม', dataIndex: 'mnt_stock_sum', key: 'mnt_stock_sum', align: 'center', width: 60, sorter: (a, b) => a.mnt_stock_sum - b.mnt_stock_sum,
+          title: 'รวม', dataIndex: 'sumstock', key: 'sumstock', align: 'center', width: 60, sorter: (a, b) => a.sumstock - b.sumstock,
           render(text, record) {
             return {
               props: {
@@ -738,15 +725,15 @@ const ShowData = () => {
       ]
     },
     {
-      title: 'Price SRP', dataIndex: 'mnt_price_srp', key: 'mnt_price_srp', align: 'right', width: 100,
-      sorter: (a, b) => a.mnt_price_srp - b.mnt_price_srp,
+      title: 'Price SRP', dataIndex: 'product_price', key: 'product_price', align: 'right', width: 100,
+      sorter: (a, b) => a.product_price - b.product_price,
       render: (value) => (
         <NumericFormat style={{ color: "#0958d9" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
     {
-      title: 'ซื้อพร้อมเครื่อง', dataIndex: 'mnt_price_w_com', key: 'mnt_price_w_com', align: 'right', width: 100,
-      sorter: (a, b) => a.mnt_price_w_com - b.mnt_price_w_com,
+      title: 'ซื้อพร้อมเครื่อง', dataIndex: 'product_minprice', key: 'product_minprice', align: 'right', width: 100,
+      sorter: (a, b) => a.product_minprice - b.product_minprice,
       render: (value) => (
         <NumericFormat style={{ color: "#f5222d" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )

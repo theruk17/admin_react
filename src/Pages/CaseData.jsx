@@ -100,13 +100,13 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
 
   useEffect(() => {
     setSwitchValue(record.case_status === "Y")
-    setFileList([{ url: record.case_img }])
+    setFileList([{ url: API_URL + '/' + record.case_img }])
     form.setFieldsValue({
       group: record.case_group,
       brand: record.case_brand,
       model: record.case_model,
       color: record.case_color,
-      price_srp: record.case_price_srp,
+      price_srp: record.product_price,
       href: record.case_href,
       status: record.case_status,
     });
@@ -131,11 +131,12 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const handleUpload = ({ file, onSuccess, onError, onProgress }) => {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', 'xwsut1mj');
+    formData.append('id', record.case_id);
+    formData.append('t_name', 'case');
+    formData.append('c_name', 'case');
 
     try {
-      axios.post('https://api.cloudinary.com/v1_1/drllzqbk0/image/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+      axios.post(API_URL + '/uploadimg', formData, {
         onUploadProgress: (progressEvent) => {
           const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
           onProgress({ percent });
@@ -144,12 +145,9 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
         .then(res => {
           console.log(res);
           const imageUrl = res.data.secure_url;
-          message.success("Upload Image to Cloud Server " + res.statusText);
+          message.success("Upload Image to Server " + res.statusText);
           onSuccess(imageUrl);
-          axios.put(API_URL + '/update_img_case/' + record.case_id, { imageUrl })
-            .then(res => {
-              message.success(res.data);
-            })
+
         })
 
     } catch (error) {
@@ -241,7 +239,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
               <InputNumber
                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                min={0}
+                min={0} readOnly
               />
             </Form.Item>
           </Col>
@@ -296,19 +294,19 @@ const CaseData = () => {
     console.log('params', pagination, filters, sorter, extra);
   };
 
+  const init = () => {
+    axios
+      .post(API_URL + "/admin_data", { t_name: 'case', c_name: 'case' })
+      .then((res) => {
+        setData(res.data);
+        setLoading(false);
+      });
+  }
+
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(API_URL + "/admin_data_case")
-      .then((res) => {
-        setLoading(false);
-        setData(res.data);
-      });
-    axios
-      .put(API_URL + "/update_stock_case")
-      .then((res) => {
-        message.success(res.data);
-      })
+    init()
+
   }, []);
 
   const showModal = (record) => {
@@ -332,16 +330,9 @@ const CaseData = () => {
   const handleCreate = (values) => {
     axios.put(API_URL + '/edit_case/' + record.case_id, values)
       .then(res => {
+        setVisible(false)
         message.success(res.data);
-        axios.get(API_URL + '/admin_data_case')
-          .then(res => {
-            setData(res.data);
-            setVisible(false);
-          })
-          .catch(err => {
-            console.log(err);
-            message.error("Error fetching updated data");
-          })
+        init()
       })
       .catch(err => {
         console.log(err);
@@ -353,6 +344,7 @@ const CaseData = () => {
 
 
   const handleStatusChange = (key) => {
+    setLoading(true)
     const newData = [...data];
     const target = newData.find((item) => item.case_id === key);
     if (target) {
@@ -361,14 +353,8 @@ const CaseData = () => {
       axios.put(API_URL + '/edit_status_case/' + key, { status: target.case_status })
         .then(res => {
           message.success(res.data);
-          axios.get(API_URL + '/admin_data_case')
-            .then(res => {
-              setData(res.data);
-            })
-            .catch(err => {
-              console.log(err);
-              message.error("Error fetching updated data");
-            })
+          setLoading(false)
+          init()
         })
         .catch(err => {
           console.log(err);
@@ -385,11 +371,11 @@ const CaseData = () => {
       key: 'case_img',
       width: 80,
       align: 'center',
-      render: (imageUrl) => <img src={imageUrl} alt="thumbnail" width="30" height="30" />,
+      render: (imageUrl) => <img src={API_URL + '/' + imageUrl} alt="thumbnail" width="30" height="30" />,
     },
     {
       title: 'Brand', dataIndex: 'case_brand', key: 'case_brand',
-      render: (text, record) => <a href={record.mnt_href} target='_blank'>{text}</a>,
+      render: (text, record) => <a href={record.case_href} target='_blank'>{text}</a>,
       sorter: (a, b) => a.case_brand.localeCompare(b.case_brand),
       sortDirections: ['descend'],
     },
@@ -404,8 +390,8 @@ const CaseData = () => {
       title: 'STOCK',
       children: [
         {
-          title: 'นครนายก', dataIndex: 'case_stock_nny', key: 'case_stock_nny', align: 'center',
-          sorter: (a, b) => a.case_stock_nny - b.case_stock_nny,
+          title: 'นครนายก', dataIndex: 'stock_nny', key: 'stock_nny', align: 'center',
+          sorter: (a, b) => a.stock_nny - b.stock_nny,
           render(text, record) {
             return {
               props: {
@@ -416,8 +402,8 @@ const CaseData = () => {
           }
         },
         {
-          title: 'รามอินทรา', dataIndex: 'case_stock_ramintra', key: 'case_stock_ramintra', align: 'center',
-          sorter: (a, b) => a.case_stock_ramintra - b.case_stock_ramintra,
+          title: 'รามอินทรา', dataIndex: 'stock_ramintra', key: 'stock_ramintra', align: 'center',
+          sorter: (a, b) => a.stock_ramintra - b.stock_ramintra,
           render(text, record) {
             return {
               props: {
@@ -428,8 +414,8 @@ const CaseData = () => {
           }
         },
         {
-          title: 'บางพลัด', dataIndex: 'case_stock_bangphlat', key: 'case_stock_bangphlat', align: 'center',
-          sorter: (a, b) => a.case_stock_bangphlat - b.case_stock_bangphlat,
+          title: 'บางพลัด', dataIndex: 'stock_bangphlat', key: 'stock_bangphlat', align: 'center',
+          sorter: (a, b) => a.stock_bangphlat - b.stock_bangphlat,
           render(text, record) {
             return {
               props: {
@@ -440,8 +426,8 @@ const CaseData = () => {
           }
         },
         {
-          title: 'เดอะโฟล์ท', dataIndex: 'case_stock_thefloat', key: 'case_stock_thefloat', align: 'center',
-          sorter: (a, b) => a.case_stock_thefloat - b.case_stock_thefloat,
+          title: 'เดอะโฟล์ท', dataIndex: 'stock_thefloat', key: 'stock_thefloat', align: 'center',
+          sorter: (a, b) => a.stock_thefloat - b.stock_thefloat,
           render(text, record) {
             return {
               props: {
@@ -452,8 +438,8 @@ const CaseData = () => {
           }
         },
         {
-          title: 'รังสิต', dataIndex: 'case_stock_rangsit', key: 'case_stock_rangsit', align: 'center',
-          sorter: (a, b) => a.case_stock_rangsit - b.case_stock_rangsit,
+          title: 'รังสิต', dataIndex: 'stock_rangsit', key: 'stock_rangsit', align: 'center',
+          sorter: (a, b) => a.stock_rangsit - b.stock_rangsit,
           render(text, record) {
             return {
               props: {
@@ -464,8 +450,8 @@ const CaseData = () => {
           }
         },
         {
-          title: 'บางแสน', dataIndex: 'case_stock_bangsaen', key: 'case_stock_bangsaen', align: 'center',
-          sorter: (a, b) => a.case_stock_bangsaen - b.case_stock_bangsaen,
+          title: 'บางแสน', dataIndex: 'stock_bangsaen', key: 'stock_bangsaen', align: 'center',
+          sorter: (a, b) => a.stock_bangsaen - b.stock_bangsaen,
           render(text, record) {
             return {
               props: {
@@ -476,7 +462,7 @@ const CaseData = () => {
           }
         },
         {
-          title: 'รวม', dataIndex: 'case_stock_sum', key: 'case_stock_sum', align: 'center', sorter: (a, b) => a.case_stock_sum - b.case_stock_sum,
+          title: 'รวม', dataIndex: 'sumstock', key: 'sumstock', align: 'center', sorter: (a, b) => a.sumstock - b.sumstock,
           render(text, record) {
             return {
               props: {
@@ -490,8 +476,8 @@ const CaseData = () => {
     },
 
     {
-      title: 'Price SRP', dataIndex: 'case_price_srp', key: 'case_price_srp', align: 'right',
-      sorter: (a, b) => a.case_price_srp - b.case_price_srp,
+      title: 'Price SRP', dataIndex: 'product_price', key: 'product_price', align: 'right',
+      sorter: (a, b) => a.product_price - b.product_price,
       render: (value) => (
         <NumericFormat style={{ color: "#0958d9" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )

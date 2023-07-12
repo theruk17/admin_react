@@ -80,14 +80,14 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
 
   useEffect(() => {
     setSwitchValue(record.m_status === "Y")
-    setFileList([{ url: record.m_img }])
+    setFileList([{ url: API_URL + '/' + record.m_img }])
     form.setFieldsValue({
       color: record.m_color,
       type: record.m_type,
       brand: record.m_brand,
       model: record.m_model,
-      price_srp: record.m_price_srp,
-      discount: record.m_discount,
+      price_srp: record.product_price,
+      discount: record.product_minprice,
       href: record.m_href,
       status: record.m_status,
     });
@@ -112,11 +112,12 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const handleUpload = ({ file, onSuccess, onError, onProgress }) => {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', 'ta46vhin');
+    formData.append('id', record.m_id);
+    formData.append('t_name', 'mouse');
+    formData.append('c_name', 'm');
 
     try {
-      axios.post('https://api.cloudinary.com/v1_1/drllzqbk0/image/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+      axios.post(API_URL + '/uploadimg', formData, {
         onUploadProgress: (progressEvent) => {
           const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
           onProgress({ percent });
@@ -125,12 +126,8 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
         .then(res => {
           console.log(res);
           const imageUrl = res.data.secure_url;
-          message.success("Upload Image to Cloud Server " + res.statusText);
+          message.success("Upload Image to Server " + res.statusText);
           onSuccess(imageUrl);
-          axios.put(API_URL + '/update_img_m/' + record.m_id, { imageUrl })
-            .then(res => {
-              message.success(res.data);
-            })
 
         })
 
@@ -223,7 +220,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
               <InputNumber
                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                min={0}
+                min={0} readOnly
               />
             </Form.Item>
           </Col>
@@ -232,7 +229,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
               <InputNumber
                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                min={0}
+                min={0} readOnly
               />
             </Form.Item>
           </Col>
@@ -288,19 +285,19 @@ const FanData = () => {
     console.log('params', pagination, filters, sorter, extra);
   };
 
+  const init = () => {
+    axios
+      .post(API_URL + "/admin_data", { t_name: 'mouse', c_name: 'm' })
+      .then((res) => {
+        setData(res.data);
+        setLoading(false)
+      });
+  }
+
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(API_URL + "/admin_data_m")
-      .then((res) => {
-        setLoading(false);
-        setData(res.data);
-      });
-    axios
-      .put(API_URL + "/update_stock_m")
-      .then((res) => {
-        message.success(res.data);
-      })
+    init()
+
   }, []);
 
   const showModal = (record) => {
@@ -324,16 +321,9 @@ const FanData = () => {
   const handleCreate = (values) => {
     axios.put(API_URL + '/edit_m/' + record.m_id, values)
       .then(res => {
+        setVisible(false)
         message.success(res.data);
-        axios.get(API_URL + '/admin_data_m')
-          .then(res => {
-            setData(res.data);
-            setVisible(false);
-          })
-          .catch(err => {
-            console.log(err);
-            message.error("Error fetching updated data");
-          })
+        init()
       })
       .catch(err => {
         console.log(err);
@@ -342,6 +332,7 @@ const FanData = () => {
   };
 
   const handleStatusChange = (key) => {
+    setLoading(true)
     const newData = [...data];
     const target = newData.find((item) => item.m_id === key);
     if (target) {
@@ -350,14 +341,8 @@ const FanData = () => {
       axios.put(API_URL + '/edit_status_m/' + key, { status: target.m_status })
         .then(res => {
           message.success(res.data);
-          axios.get(API_URL + '/admin_data_m')
-            .then(res => {
-              setData(res.data);
-            })
-            .catch(err => {
-              console.log(err);
-              message.error("Error fetching updated data");
-            })
+          setLoading(false)
+          init()
         })
         .catch(err => {
           console.log(err);
@@ -374,7 +359,7 @@ const FanData = () => {
       key: 'm_img',
       width: 60,
       align: 'center',
-      render: (imageUrl) => <img src={imageUrl} alt="thumbnail" height="30" />,
+      render: (imageUrl) => <img src={API_URL + '/' + imageUrl} alt="thumbnail" height="30" />,
     },
     {
       title: 'Brand', dataIndex: 'm_brand', key: 'm_brand', width: 100,
@@ -402,8 +387,8 @@ const FanData = () => {
       title: 'STOCK',
       children: [
         {
-          title: 'นครนายก', dataIndex: 'm_stock_nny', key: 'm_stock_nny', align: 'center',
-          sorter: (a, b) => a.m_stock_nny - b.m_stock_nny,
+          title: 'นครนายก', dataIndex: 'stock_nny', key: 'stock_nny', align: 'center',
+          sorter: (a, b) => a.stock_nny - b.stock_nny,
           render(text, record) {
             return {
               props: {
@@ -414,8 +399,8 @@ const FanData = () => {
           }
         },
         {
-          title: 'รามอินทรา', dataIndex: 'm_stock_ramintra', key: 'm_stock_ramintra', align: 'center',
-          sorter: (a, b) => a.m_stock_ramintra - b.m_stock_ramintra,
+          title: 'รามอินทรา', dataIndex: 'stock_ramintra', key: 'stock_ramintra', align: 'center',
+          sorter: (a, b) => a.stock_ramintra - b.stock_ramintra,
           render(text, record) {
             return {
               props: {
@@ -426,8 +411,8 @@ const FanData = () => {
           }
         },
         {
-          title: 'บางพลัด', dataIndex: 'm_stock_bangphlat', key: 'm_stock_bangphlat', align: 'center',
-          sorter: (a, b) => a.m_stock_bangphlat - b.m_stock_bangphlat,
+          title: 'บางพลัด', dataIndex: 'stock_bangphlat', key: 'stock_bangphlat', align: 'center',
+          sorter: (a, b) => a.stock_bangphlat - b.stock_bangphlat,
           render(text, record) {
             return {
               props: {
@@ -438,8 +423,8 @@ const FanData = () => {
           }
         },
         {
-          title: 'เดอะโฟล์ท', dataIndex: 'm_stock_thefloat', key: 'm_stock_thefloat', align: 'center',
-          sorter: (a, b) => a.m_stock_thefloat - b.m_stock_thefloat,
+          title: 'เดอะโฟล์ท', dataIndex: 'stock_thefloat', key: 'stock_thefloat', align: 'center',
+          sorter: (a, b) => a.stock_thefloat - b.stock_thefloat,
           render(text, record) {
             return {
               props: {
@@ -450,8 +435,8 @@ const FanData = () => {
           }
         },
         {
-          title: 'รังสิต', dataIndex: 'm_stock_rangsit', key: 'm_stock_rangsit', align: 'center',
-          sorter: (a, b) => a.m_stock_rangsit - b.m_stock_rangsit,
+          title: 'รังสิต', dataIndex: 'stock_rangsit', key: 'stock_rangsit', align: 'center',
+          sorter: (a, b) => a.stock_rangsit - b.stock_rangsit,
           render(text, record) {
             return {
               props: {
@@ -462,8 +447,8 @@ const FanData = () => {
           }
         },
         {
-          title: 'บางแสน', dataIndex: 'm_stock_bangsaen', key: 'm_stock_bangsaen', align: 'center',
-          sorter: (a, b) => a.m_stock_bangsaen - b.m_stock_bangsaen,
+          title: 'บางแสน', dataIndex: 'stock_bangsaen', key: 'stock_bangsaen', align: 'center',
+          sorter: (a, b) => a.stock_bangsaen - b.stock_bangsaen,
           render(text, record) {
             return {
               props: {
@@ -474,7 +459,7 @@ const FanData = () => {
           }
         },
         {
-          title: 'รวม', dataIndex: 'm_stock_sum', key: 'm_stock_sum', align: 'center', sorter: (a, b) => a.m_stock_sum - b.m_stock_sum,
+          title: 'รวม', dataIndex: 'sumstock', key: 'sumstock', align: 'center', sorter: (a, b) => a.sumstock - b.sumstock,
           render(text, record) {
             return {
               props: {
@@ -488,15 +473,15 @@ const FanData = () => {
     },
 
     {
-      title: 'Price SRP', dataIndex: 'm_price_srp', key: 'm_price_srp', align: 'right',
-      sorter: (a, b) => a.m_price_srp - b.m_price_srp,
+      title: 'Price SRP', dataIndex: 'product_price', key: 'product_price', align: 'right',
+      sorter: (a, b) => a.product_price - b.product_price,
       render: (value) => (
         <NumericFormat style={{ color: "#0958d9" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
     {
-      title: 'Discount', dataIndex: 'm_discount', key: 'm_discount', align: 'right',
-      sorter: (a, b) => a.m_discount - b.m_discount,
+      title: 'Discount', dataIndex: 'product_minprice', key: 'product_minprice', align: 'right',
+      sorter: (a, b) => a.product_minprice - b.product_minprice,
       render: (value) => (
         <NumericFormat style={{ color: "#d4001a" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
