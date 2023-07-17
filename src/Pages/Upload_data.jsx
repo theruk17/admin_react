@@ -12,14 +12,10 @@ const Upload_data = () => {
   const syncData = async () => {
     try {
       setLoading(true)
-      await axios.get(API_URL + '/getdatasheet', {
-        onUploadProgress: (progressEvent) => {
-          const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          setProgress({ percent });
-        }
-      })
+      await axios.get(API_URL + '/getdatasheet')
         .then(res => {
           if (res.data != '') {
+            setProgress(100);
             setLoading(false)
             message.success(res.data);
           }
