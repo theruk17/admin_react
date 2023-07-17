@@ -62,7 +62,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const [fileList, setFileList] = useState([]);
 
   useEffect(() => {
-    setSwitchValue(record.mic_status === "Y")
+    setSwitchValue(record.status === "Y")
     setFileList([{ url: API_URL + '/' + record.mic_img }])
     form.setFieldsValue({
       color: record.mic_color,
@@ -71,7 +71,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
       price_srp: record.product_price,
       discount: record.product_minprice,
       href: record.mic_href,
-      status: record.mic_status,
+      status: record.status,
     });
   }, [record, form]);
 
@@ -307,11 +307,11 @@ const FanData = () => {
   const handleStatusChange = (key) => {
     setLoading(true)
     const newData = [...data];
-    const target = newData.find((item) => item.mic_id === key);
+    const target = newData.find((item) => item.product_id === key);
     if (target) {
-      target.mic_status = target.mic_status === 'Y' ? 'N' : 'Y';
+      target.status = target.status === 'Y' ? 'N' : 'Y';
       setData(newData);
-      axios.put(API_URL + '/edit_status_mic/' + key, { status: target.mic_status })
+      axios.put(API_URL + '/edit_status_mic/' + key, { status: target.status })
         .then(res => {
           message.success(res.data);
           setLoading(false)
@@ -455,9 +455,9 @@ const FanData = () => {
       )
     },
     {
-      title: 'Status', dataIndex: 'mic_status', key: 'mic_status', align: 'center',
+      title: 'Status', dataIndex: 'status', key: 'status', align: 'center',
       render: (text, record) => (
-        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.mic_status === 'Y'} onChange={() => handleStatusChange(record.mic_id)}
+        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.product_id)}
         />
       )
     },

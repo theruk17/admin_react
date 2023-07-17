@@ -83,7 +83,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const [fileList, setFileList] = useState([]);
 
   useEffect(() => {
-    setSwitchValue(record.mp_status === "Y")
+    setSwitchValue(record.status === "Y")
     setFileList([{ url: API_URL + '/' + record.mp_img }])
     form.setFieldsValue({
       color: record.mp_color,
@@ -94,7 +94,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
       price_srp: record.product_price,
       discount: record.product_minprice,
       href: record.mp_href,
-      status: record.mp_status,
+      status: record.status,
     });
   }, [record, form]);
 
@@ -348,11 +348,11 @@ const FanData = () => {
   const handleStatusChange = (key) => {
     setLoading(true)
     const newData = [...data];
-    const target = newData.find((item) => item.mp_id === key);
+    const target = newData.find((item) => item.product_id === key);
     if (target) {
-      target.mp_status = target.mp_status === 'Y' ? 'N' : 'Y';
+      target.status = target.status === 'Y' ? 'N' : 'Y';
       setData(newData);
-      axios.put(API_URL + '/edit_status_mp/' + key, { status: target.mp_status })
+      axios.put(API_URL + '/edit_status_mp/' + key, { status: target.status })
         .then(res => {
           message.success(res.data);
           setLoading(false)
@@ -506,9 +506,9 @@ const FanData = () => {
       )
     },
     {
-      title: 'Status', dataIndex: 'mp_status', key: 'mp_status', align: 'center',
+      title: 'Status', dataIndex: 'status', key: 'status', align: 'center',
       render: (text, record) => (
-        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.mp_status === 'Y'} onChange={() => handleStatusChange(record.mp_id)}
+        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.product_id)}
         />
       )
     },

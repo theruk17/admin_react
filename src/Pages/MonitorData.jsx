@@ -107,7 +107,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
       });
 
     setChecked(record.mnt_curve === "Y")
-    setSwitchValue(record.mnt_status === "Y")
+    setSwitchValue(record.status === "Y")
     setFileList([{ url: API_URL + '/' + record.mnt_img }])
     form.setFieldsValue({
       group: record.mnt_group,
@@ -120,7 +120,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
       price_srp: record.product_price,
       price_w_com: record.product_minprice,
       curve: record.mnt_curve,
-      status: record.mnt_status,
+      status: record.status,
       href: record.mnt_href,
     });
   }, [record, form]);
@@ -452,11 +452,11 @@ const ShowData = () => {
   const handleStatusChange = (key) => {
     setLoading(true)
     const newData = [...data];
-    const target = newData.find((item) => item.mnt_id === key);
+    const target = newData.find((item) => item.product_id === key);
     if (target) {
-      target.mnt_status = target.mnt_status === 'Y' ? 'N' : 'Y';
+      target.status = target.status === 'Y' ? 'N' : 'Y';
       setData(newData);
-      axios.put(API_URL + '/edit_status/' + key, { status: target.mnt_status })
+      axios.put(API_URL + '/edit_status/' + key, { status: target.status })
         .then(res => {
           message.success(res.data);
           setLoading(false)
@@ -739,9 +739,9 @@ const ShowData = () => {
       )
     },
     {
-      title: 'Status', dataIndex: 'mnt_status', key: 'mnt_status', align: 'center', width: 100,
+      title: 'Status', dataIndex: 'status', key: 'status', align: 'center', width: 100,
       render: (text, record) => (
-        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.mnt_status === 'Y'} onChange={() => handleStatusChange(record.mnt_id)}
+        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.product_id)}
         />
       )
     },

@@ -61,7 +61,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const [fileList, setFileList] = useState([]);
 
   useEffect(() => {
-    setSwitchValue(record.hs_status === "Y")
+    setSwitchValue(record.status === "Y")
     setFileList([{ url: API_URL + '/' + record.hs_img }])
     form.setFieldsValue({
       group: record.hs_group,
@@ -70,7 +70,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
       price_srp: record.product_price,
       discount: record.product_minprice,
       href: record.hs_href,
-      status: record.hs_status,
+      status: record.status,
     });
   }, [record, form]);
 
@@ -303,11 +303,11 @@ const FanData = () => {
   const handleStatusChange = (key) => {
     setLoading(true)
     const newData = [...data];
-    const target = newData.find((item) => item.hs_id === key);
+    const target = newData.find((item) => item.product_id === key);
     if (target) {
-      target.hs_status = target.hs_status === 'Y' ? 'N' : 'Y';
+      target.status = target.status === 'Y' ? 'N' : 'Y';
       setData(newData);
-      axios.put(API_URL + '/edit_status_hs/' + key, { status: target.hs_status })
+      axios.put(API_URL + '/edit_status_hs/' + key, { status: target.status })
         .then(res => {
           message.success(res.data);
           setLoading(false)
@@ -519,9 +519,9 @@ const FanData = () => {
       )
     },
     {
-      title: 'Status', dataIndex: 'hs_status', key: 'hs_status', align: 'center',
+      title: 'Status', dataIndex: 'status', key: 'status', align: 'center',
       render: (text, record) => (
-        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.hs_status === 'Y'} onChange={() => handleStatusChange(record.hs_id)}
+        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.product_id)}
         />
       )
     },
