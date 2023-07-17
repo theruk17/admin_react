@@ -90,7 +90,6 @@ const beforeUpload = (file) => {
 const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const [form] = Form.useForm();
   const [checked, setChecked] = useState(false);
-  const [switchValue, setSwitchValue] = useState(false);
 
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
@@ -107,7 +106,6 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
       });
 
     setChecked(record.mnt_curve === "Y")
-    setSwitchValue(record.status === "Y")
     setFileList([{ url: API_URL + '/' + record.mnt_img }])
     form.setFieldsValue({
       group: record.mnt_group,
@@ -129,11 +127,6 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const onCheckboxChange = (e) => {
     setChecked(e.target.checked);
     form.setFieldsValue({ curve: e.target.checked ? 'Y' : 'N' });
-  };
-
-  const onStatusChange = (checked) => {
-    setSwitchValue(checked);
-    form.setFieldsValue({ status: checked ? 'Y' : 'N' });
   };
 
   const handleCancel = () => setPreviewOpen(false);
@@ -352,11 +345,6 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           </Col>
         </Row>
         <Row gutter={20}>
-          <Col span={6}>
-            <Form.Item label="Status" name="status">
-              <Switch checkedChildren="On" unCheckedChildren="Off" checked={switchValue} onChange={onStatusChange} ></Switch>
-            </Form.Item>
-          </Col>
           <Col span={18}>
             <Form.Item name="href" label="Link" >
               <Input placeholder='Link' allowClear />

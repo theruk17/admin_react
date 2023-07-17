@@ -71,7 +71,6 @@ const beforeUpload = (file) => {
 
 const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const [form] = Form.useForm();
-  const [switchValue, setSwitchValue] = useState(false);
 
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
@@ -79,7 +78,6 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const [fileList, setFileList] = useState([]);
 
   useEffect(() => {
-    setSwitchValue(record.status === "Y")
     setFileList([{ url: API_URL + '/' + record.m_img }])
     form.setFieldsValue({
       color: record.m_color,
@@ -92,12 +90,6 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
       status: record.status,
     });
   }, [record, form]);
-
-
-  const onStatusChange = (checked) => {
-    setSwitchValue(checked);
-    form.setFieldsValue({ status: checked ? 'Y' : 'N' });
-  };
 
   const handleCancel = () => setPreviewOpen(false);
   const handlePreview = async (file) => {
@@ -236,11 +228,6 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
         </Row>
 
         <Row gutter={20}>
-          <Col span={6}>
-            <Form.Item label="Status" name="status">
-              <Switch checkedChildren="On" unCheckedChildren="Off" checked={switchValue} onChange={onStatusChange} ></Switch>
-            </Form.Item>
-          </Col>
           <Col span={18}>
             <Form.Item name="href" label="Link" >
               <Input placeholder='Link' allowClear />
@@ -338,7 +325,7 @@ const FanData = () => {
     if (target) {
       target.status = target.status === 'Y' ? 'N' : 'Y';
       setData(newData);
-      axios.put(API_URL + '/edit_status_m/' + key, { status: target.status })
+      axios.put(API_URL + '/edit_status/' + key, { status: target.status })
         .then(res => {
           message.success(res.data);
           setLoading(false)
