@@ -12,26 +12,27 @@ const Upload_data = () => {
   const [progress2, setProgress2] = useState(0);
 
   const syncData = async () => {
-    try {
-      setLoading(true)
-      await axios.get(API_URL + '/getdatasheet')
-        .then(res => {
-          if (res.data != '') {
-            setProgress(100);
-            setLoading(false)
-            notification.success({
-              message: 'Successful',
-              description: res.data.message,
-            });
-          }
 
-        })
-    } catch (err) {
-      notification.error({
-        message: 'Error',
-        description: err.response.data.message.code,
-      });
-    }
+    setLoading(true)
+    await axios.get(API_URL + '/getdatasheet')
+      .then(res => {
+        if (res.data != '') {
+          setProgress(100);
+          setLoading(false)
+          notification.success({
+            message: 'Successful',
+            description: res.data.message,
+          });
+        }
+
+      })
+      .catch((err) => {
+        notification.error({
+          message: 'Error',
+          description: err.response.data.message.code,
+        });
+      })
+
 
   }
 
@@ -70,7 +71,6 @@ const Upload_data = () => {
     <Space direction="vertical" size={16}>
       <Card
         title="Sync data from google sheet"
-
         style={{
           width: 500,
         }}
@@ -84,6 +84,7 @@ const Upload_data = () => {
             to: '#87d068',
           }}
         />
+        <p style={{ color: 'red' }}>* ดึงข้อมูลชื่อและรายละเอียดสินค้าจาก Excel เท่านั้น</p>
       </Card>
       <Card
         title="ซิงค์ข้อมูลจาก Itech"
@@ -101,6 +102,7 @@ const Upload_data = () => {
             to: '#87d068',
           }}
         />
+        <p style={{ color: 'red' }}>* ดึงข้อมูลราคาและจำนวนสต็อกสินค้าจาก iTech เท่านั้น</p>
       </Card>
     </Space>
   )
