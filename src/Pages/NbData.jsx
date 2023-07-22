@@ -30,6 +30,7 @@ const Color = [
   { val: '(CARBON BLACK)' },
   { val: '(MIXED BLACK)' },
   { val: '(SHALE BLACK)' },
+  { val: '(MATT BLACK)' },
   { val: '(ARCTIC GREY)' },
   { val: '(CLOUD GREY)' },
   { val: '(PLATINUM GREY)' },

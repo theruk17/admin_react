@@ -76,6 +76,9 @@ const SW = [
   { text: 'GX BROWN TACTILE', value: 'GX BROWN TACTILE' },
   { text: 'KAILH PIXEL L', value: 'KAILH PIXEL L' },
   { text: 'KAILH PIXEL T', value: 'KAILH PIXEL T' },
+  { text: 'KAILH TURBO RED', value: 'KAILH TURBO RED' },
+  { text: 'KAILH TURBO BROWN', value: 'KAILH TURBO BROWN' },
+  { text: 'KAILH TURBO SILVE', value: 'KAILH TURBO SILVE' },
   { text: 'RUBBER DOME', value: 'RUBBER DOME' },
   { text: 'TACTILE SWITCH', value: 'TACTILE SWITCH' },
   { text: 'TITAN SWITCH', value: 'TITAN SWITCH' },
@@ -101,6 +104,8 @@ const Color = [
   { text: 'PALETTE', value: 'PALETTE' },
   { text: 'WHITE NIGHT', value: 'WHITE NIGHT' },
   { text: 'WHITE ICE', value: 'WHITE ICE' },
+  { text: 'WHITE POWDER', value: 'WHITE POWDER' },
+  { text: 'BLUE NAVY', value: 'BLUE NAVY' },
   { text: 'BLACK SLATE', value: 'BLACK SLATE' },
   { text: 'BLACK&CYAN', value: 'BLACK&CYAN' },
   { text: 'GATERON YELLOW', value: 'GATERON YELLOW' },
@@ -109,6 +114,7 @@ const Color = [
   { text: 'GRAPHITE GRAY', value: 'GRAPHITE GRAY' },
   { text: 'CEMENT GRAY', value: 'CEMENT GRAY' },
   { text: 'MECHANICAL GREY', value: 'MECHANICAL GREY' },
+  { text: 'MANGO STICKY RICE', value: 'MANGO STICKY RICE' },
   { text: 'WHITE CASE/STEEL PLATE', value: 'WHITE CASE/STEEL PLATE' },
 ]
 
