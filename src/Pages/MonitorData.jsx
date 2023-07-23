@@ -25,46 +25,46 @@ const Brand = [
 ]
 
 const Size = [
-  { val: '21.5"' },
-  { val: '23.6"' },
-  { val: '23.8"' },
-  { val: '24"' },
-  { val: '24.5"' },
-  { val: '27"' },
-  { val: '28"' },
-  { val: '31.5"' },
-  { val: '32"' },
-  { val: '34"' }
+  { text: '21.5"', value: '21.5"' },
+  { text: '23.8"', value: '23.8"' },
+  { text: '24"', value: '24"' },
+  { text: '23.6"', value: '23.6"' },
+  { text: '24.5"', value: '24.5"' },
+  { text: '27"', value: '27"' },
+  { text: '28"', value: '28"' },
+  { text: '31.5"', value: '31.5"' },
+  { text: '32"', value: '32"' },
+  { text: '34"', value: '34"' }
 ]
 
 const Hz = [
-  { val: '60Hz' },
-  { val: '75Hz' },
-  { val: '100Hz' },
-  { val: '144Hz' },
-  { val: '165Hz' },
-  { val: '170Hz' },
-  { val: '240Hz' },
-  { val: '280Hz' }
+  { text: '60Hz', value: '60Hz' },
+  { text: '75Hz', value: '75Hz' },
+  { text: '100Hz', value: '100Hz' },
+  { text: '144Hz', value: '144Hz' },
+  { text: '165Hz', value: '165Hz' },
+  { text: '170Hz', value: '170Hz' },
+  { text: '240Hz', value: '240Hz' },
+  { text: '280Hz', value: '280Hz' }
 ]
 
 const Panel = [
-  { val: 'VA' },
-  { val: 'IPS' },
-  { val: 'TN' },
-  { val: 'SS IPS' },
-  { val: 'IPS HDR' },
-  { val: 'ULTRA-IPS' },
-  { val: 'IPS FLAT' },
-  { val: 'NANO IPS HDR' },
-  { val: 'WQHD' }
+  { text: 'VA', value: 'VA' },
+  { text: 'IPS', value: 'IPS' },
+  { text: 'TN', value: 'TN' },
+  { text: 'SS IPS', value: 'SS IPS' },
+  { text: 'IPS HDR', value: 'IPS HDR' },
+  { text: 'ULTRA-IPS', value: 'ULTRA-IPS' },
+  { text: 'IPS FLAT', value: 'IPS FLAT' },
+  { text: 'NANO IPS', value: 'NANO IPS' },
+  { text: 'WQHD', value: 'WQHD' }
 ]
 
 const Resolution = [
-  { val: '1920 x 1080 (FHD)' },
-  { val: '2560 x 1440 (2K)' },
-  { val: '3840 x 2160 (4K)' },
-  { val: '3440 x 1440 (2K)' }
+  { text: '1920 x 1080 (FHD)', value: '1920 x 1080 (FHD)' },
+  { text: '2560 x 1440 (2K)', value: '2560 x 1440 (2K)' },
+  { text: '3840 x 2160 (4K)', value: '3840 x 2160 (4K)' },
+  { text: '3440 x 1440 (2K)', value: '3440 x 1440 (2K)' }
 ]
 
 const getBase64 = (file) =>
@@ -202,23 +202,8 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
     >
       <Divider />
       <Form form={form} name="form_in_modal">
-        <Row gutter={20}>
-          <Col span={12}>
-            <Form.Item label="Brand" name="brand"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input Brand!',
-                },
-              ]}>
-              <Select placeholder="Brand" allowClear>
-                {Brand.map(item => (
-                  <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
+        <Row gutter={24}>
+          <Col span={24}>
             <Form.Item name="model" label="Model"
               rules={[
                 {
@@ -230,75 +215,23 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
         </Row>
-        <Row gutter={20}>
-          <Col span={4}>
-            <Form.Item label="Size" name="size"
+        <Row gutter={24}>
+          <Col span={12}>
+            <Form.Item label="Brand" name="brand"
               rules={[
                 {
                   required: true,
-                  message: 'Please input Size!',
+                  message: 'Please input Brand!',
                 },
               ]}>
-              <Select placeholder="Size" allowClear>
-                {Size.map(item => (
-                  <Select.Option key={item.val} value={item.mnt_val}>{item.val}</Select.Option>
+              <Select placeholder="Brand" allowClear showSearch>
+                {Brand.map(item => (
+                  <Select.Option key={item.value} value={item.value}>{item.text}</Select.Option>
                 ))}
               </Select>
             </Form.Item>
           </Col>
-          <Col span={6}>
-            <Form.Item label="Refresh Rate" name="hz"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input Refresh Rate!',
-                },
-              ]}>
-              <Select placeholder="Refresh Rate" allowClear>
-                {Hz.map(item => (
-                  <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={6}>
-            <Form.Item label="Panel" name="panel"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input Panel!',
-                },
-              ]}>
-              <Select placeholder="Panel" allowClear  >
-                {Panel.map(item => (
-                  <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="Resolution" name="resolution"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input Resolation!',
-                },
-              ]}>
-              <Select placeholder="Resolution" allowClear >
-                {Resolution.map(item => (
-                  <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={20}>
-          <Col span={3}>
-            <Form.Item label="Curve" name="curve" >
-              <Checkbox checked={checked} onChange={onCheckboxChange} ></Checkbox>
-            </Form.Item>
-          </Col>
-          <Col span={9}>
+          <Col span={12}>
             <Form.Item label="Group" name="group"
               rules={[
                 {
@@ -313,6 +246,77 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
               </Select>
             </Form.Item>
           </Col>
+        </Row>
+        <Row gutter={24}>
+          <Col span={4}>
+            <Form.Item label="Size" name="size"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input Size!',
+                },
+              ]}>
+              <Select placeholder="Size" allowClear>
+                {Size.map(item => (
+                  <Select.Option key={item.value} value={item.value}>{item.text}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={6}>
+            <Form.Item label="Refresh Rate" name="hz"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input Refresh Rate!',
+                },
+              ]}>
+              <Select placeholder="Refresh Rate" allowClear>
+                {Hz.map(item => (
+                  <Select.Option key={item.value} value={item.value}>{item.text}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={5}>
+            <Form.Item label="Panel" name="panel"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input Panel!',
+                },
+              ]}>
+              <Select placeholder="Panel" allowClear  >
+                {Panel.map(item => (
+                  <Select.Option key={item.value} value={item.value}>{item.text}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={7}>
+            <Form.Item label="Resolution" name="resolution"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input Resolation!',
+                },
+              ]}>
+              <Select placeholder="Resolution" allowClear >
+                {Resolution.map(item => (
+                  <Select.Option key={item.value} value={item.value}>{item.text}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={2}>
+            <Form.Item label="Curve" name="curve" >
+              <Checkbox checked={checked} onChange={onCheckboxChange} ></Checkbox>
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={24}>
+
+
           <Col span={6}>
             <Form.Item label="Price" name="price_srp"
               rules={[
@@ -329,7 +333,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item label="ราคาพร้อมเครื่อง" name="price_w_com"
+            <Form.Item label="MinPrice" name="price_w_com"
               rules={[
                 {
                   required: true,
@@ -344,8 +348,8 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
         </Row>
-        <Row gutter={20}>
-          <Col span={18}>
+        <Row gutter={24}>
+          <Col span={24}>
             <Form.Item name="href" label="Link" >
               <Input placeholder='Link' allowClear />
             </Form.Item>
@@ -459,11 +463,10 @@ const ShowData = () => {
 
   const Column = [
     {
-      title: 'Image',
-      dataIndex: 'mnt_img',
-      key: 'mnt_img',
-      width: 80,
-      align: 'center',
+      title: 'ProductCode', dataIndex: 'mnt_id', key: 'mnt_id', width: 120,
+    },
+    {
+      title: 'Image', dataIndex: 'mnt_img', key: 'mnt_img', width: 60, align: 'center',
       render: (imageUrl) => <img src={API_URL + '/' + imageUrl} alt="thumbnail" width="30" height="30" />,
     },
     {
@@ -475,54 +478,11 @@ const ShowData = () => {
       sortDirections: ['descend'],
     },
     {
-      title: 'Model', dataIndex: 'mnt_model', key: 'mnt_model',
-      onFilter: (value, record) => record.mnt_model.startsWith(value),
-      filterSearch: true,
+      title: 'Model', dataIndex: 'mnt_model', key: 'mnt_model'
     },
     {
       title: 'Size', dataIndex: 'mnt_size', key: 'mnt_size', align: 'right', width: 80,
-      filters: [
-        {
-          text: '21.5"',
-          value: '21.5"',
-        },
-        {
-          text: '23.6"',
-          value: '23.6"',
-        },
-        {
-          text: '23.8"',
-          value: '23.8"',
-        },
-        {
-          text: '24"',
-          value: '24"',
-        },
-        {
-          text: '24.5"',
-          value: '24.5"',
-        },
-        {
-          text: '27"',
-          value: '27"',
-        },
-        {
-          text: '28"',
-          value: '28"',
-        },
-        {
-          text: '31.5"',
-          value: '31.5"',
-        },
-        {
-          text: '32"',
-          value: '32"',
-        },
-        {
-          text: '34"',
-          value: '34"',
-        },
-      ],
+      filters: Size,
       onFilter: (value, record) => record.mnt_size.indexOf(value) === 0,
       render: (text) => <p>{text}</p>,
       sorter: (a, b) => a.mnt_size.localeCompare(b.mnt_size),
@@ -530,40 +490,7 @@ const ShowData = () => {
     },
     {
       title: 'Refresh Rate', dataIndex: 'mnt_refresh_rate', key: 'mnt_refresh_rate', align: 'right', width: 80,
-      filters: [
-        {
-          text: '60Hz',
-          value: '60Hz',
-        },
-        {
-          text: '75Hz',
-          value: '75Hz',
-        },
-        {
-          text: '100Hz',
-          value: '100Hz',
-        },
-        {
-          text: '144Hz',
-          value: '144Hz',
-        },
-        {
-          text: '165Hz',
-          value: '165Hz',
-        },
-        {
-          text: '170Hz',
-          value: '170Hz',
-        },
-        {
-          text: '240Hz',
-          value: '240Hz',
-        },
-        {
-          text: '280Hz',
-          value: '280Hz',
-        }
-      ],
+      filters: Hz,
       onFilter: (value, record) => record.mnt_refresh_rate.indexOf(value) === 0,
       render: (text) => <p>{text}</p>,
       sorter: (a, b) => a.mnt_refresh_rate.localeCompare(b.mnt_refresh_rate),
@@ -571,52 +498,14 @@ const ShowData = () => {
     },
     {
       title: 'Panel', dataIndex: 'mnt_panel', key: 'mnt_panel', align: 'right', width: 80,
-      filters: [
-        {
-          text: 'TN',
-          value: 'TN',
-        },
-        {
-          text: 'VA',
-          value: 'VA',
-        },
-        {
-          text: 'IPS',
-          value: 'IPS',
-        },
-        {
-          text: 'NANO IPS',
-          value: 'NANO IPS',
-        },
-        {
-          text: 'WQHD',
-          value: 'WQHD',
-        }
-      ],
+      filters: Panel,
       onFilter: (value, record) => record.mnt_panel.indexOf(value) === 0,
       sorter: (a, b) => a.mnt_panel.localeCompare(b.mnt_panel),
       sortDirections: ['ascend', 'descend'],
     },
     {
       title: 'Resolution', dataIndex: 'mnt_resolution', key: 'mnt_resolution', align: 'right', width: 140,
-      filters: [
-        {
-          text: '1920 x 1080 (FHD)',
-          value: '1920 x 1080 (FHD)',
-        },
-        {
-          text: '2560 x 1440 (2K)',
-          value: '2560 x 1440 (2K)',
-        },
-        {
-          text: '3440 x 1440 (2K)',
-          value: '3440 x 1440 (2K)',
-        },
-        {
-          text: '3840 x 2160 (4K)',
-          value: '3840 x 2160 (4K)',
-        }
-      ],
+      filters: Resolution,
       onFilter: (value, record) => record.mnt_resolution.indexOf(value) === 0,
       sorter: (a, b) => a.mnt_resolution.localeCompare(b.mnt_resolution),
       sortDirections: ['ascend', 'descend'],
@@ -628,7 +517,7 @@ const ShowData = () => {
       title: 'STOCK',
       children: [
         {
-          title: 'นครนายก', dataIndex: 'stock_nny', key: 'stock_nny', align: 'center', width: 60,
+          title: 'นครนายก', dataIndex: 'stock_nny', key: 'stock_nny', align: 'center', width: 70,
           sorter: (a, b) => a.stock_nny - b.stock_nny,
           render(text, record) {
             return {
@@ -640,7 +529,7 @@ const ShowData = () => {
           }
         },
         {
-          title: 'รามอินทรา', dataIndex: 'stock_ramintra', key: 'stock_ramintra', align: 'center', width: 60,
+          title: 'รามอินทรา', dataIndex: 'stock_ramintra', key: 'stock_ramintra', width: 70, align: 'center',
           sorter: (a, b) => a.stock_ramintra - b.stock_ramintra,
           render(text, record) {
             return {
@@ -652,7 +541,7 @@ const ShowData = () => {
           }
         },
         {
-          title: 'บางพลัด', dataIndex: 'stock_bangphlat', key: 'stock_bangphlat', align: 'center', width: 60,
+          title: 'บางพลัด', dataIndex: 'stock_bangphlat', key: 'stock_bangphlat', align: 'center', width: 70,
           sorter: (a, b) => a.stock_bangphlat - b.stock_bangphlat,
           render(text, record) {
             return {
@@ -664,7 +553,7 @@ const ShowData = () => {
           }
         },
         {
-          title: 'เดอะโฟล์ท', dataIndex: 'stock_thefloat', key: 'stock_thefloat', align: 'center', width: 60,
+          title: 'เดอะโฟล์ท', dataIndex: 'stock_thefloat', key: 'stock_thefloat', align: 'center', width: 70,
           sorter: (a, b) => a.stock_thefloat - b.stock_thefloat,
           render(text, record) {
             return {
@@ -676,7 +565,7 @@ const ShowData = () => {
           }
         },
         {
-          title: 'รังสิต', dataIndex: 'stock_rangsit', key: 'stock_rangsit', align: 'center',
+          title: 'รังสิต', dataIndex: 'stock_rangsit', key: 'stock_rangsit', width: 70, align: 'center',
           sorter: (a, b) => a.stock_rangsit - b.stock_rangsit,
           render(text, record) {
             return {
@@ -688,7 +577,7 @@ const ShowData = () => {
           }
         },
         {
-          title: 'บางแสน', dataIndex: 'stock_bangsaen', key: 'stock_bangsaen', align: 'center',
+          title: 'บางแสน', dataIndex: 'stock_bangsaen', key: 'stock_bangsaen', width: 70, align: 'center',
           sorter: (a, b) => a.stock_bangsaen - b.stock_bangsaen,
           render(text, record) {
             return {
@@ -700,7 +589,8 @@ const ShowData = () => {
           }
         },
         {
-          title: 'รวม', dataIndex: 'sumstock', key: 'sumstock', align: 'center', width: 60, sorter: (a, b) => a.sumstock - b.sumstock,
+          title: 'รวม', dataIndex: 'sumstock', key: 'sumstock', align: 'center', width: 70,
+          sorter: (a, b) => a.sumstock - b.sumstock,
           render(text, record) {
             return {
               props: {
@@ -720,7 +610,7 @@ const ShowData = () => {
       )
     },
     {
-      title: 'ซื้อพร้อมเครื่อง', dataIndex: 'product_minprice', key: 'product_minprice', align: 'right', width: 100,
+      title: 'MinPrice', dataIndex: 'product_minprice', key: 'product_minprice', align: 'right', width: 100,
       sorter: (a, b) => a.product_minprice - b.product_minprice,
       render: (value) => (
         <NumericFormat style={{ color: "#f5222d" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
@@ -729,7 +619,7 @@ const ShowData = () => {
     {
       title: 'Status', dataIndex: 'status', key: 'status', align: 'center', width: 100,
       render: (text, record) => (
-        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.product_id)}
+        <Switch loading={loading} checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.product_id)}
         />
       )
     },

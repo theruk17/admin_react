@@ -1,4 +1,4 @@
-import { Layout, Menu, theme} from 'antd';
+import { Layout, Menu, theme } from 'antd';
 import React from 'react';
 import PageContent from '../components/PageContent'
 import '../index.css';
@@ -15,39 +15,39 @@ const App = () => {
   return (
     <Layout>
       <Header className="header" style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 1,
-          width: '100%',
-        }}>
+        position: 'sticky',
+        top: 0,
+        zIndex: 1,
+        width: '100%',
+      }}>
         <img className='logo' src={LogoIHC} alt="" style={{
           width: 140,
         }} />
-        <Menu theme="dark" mode="horizontal"  defaultSelectedKeys={['1']}
-        onClick={(item) => {
-          navigate(item.key);
-        }}
-        items={[
-          {
-            icon: <HouseDoor />,
-            label: "HOME",
-            key:'/'
-          },
-          {
-            icon: <ArrowRepeat />,
-            label: "SYNC DATA",
-            key:'/upload'
-          },
-        ]} />
+        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}
+          onClick={(item) => {
+            navigate(item.key);
+          }}
+          items={[
+            {
+              icon: <HouseDoor />,
+              label: "HOME",
+              key: '/'
+            },
+            {
+              icon: <ArrowRepeat />,
+              label: "SYNC DATA",
+              key: '/upload'
+            },
+          ]} />
       </Header>
       <Layout>
         <Sider
           breakpoint='lg'
           collapsedWidth='0'
-          width={200}
+          width={180}
           style={{
             background: colorBgContainer,
-            
+
           }}
         >
           <Menu
@@ -64,62 +64,62 @@ const App = () => {
               {
                 icon: <Display />,
                 label: "Monitor",
-                key:'/monitor'
+                key: '/monitor'
               },
               {
                 icon: <Pc />,
                 label: "Case",
-                key:'/case'
+                key: '/case'
               },
               {
                 icon: <Laptop />,
                 label: "Notebook",
-                key:'/nb'
+                key: '/nb'
               },
               {
                 icon: <Snow />,
                 label: "Liquid Cooling",
-                key:'/lc'
+                key: '/lc'
               },
               {
                 icon: <Fan />,
                 label: "FAN",
-                key:'/fan'
+                key: '/fan'
               },
               {
                 icon: <Headset />,
                 label: "HeadSet",
-                key:'/headset'
+                key: '/headset'
               },
               {
                 icon: <Keyboard />,
                 label: "Keyboard",
-                key:'/kb'
+                key: '/kb'
               },
               {
                 icon: <FileEarmark />,
                 label: "Chair",
-                key:'/ch'
+                key: '/ch'
               },
               {
                 icon: <Mouse2 />,
                 label: "Mouse",
-                key:'/mouse'
+                key: '/mouse'
               },
               {
                 icon: <SquareFill />,
                 label: "Mousepad",
-                key:'/mousepad'
+                key: '/mousepad'
               },
               {
                 icon: <Mic />,
                 label: "MIC",
-                key:'/mic'
+                key: '/mic'
               },
               {
                 icon: <FileEarmark />,
                 label: "SINK",
-                key:'/sink'
+                key: '/sink'
               },
             ]}
           />
@@ -127,11 +127,11 @@ const App = () => {
         <Layout>
           <Content
             style={{
-              
+
               padding: 24,
               margin: 0,
-              minHeight: '75vh',
-              height: '100%',
+              minHeight: '100vh',
+
               background: colorBgContainer,
             }}
           >

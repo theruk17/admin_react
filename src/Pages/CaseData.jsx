@@ -9,64 +9,65 @@ import '../App.css';
 const API_URL = import.meta.env.VITE_API_URL
 
 const Brand = [
-  { val: 'AEROCOOL' },
-  { val: 'ANTEC' },
-  { val: 'ASUS' },
-  { val: 'AXEL' },
-  { val: 'AZZA' },
-  { val: 'BE QUIET' },
-  { val: 'COOLER MASTER' },
-  { val: 'CORSAIR' },
-  { val: 'DARKFLASH' },
-  { val: 'FRACTAL' },
-  { val: 'GIGABYTE' },
-  { val: 'LIAN LI' },
-  { val: 'INWIN' },
-  { val: 'iHAVECPU' },
-  { val: 'MONTECH' },
-  { val: 'NEOLUTION' },
-  { val: 'MSI' },
-  { val: 'OCPC' },
-  { val: 'NZXT' },
-  { val: 'PLENTY' },
-  { val: 'SILVERSTONE' },
-  { val: 'THERMALTAKE' },
-  { val: 'TSUNAMI' },
-  { val: 'VENUS' },
-  { val: 'XIGMATEK' },
-  { val: 'ZALMAN' },
+  { text: 'AEROCOOL', value: 'AEROCOOL' },
+  { text: 'ANTEC', value: 'ANTEC' },
+  { text: 'ASUS', value: 'ASUS' },
+  { text: 'AXEL', value: 'AXEL' },
+  { text: 'AZZA', value: 'AZZA' },
+  { text: 'BE QUIET', value: 'BE QUIET' },
+  { text: 'COOLER MASTER', value: 'COOLER MASTER' },
+  { text: 'CORSAIR', value: 'CORSAIR' },
+  { text: 'DARKFLASH', value: 'DARKFLASH' },
+  { text: 'FRACTAL', value: 'FRACTAL' },
+  { text: 'GIGABYTE', value: 'GIGABYTE' },
+  { text: 'LIAN LI', value: 'LIAN LI' },
+  { text: 'INWIN', value: 'INWIN' },
+  { text: 'iHAVECPU', value: 'iHAVECPU' },
+  { text: 'MONTECH', value: 'MONTECH' },
+  { text: 'NEOLUTION', value: 'NEOLUTION' },
+  { text: 'MSI', value: 'MSI' },
+  { text: 'OCPC', value: 'OCPC' },
+  { text: 'NZXT', value: 'NZXT' },
+  { text: 'PLENTY', value: 'PLENTY' },
+  { text: 'SILVERSTONE', value: 'SILVERSTONE' },
+  { text: 'THERMALTAKE', value: 'THERMALTAKE' },
+  { text: 'TSUNAMI', value: 'TSUNAMI' },
+  { text: 'VENUS', value: 'VENUS' },
+  { text: 'XIGMATEK', value: 'XIGMATEK' },
+  { text: 'ZALMAN', value: 'ZALMAN' },
 
 ]
 
 const Color = [
-  { val: '(BLACK)' },
-  { val: '(WHITE)' },
-  { val: '(RED)' },
-  { val: '(BLUE)' },
-  { val: '(SNOW WHITE)' },
-  { val: '(BLACK/RED)' },
-  { val: '(BLACK/WHITE)' },
-  { val: '(GRAY)' },
-  { val: '(CYAN)' },
-  { val: '(PURPLE)' },
-  { val: '(PINK)' },
-  { val: '(SILVER)' },
-  { val: '(MATTE BLACK)' },
-  { val: '(MATTE WHITE)' },
-  { val: '(MESH BLACK)' },
-  { val: '(MESH WHITE)' },
-  { val: '(RAZER EDITION)' },
-  { val: '(YELLOW)' },
+  { text: '(BLACK)', value: '(BLACK)' },
+  { text: '(WHITE)', value: '(WHITE)' },
+  { text: '(RED)', value: '(RED)' },
+  { text: '(BLUE)', value: '(BLUE)' },
+  { text: '(ORANGE)', value: '(ORANGE)' },
+  { text: '(SNOW WHITE)', value: '(SNOW WHITE)' },
+  { text: '(BLACK/RED)', value: '(BLACK/RED)' },
+  { text: '(BLACK/WHITE)', value: '(BLACK/WHITE)' },
+  { text: '(GRAY)', value: '(GRAY)' },
+  { text: '(CYAN)', value: '(CYAN)' },
+  { text: '(PURPLE)', value: '(PURPLE)' },
+  { text: '(PINK)', value: '(PINK)' },
+  { text: '(SILVER)', value: '(SILVER)' },
+  { text: '(MATTE BLACK)', value: '(MATTE BLACK)' },
+  { text: '(MATTE WHITE)', value: '(MATTE WHITE)' },
+  { text: '(MESH BLACK)', value: '(MESH BLACK)' },
+  { text: '(MESH WHITE)', value: '(MESH WHITE)' },
+  { text: '(RAZER EDITION)', value: '(RAZER EDITION)' },
+  { text: '(YELLOW)', value: '(YELLOW)' },
 
 ]
 
 
 const Group = [
-  { val: 'ZONE iHAVECPU' },
-  { val: 'ZONE A' },
-  { val: 'ZONE B' },
-  { val: 'ZONE C' },
-  { val: 'ZONE ITX' },
+  { text: 'ZONE iHAVECPU', value: 'ZONE iHAVECPU' },
+  { text: 'ZONE A', value: 'ZONE A' },
+  { text: 'ZONE B', value: 'ZONE B' },
+  { text: 'ZONE C', value: 'ZONE C' },
+  { text: 'ZONE ITX', value: 'ZONE ITX' },
 ]
 
 const getBase64 = (file) =>
@@ -105,6 +106,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
       model: record.case_model,
       color: record.case_color,
       price_srp: record.product_price,
+      minprice: record.product_minprice,
       href: record.case_href,
       status: record.status,
     });
@@ -184,7 +186,20 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
     >
       <Divider />
       <Form form={form} name="form_in_modal">
-        <Row gutter={20}>
+        <Row gutter={24}>
+          <Col span={24}>
+            <Form.Item name="model" label="Model"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your Model!',
+                },
+              ]}>
+              <Input placeholder='Model' allowClear />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={24}>
           <Col span={12}>
             <Form.Item label="Brand" name="brand"
               rules={[
@@ -193,40 +208,34 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
                   message: 'Please input your Brand!',
                 },
               ]}>
-              <Select placeholder="Brand" allowClear>
+              <Select placeholder="Brand" allowClear showSearch>
                 {Brand.map(item => (
-                  <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
+                  <Select.Option key={item.value} value={item.value}>{item.text}</Select.Option>
                 ))}
               </Select>
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item name="model" label="Model" >
-              <Input placeholder='Model' allowClear />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={20}>
           <Col span={6}>
             <Form.Item label="Color" name="color">
-              <Select placeholder="Size" allowClear>
+              <Select placeholder="Color" allowClear>
                 {Color.map(item => (
-                  <Select.Option key={item.val} value={item.mnt_val}>{item.val}</Select.Option>
+                  <Select.Option key={item.value} value={item.value}>{item.text}</Select.Option>
                 ))}
               </Select>
             </Form.Item>
           </Col>
-        </Row>
-        <Row gutter={20}>
           <Col span={6}>
             <Form.Item label="Group" name="group">
               <Select placeholder="Group" allowClear>
                 {Group.map(item => (
-                  <Select.Option key={item.val} value={item.val}>{item.label}</Select.Option>
+                  <Select.Option key={item.value} value={item.value}>{item.text}</Select.Option>
                 ))}
               </Select>
             </Form.Item>
           </Col>
+
+        </Row>
+        <Row gutter={24}>
           <Col span={6}>
             <Form.Item label="Price" name="price_srp">
               <InputNumber
@@ -236,9 +245,18 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
               />
             </Form.Item>
           </Col>
+          <Col span={6}>
+            <Form.Item label="MinPrice" name="minprice">
+              <InputNumber
+                formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                min={0} readOnly
+              />
+            </Form.Item>
+          </Col>
         </Row>
-        <Row gutter={20}>
-          <Col span={18}>
+        <Row gutter={24}>
+          <Col span={24}>
             <Form.Item name="href" label="Link" >
               <Input placeholder='Link' allowClear />
             </Form.Item>
@@ -352,17 +370,21 @@ const CaseData = () => {
   };
 
   const Column = [
-
+    {
+      title: 'ProductCode', dataIndex: 'case_id', key: 'case_id', width: 120,
+    },
     {
       title: 'Image',
       dataIndex: 'case_img',
       key: 'case_img',
-      width: 80,
+      width: 60,
       align: 'center',
       render: (imageUrl) => <img src={API_URL + '/' + imageUrl} alt="thumbnail" width="30" height="30" />,
     },
     {
-      title: 'Brand', dataIndex: 'case_brand', key: 'case_brand',
+      title: 'Brand', dataIndex: 'case_brand', key: 'case_brand', width: 130,
+      filters: Brand,
+      onFilter: (value, record) => record.case_brand.indexOf(value) === 0,
       render: (text, record) => <a href={record.case_href} target='_blank'>{text}</a>,
       sorter: (a, b) => a.case_brand.localeCompare(b.case_brand),
       sortDirections: ['descend'],
@@ -371,14 +393,20 @@ const CaseData = () => {
       title: 'Model', dataIndex: 'case_model', key: 'case_model',
     },
     {
-      title: 'Color', dataIndex: 'case_color', key: 'case_color',
-
+      title: 'Color', dataIndex: 'case_color', key: 'case_color', align: 'center', width: 130,
+      filters: Color,
+      onFilter: (value, record) => record.case_color.indexOf(value) === 0,
+    },
+    {
+      title: 'Group', dataIndex: 'case_group', key: 'case_group', align: 'center', width: 130,
+      filters: Group,
+      onFilter: (value, record) => record.case_group.indexOf(value) === 0,
     },
     {
       title: 'STOCK',
       children: [
         {
-          title: 'นครนายก', dataIndex: 'stock_nny', key: 'stock_nny', align: 'center',
+          title: 'นครนายก', dataIndex: 'stock_nny', key: 'stock_nny', align: 'center', width: 70,
           sorter: (a, b) => a.stock_nny - b.stock_nny,
           render(text, record) {
             return {
@@ -390,7 +418,7 @@ const CaseData = () => {
           }
         },
         {
-          title: 'รามอินทรา', dataIndex: 'stock_ramintra', key: 'stock_ramintra', align: 'center',
+          title: 'รามอินทรา', dataIndex: 'stock_ramintra', key: 'stock_ramintra', align: 'center', width: 70,
           sorter: (a, b) => a.stock_ramintra - b.stock_ramintra,
           render(text, record) {
             return {
@@ -402,7 +430,7 @@ const CaseData = () => {
           }
         },
         {
-          title: 'บางพลัด', dataIndex: 'stock_bangphlat', key: 'stock_bangphlat', align: 'center',
+          title: 'บางพลัด', dataIndex: 'stock_bangphlat', key: 'stock_bangphlat', align: 'center', width: 70,
           sorter: (a, b) => a.stock_bangphlat - b.stock_bangphlat,
           render(text, record) {
             return {
@@ -414,7 +442,7 @@ const CaseData = () => {
           }
         },
         {
-          title: 'เดอะโฟล์ท', dataIndex: 'stock_thefloat', key: 'stock_thefloat', align: 'center',
+          title: 'เดอะโฟล์ท', dataIndex: 'stock_thefloat', key: 'stock_thefloat', align: 'center', width: 70,
           sorter: (a, b) => a.stock_thefloat - b.stock_thefloat,
           render(text, record) {
             return {
@@ -426,7 +454,7 @@ const CaseData = () => {
           }
         },
         {
-          title: 'รังสิต', dataIndex: 'stock_rangsit', key: 'stock_rangsit', align: 'center',
+          title: 'รังสิต', dataIndex: 'stock_rangsit', key: 'stock_rangsit', align: 'center', width: 70,
           sorter: (a, b) => a.stock_rangsit - b.stock_rangsit,
           render(text, record) {
             return {
@@ -438,7 +466,7 @@ const CaseData = () => {
           }
         },
         {
-          title: 'บางแสน', dataIndex: 'stock_bangsaen', key: 'stock_bangsaen', align: 'center',
+          title: 'บางแสน', dataIndex: 'stock_bangsaen', key: 'stock_bangsaen', align: 'center', width: 70,
           sorter: (a, b) => a.stock_bangsaen - b.stock_bangsaen,
           render(text, record) {
             return {
@@ -450,7 +478,8 @@ const CaseData = () => {
           }
         },
         {
-          title: 'รวม', dataIndex: 'sumstock', key: 'sumstock', align: 'center', sorter: (a, b) => a.sumstock - b.sumstock,
+          title: 'รวม', dataIndex: 'sumstock', key: 'sumstock', align: 'center', width: 70,
+          sorter: (a, b) => a.sumstock - b.sumstock,
           render(text, record) {
             return {
               props: {
@@ -464,21 +493,29 @@ const CaseData = () => {
     },
 
     {
-      title: 'Price SRP', dataIndex: 'product_price', key: 'product_price', align: 'right',
+      title: 'Price SRP', dataIndex: 'product_price', key: 'product_price', align: 'right', width: 100,
       sorter: (a, b) => a.product_price - b.product_price,
       render: (value) => (
         <NumericFormat style={{ color: "#0958d9" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
     {
-      title: 'Status', dataIndex: 'status', key: 'status', align: 'center',
+      title: 'MinPrice', dataIndex: 'product_minprice', key: 'product_minprice', align: 'right', width: 100,
+      sorter: (a, b) => a.product_minprice - b.product_minprice,
+      render: (value) => (
+        <NumericFormat style={{ color: "#f5222d" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+      )
+    },
+
+    {
+      title: 'Status', dataIndex: 'status', key: 'status', align: 'center', width: 100,
       render: (text, record) => (
-        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.product_id)}
+        <Switch loading={loading} checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.product_id)}
         />
       )
     },
     {
-      title: 'Action', dataIndex: 'action', key: 'action',
+      title: 'Action', dataIndex: 'action', key: 'action', align: 'center', width: 80,
       render: (text, record) => (
         <Space size="middle">
           <a key={record} onClick={() => showModal(record)}><EditTwoTone twoToneColor="#ffa940" /></a>

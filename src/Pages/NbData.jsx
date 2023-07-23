@@ -8,57 +8,55 @@ import '../App.css';
 const API_URL = import.meta.env.VITE_API_URL
 
 const Brand = [
-  { val: 'ACER' },
-  { val: 'ASUS' },
-  { val: 'DELL' },
-  { val: 'GIGABYTE' },
-  { val: 'HP' },
-  { val: 'LENOVO' },
-  { val: 'MSI' },
+  { text: 'ACER', value: 'ACER' },
+  { text: 'ASUS', value: 'ASUS' },
+  { text: 'DELL', value: 'DELL' },
+  { text: 'GIGABYTE', value: 'GIGABYTE' },
+  { text: 'HP', value: 'HP' },
+  { text: 'LENOVO', value: 'LENOVO' },
+  { text: 'MSI', value: 'MSI' },
 ]
 
 const Color = [
-  { val: '(BLACK)' },
-  { val: '(BONFIRE BLACK)' },
-  { val: '(CLASSIC BLACK)' },
-  { val: '(MIDNIGHT BLACK)' },
-  { val: '(OBSIDIAN BLACK)' },
-  { val: '(OFF BLACK)' },
-  { val: '(SHADOW BLACK)' },
-  { val: '(GRAPHITE BLACK)' },
-  { val: '(INDIE BLACK)' },
-  { val: '(CARBON BLACK)' },
-  { val: '(MIXED BLACK)' },
-  { val: '(SHALE BLACK)' },
-  { val: '(MATT BLACK)' },
-  { val: '(ARCTIC GREY)' },
-  { val: '(CLOUD GREY)' },
-  { val: '(PLATINUM GREY)' },
-  { val: '(TITAN GREY)' },
-  { val: '(STORM GREY)' },
-  { val: '(ONYX GREY)' },
-  { val: '(SLATE GREY)' },
-  { val: '(STELLAR GRAY)' },
-  { val: '(MECHA GRAY)' },
-  { val: '(ECLIPSE GRAY)' },
-  { val: '(DARK SHADOW GREY)' },
-  { val: '(SPRUCE BLUE)' },
-  { val: '(QUIET BLUE)' },
-  { val: '(PERFOMANCE BLUE)' },
-  { val: '(MICA SILVER)' },
-  { val: '(NATURAL SILVER)' },
-  { val: '(PLATINUM SILVER)' },
-  { val: '(PURE SILVER)' },
-  { val: '(SPECTER GREEN WITH CAMOUFLAG)' },
-
-
+  { text: '(BLACK)', value: '(BLACK)' },
+  { text: '(BONFIRE BLACK)', value: '(BONFIRE BLACK)' },
+  { text: '(CLASSIC BLACK)', value: '(CLASSIC BLACK)' },
+  { text: '(MIDNIGHT BLACK)', value: '(MIDNIGHT BLACK)' },
+  { text: '(OBSIDIAN BLACK)', value: '(OBSIDIAN BLACK)' },
+  { text: '(OFF BLACK)', value: '(OFF BLACK)' },
+  { text: '(SHADOW BLACK)', value: '(SHADOW BLACK)' },
+  { text: '(GRAPHITE BLACK)', value: '(GRAPHITE BLACK)' },
+  { text: '(INDIE BLACK)', value: '(INDIE BLACK)' },
+  { text: '(CARBON BLACK)', value: '(CARBON BLACK)' },
+  { text: '(MIXED BLACK)', value: '(MIXED BLACK)' },
+  { text: '(SHALE BLACK)', value: '(SHALE BLACK)' },
+  { text: '(MATT BLACK)', value: '(MATT BLACK)' },
+  { text: '(ARCTIC GREY)', value: '(ARCTIC GREY)' },
+  { text: '(CLOUD GREY)', value: '(CLOUD GREY)' },
+  { text: '(PLATINUM GREY)', value: '(PLATINUM GREY)' },
+  { text: '(TITAN GREY)', value: '(TITAN GREY)' },
+  { text: '(STORM GREY)', value: '(STORM GREY)' },
+  { text: '(ONYX GREY)', value: '(ONYX GREY)' },
+  { text: '(SLATE GREY)', value: '(SLATE GREY)' },
+  { text: '(STELLAR GRAY)', value: '(STELLAR GRAY)' },
+  { text: '(MECHA GRAY)', value: '(MECHA GRAY)' },
+  { text: '(ECLIPSE GRAY)', value: '(ECLIPSE GRAY)' },
+  { text: '(DARK SHADOW GREY)', value: '(DARK SHADOW GREY)' },
+  { text: '(SPRUCE BLUE)', value: '(SPRUCE BLUE)' },
+  { text: '(QUIET BLUE)', value: '(QUIET BLUE)' },
+  { text: '(PERFOMANCE BLUE)', value: '(PERFOMANCE BLUE)' },
+  { text: '(MICA SILVER)', value: '(MICA SILVER)' },
+  { text: '(NATURAL SILVER)', value: '(NATURAL SILVER)' },
+  { text: '(PLATINUM SILVER)', value: '(PLATINUM SILVER)' },
+  { text: '(PURE SILVER)', value: '(PURE SILVER)' },
+  { text: '(SPECTER GREEN WITH CAMOUFLAG)', value: '(SPECTER GREEN WITH CAMOUFLAG)' },
 
 ]
 
 
 const Group = [
-  { val: 'Gaming' },
-  { val: 'Non-gaming' },
+  { text: 'GAMING', value: 'GAMING' },
+  { text: 'NON-GAMING', value: 'NON-GAMING' },
 ]
 
 const getBase64 = (file) =>
@@ -97,7 +95,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
       model: record.nb_model,
       color: record.nb_color,
       price_srp: record.product_price,
-      dis_price: record.product_minprice,
+      minprice: record.product_minprice,
       href: record.nb_href,
       status: record.status,
     });
@@ -176,8 +174,21 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
     >
       <Divider />
       <Form form={form} name="form_in_modal">
-        <Row gutter={20}>
-          <Col span={12}>
+        <Row gutter={24}>
+          <Col span={24}>
+            <Form.Item name="model" label="Model"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your Model!',
+                },
+              ]}>
+              <Input placeholder='Model' allowClear />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={24}>
+          <Col span={8}>
             <Form.Item label="Brand" name="brand"
               rules={[
                 {
@@ -185,40 +196,33 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
                   message: 'Please input your Brand!',
                 },
               ]}>
-              <Select placeholder="Brand" allowClear>
+              <Select placeholder="Brand" allowClear showSearch>
                 {Brand.map(item => (
-                  <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
+                  <Select.Option key={item.value} value={item.value}>{item.text}</Select.Option>
                 ))}
               </Select>
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item name="model" label="Model" >
-              <Input placeholder='Model' allowClear />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={20}>
-          <Col span={6}>
+          <Col span={8}>
             <Form.Item label="Color" name="color">
-              <Select placeholder="Color" allowClear>
+              <Select placeholder="Color" allowClear showSearch>
                 {Color.map(item => (
-                  <Select.Option key={item.val} value={item.mnt_val}>{item.val}</Select.Option>
+                  <Select.Option key={item.value} value={item.value}>{item.text}</Select.Option>
                 ))}
               </Select>
             </Form.Item>
           </Col>
-        </Row>
-        <Row gutter={20}>
-          <Col span={6}>
+          <Col span={8}>
             <Form.Item label="Group" name="group">
               <Select placeholder="Group" allowClear>
                 {Group.map(item => (
-                  <Select.Option key={item.val} value={item.val}>{item.label}</Select.Option>
+                  <Select.Option key={item.value} value={item.value}>{item.text}</Select.Option>
                 ))}
               </Select>
             </Form.Item>
           </Col>
+        </Row>
+        <Row gutter={24}>
           <Col span={6}>
             <Form.Item label="Price SRP" name="price_srp">
               <InputNumber
@@ -229,7 +233,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item label="Discount" name="dis_price">
+            <Form.Item label="MinPrice" name="minprice">
               <InputNumber
                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
@@ -238,8 +242,8 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
         </Row>
-        <Row gutter={20}>
-          <Col span={18}>
+        <Row gutter={24}>
+          <Col span={24}>
             <Form.Item name="href" label="Link" >
               <Input placeholder='Link' allowClear />
             </Form.Item>
@@ -350,7 +354,9 @@ const NbData = () => {
   };
 
   const Column = [
-
+    {
+      title: 'ProductCode', dataIndex: 'nb_id', key: 'nb_id', width: 120,
+    },
     {
       title: 'Image',
       dataIndex: 'nb_img',
@@ -360,53 +366,33 @@ const NbData = () => {
       render: (imageUrl) => <img src={API_URL + '/' + imageUrl} alt="thumbnail" height="30" />,
     },
     {
-      title: 'Brand', dataIndex: 'nb_brand', key: 'nb_brand',
-      width: 80,
+      title: 'Brand', dataIndex: 'nb_brand', key: 'nb_brand', width: 130,
       render: (text, record) => <a href={record.nb_href} target='_blank'>{text}</a>,
-      filters: [
-        {
-          text: 'ACER',
-          value: 'ACER',
-        },
-        {
-          text: 'ASUS',
-          value: 'ASUS',
-        },
-        {
-          text: 'DELL',
-          value: 'DELL',
-        },
-        {
-          text: 'HP',
-          value: 'HP',
-        },
-        {
-          text: 'LENOVO',
-          value: 'LENOVO',
-        },
-        {
-          text: 'MSI',
-          value: 'MSI',
-        },
-
-
-      ],
+      filters: Brand,
       onFilter: (value, record) => record.nb_brand.indexOf(value) === 0,
       sorter: (a, b) => a.nb_brand.localeCompare(b.nb_brand),
       sortDirections: ['descend'],
     },
     {
-      title: 'Model', dataIndex: 'nb_model', key: 'nb_model', width: 400,
+      title: 'Model', dataIndex: 'nb_model', key: 'nb_model',
     },
     {
-      title: 'Color', dataIndex: 'nb_color', key: 'nb_color', width: 190,
+      title: 'Color', dataIndex: 'nb_color', key: 'nb_color', width: 170,
+      filters: Color,
+      onFilter: (value, record) => record.nb_color.indexOf(value) === 0,
     },
+    {
+      title: 'Group', dataIndex: 'nb_group', key: 'nb_group', width: 120,
+      filters: Group,
+      onFilter: (value, record) => record.nb_group.indexOf(value) === 0,
+    },
+
 
     {
       title: 'STOCK',
       children: [
         {
-          title: 'นครนายก', dataIndex: 'stock_nny', key: 'stock_nny', align: 'center',
+          title: 'นครนายก', dataIndex: 'stock_nny', key: 'stock_nny', align: 'center', width: 70,
           sorter: (a, b) => a.stock_nny - b.stock_nny,
           render(text, record) {
             return {
@@ -418,7 +404,7 @@ const NbData = () => {
           }
         },
         {
-          title: 'รามอินทรา', dataIndex: 'stock_ramintra', key: 'stock_ramintra', align: 'center',
+          title: 'รามอินทรา', dataIndex: 'stock_ramintra', key: 'stock_ramintra', align: 'center', width: 70,
           sorter: (a, b) => a.stock_ramintra - b.stock_ramintra,
           render(text, record) {
             return {
@@ -430,7 +416,7 @@ const NbData = () => {
           }
         },
         {
-          title: 'บางพลัด', dataIndex: 'stock_bangphlat', key: 'stock_bangphlat', align: 'center',
+          title: 'บางพลัด', dataIndex: 'stock_bangphlat', key: 'stock_bangphlat', align: 'center', width: 70,
           sorter: (a, b) => a.stock_bangphlat - b.stock_bangphlat,
           render(text, record) {
             return {
@@ -442,7 +428,7 @@ const NbData = () => {
           }
         },
         {
-          title: 'เดอะโฟล์ท', dataIndex: 'stock_thefloat', key: 'stock_thefloat', align: 'center',
+          title: 'เดอะโฟล์ท', dataIndex: 'stock_thefloat', key: 'stock_thefloat', align: 'center', width: 70,
           sorter: (a, b) => a.stock_thefloat - b.stock_thefloat,
           render(text, record) {
             return {
@@ -454,7 +440,7 @@ const NbData = () => {
           }
         },
         {
-          title: 'รังสิต', dataIndex: 'stock_rangsit', key: 'stock_rangsit', align: 'center',
+          title: 'รังสิต', dataIndex: 'stock_rangsit', key: 'stock_rangsit', align: 'center', width: 70,
           sorter: (a, b) => a.stock_rangsit - b.stock_rangsit,
           render(text, record) {
             return {
@@ -466,7 +452,7 @@ const NbData = () => {
           }
         },
         {
-          title: 'บางแสน', dataIndex: 'stock_bangsaen', key: 'stock_bangsaen', align: 'center',
+          title: 'บางแสน', dataIndex: 'stock_bangsaen', key: 'stock_bangsaen', align: 'center', width: 70,
           sorter: (a, b) => a.stock_bangsaen - b.stock_bangsaen,
           render(text, record) {
             return {
@@ -478,7 +464,8 @@ const NbData = () => {
           }
         },
         {
-          title: 'รวม', dataIndex: 'sumstock', key: 'sumstock', align: 'center', sorter: (a, b) => a.sumstock - b.sumstock,
+          title: 'รวม', dataIndex: 'sumstock', key: 'sumstock', align: 'center', width: 70,
+          sorter: (a, b) => a.sumstock - b.sumstock,
           render(text, record) {
             return {
               props: {
@@ -492,28 +479,28 @@ const NbData = () => {
     },
 
     {
-      title: 'Price SRP', dataIndex: 'product_price', key: 'product_price', align: 'right',
+      title: 'Price SRP', dataIndex: 'product_price', key: 'product_price', align: 'right', width: 100,
       sorter: (a, b) => a.product_price - b.product_price,
       render: (value) => (
         <NumericFormat style={{ color: "#0958d9" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
     {
-      title: 'Discount', dataIndex: 'product_minprice', key: 'product_minprice', align: 'right',
+      title: 'MinPrice', dataIndex: 'product_minprice', key: 'product_minprice', align: 'right', width: 100,
       sorter: (a, b) => a.product_minprice - b.product_minprice,
       render: (value) => (
         <NumericFormat style={{ color: "#d4001a" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
     {
-      title: 'Status', dataIndex: 'status', key: 'status', align: 'center',
+      title: 'Status', dataIndex: 'status', key: 'status', align: 'center', width: 100,
       render: (text, record) => (
-        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.product_id)}
+        <Switch loading={loading} checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.product_id)}
         />
       )
     },
     {
-      title: 'Action', dataIndex: 'action', key: 'action',
+      title: 'Action', dataIndex: 'action', key: 'action', align: 'center', width: 80,
       render: (text, record) => (
         <Space size="middle">
           <a key={record} onClick={() => showModal(record)}><EditTwoTone twoToneColor="#ffa940" /></a>

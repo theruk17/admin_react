@@ -143,7 +143,20 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
     >
       <Divider />
       <Form form={form} name="form_in_modal">
-        <Row gutter={20}>
+        <Row gutter={24}>
+          <Col span={24}>
+            <Form.Item name="model" label="Model"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your Model!',
+                },
+              ]}>
+              <Input placeholder='Model' allowClear />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={24}>
           <Col span={12}>
             <Form.Item label="Brand" name="brand"
               rules={[
@@ -152,20 +165,13 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
                   message: 'Please input your Brand!',
                 },
               ]}>
-              <Select placeholder="Brand" allowClear>
+              <Select placeholder="Brand" allowClear showSearch>
                 {Brand.map(item => (
                   <Select.Option key={item.value} value={item.value}>{item.value}</Select.Option>
                 ))}
               </Select>
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item name="model" label="Model" >
-              <Input placeholder='Model' allowClear />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={20}>
           <Col span={12}>
             <Form.Item label="Color" name="color">
               <Select placeholder="Color" allowClear>
@@ -176,7 +182,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
         </Row>
-        <Row gutter={20}>
+        <Row gutter={24}>
           <Col span={6}>
             <Form.Item label="Price SRP" name="price_srp">
               <InputNumber
@@ -197,8 +203,8 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           </Col>
         </Row>
 
-        <Row gutter={20}>
-          <Col span={18}>
+        <Row gutter={24}>
+          <Col span={24}>
             <Form.Item name="href" label="Link" >
               <Input placeholder='Link' allowClear />
             </Form.Item>
@@ -309,7 +315,9 @@ const FanData = () => {
   };
 
   const Column = [
-
+    {
+      title: 'ProductCode', dataIndex: 's_id', key: 's_id', width: 120,
+    },
     {
       title: 'Image',
       dataIndex: 's_img',
@@ -319,9 +327,8 @@ const FanData = () => {
       render: (imageUrl) => <img src={API_URL + '/' + imageUrl} alt="thumbnail" height="30" />,
     },
     {
-      title: 'Brand', dataIndex: 's_brand', key: 's_brand', width: 100,
+      title: 'Brand', dataIndex: 's_brand', key: 's_brand', width: 130,
       render: (text, record) => <a href={record.s_href} target='_blank'>{text}</a>,
-
       filters: Brand,
       onFilter: (value, record) => record.s_brand.indexOf(value) === 0,
       sorter: (a, b) => a.s_brand.localeCompare(b.s_brand),
@@ -331,15 +338,16 @@ const FanData = () => {
     {
       title: 'Model', dataIndex: 's_model', key: 's_model',
     },
-
     {
-      title: 'Color', dataIndex: 's_color', key: 's_color', align: 'center',
+      title: 'Color', dataIndex: 's_color', key: 's_color', align: 'center', width: 120,
+      filters: Color,
+      onFilter: (value, record) => record.s_color.indexOf(value) === 0,
     },
     {
       title: 'STOCK',
       children: [
         {
-          title: 'นครนายก', dataIndex: 'stock_nny', key: 'stock_nny', align: 'center',
+          title: 'นครนายก', dataIndex: 'stock_nny', key: 'stock_nny', align: 'center', width: 70,
           sorter: (a, b) => a.stock_nny - b.stock_nny,
           render(text, record) {
             return {
@@ -351,7 +359,7 @@ const FanData = () => {
           }
         },
         {
-          title: 'รามอินทรา', dataIndex: 'stock_ramintra', key: 'stock_ramintra', align: 'center',
+          title: 'รามอินทรา', dataIndex: 'stock_ramintra', key: 'stock_ramintra', align: 'center', width: 70,
           sorter: (a, b) => a.stock_ramintra - b.stock_ramintra,
           render(text, record) {
             return {
@@ -363,7 +371,7 @@ const FanData = () => {
           }
         },
         {
-          title: 'บางพลัด', dataIndex: 'stock_bangphlat', key: 'stock_bangphlat', align: 'center',
+          title: 'บางพลัด', dataIndex: 'stock_bangphlat', key: 'stock_bangphlat', align: 'center', width: 70,
           sorter: (a, b) => a.stock_bangphlat - b.stock_bangphlat,
           render(text, record) {
             return {
@@ -375,7 +383,7 @@ const FanData = () => {
           }
         },
         {
-          title: 'เดอะโฟล์ท', dataIndex: 'stock_thefloat', key: 'stock_thefloat', align: 'center',
+          title: 'เดอะโฟล์ท', dataIndex: 'stock_thefloat', key: 'stock_thefloat', align: 'center', width: 70,
           sorter: (a, b) => a.stock_thefloat - b.stock_thefloat,
           render(text, record) {
             return {
@@ -387,7 +395,7 @@ const FanData = () => {
           }
         },
         {
-          title: 'รังสิต', dataIndex: 'stock_rangsit', key: 'stock_rangsit', align: 'center',
+          title: 'รังสิต', dataIndex: 'stock_rangsit', key: 'stock_rangsit', align: 'center', width: 70,
           sorter: (a, b) => a.stock_rangsit - b.stock_rangsit,
           render(text, record) {
             return {
@@ -399,7 +407,7 @@ const FanData = () => {
           }
         },
         {
-          title: 'บางแสน', dataIndex: 'stock_bangsaen', key: 'stock_bangsaen', align: 'center',
+          title: 'บางแสน', dataIndex: 'stock_bangsaen', key: 'stock_bangsaen', align: 'center', width: 70,
           sorter: (a, b) => a.stock_bangsaen - b.stock_bangsaen,
           render(text, record) {
             return {
@@ -411,7 +419,8 @@ const FanData = () => {
           }
         },
         {
-          title: 'รวม', dataIndex: 'sumstock', key: 'sumstock', align: 'center', sorter: (a, b) => a.sumstock - b.sumstock,
+          title: 'รวม', dataIndex: 'sumstock', key: 'sumstock', align: 'center', width: 70,
+          sorter: (a, b) => a.sumstock - b.sumstock,
           render(text, record) {
             return {
               props: {
@@ -425,28 +434,28 @@ const FanData = () => {
     },
 
     {
-      title: 'Price SRP', dataIndex: 'product_price', key: 'product_price', align: 'right',
+      title: 'Price SRP', dataIndex: 'product_price', key: 'product_price', align: 'right', width: 100,
       sorter: (a, b) => a.product_price - b.product_price,
       render: (value) => (
         <NumericFormat style={{ color: "#0958d9" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
     {
-      title: 'Discount', dataIndex: 'product_minprice', key: 'product_minprice', align: 'right',
+      title: 'MinPrice', dataIndex: 'product_minprice', key: 'product_minprice', align: 'right', width: 100,
       sorter: (a, b) => a.product_minprice - b.product_minprice,
       render: (value) => (
         <NumericFormat style={{ color: "#d4001a" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
     {
-      title: 'Status', dataIndex: 'status', key: 'status', align: 'center',
+      title: 'Status', dataIndex: 'status', key: 'status', align: 'center', width: 100,
       render: (text, record) => (
-        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.product_id)}
+        <Switch loading={loading} checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.product_id)}
         />
       )
     },
     {
-      title: 'Action', dataIndex: 'action', key: 'action',
+      title: 'Action', dataIndex: 'action', key: 'action', align: 'center', width: 80,
       render: (text, record) => (
         <Space size="middle">
           <a key={record} onClick={() => showModal(record)}><EditTwoTone twoToneColor="#ffa940" /></a>

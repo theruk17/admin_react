@@ -8,41 +8,41 @@ import '../App.css';
 const API_URL = import.meta.env.VITE_API_URL
 
 const Brand = [
-  { val: 'ANTEC' },
-  { val: 'BE QUIET' },
-  { val: 'COOLER MASTER' },
-  { val: 'CORSAIR' },
-  { val: 'EK-VARDAR' },
-  { val: 'ID-COOLING' },
-  { val: 'INWIN' },
-  { val: 'LIANLI' },
-  { val: 'NZXT' },
-  { val: 'POWER MONSTER' },
-  { val: 'SILVERSTONE' },
-  { val: 'THERMALTAKE' },
-  { val: 'TSUNAMI' },
+  { text: 'ANTEC', value: 'ANTEC' },
+  { text: 'BE QUIET', value: 'BE QUIET' },
+  { text: 'COOLER MASTER', value: 'COOLER MASTER' },
+  { text: 'CORSAIR', value: 'CORSAIR' },
+  { text: 'EK-VARDAR', value: 'EK-VARDAR' },
+  { text: 'ID-COOLING', value: 'ID-COOLING' },
+  { text: 'INWIN', value: 'INWIN' },
+  { text: 'LIANLI', value: 'LIANLI' },
+  { text: 'NZXT', value: 'NZXT' },
+  { text: 'POWER MONSTER', value: 'POWER MONSTER' },
+  { text: 'SILVERSTONE', value: 'SILVERSTONE' },
+  { text: 'THERMALTAKE', value: 'THERMALTAKE' },
+  { text: 'TSUNAMI', value: 'TSUNAMI' },
 ]
 
 const Color = [
-  { val: 'BLACK' },
-  { val: 'WHITE' },
-  { val: 'BLUE' },
-  { val: 'RED' },
-  { val: 'PINK' },
-  { val: 'MATTE BLACK' },
-  { val: 'MATTE WHITE' },
-  { val: 'RACING GREEN' },
-  { val: 'TURQUOISE' },
+  { text: 'BLACK', value: 'BLACK' },
+  { text: 'WHITE', value: 'WHITE' },
+  { text: 'BLUE', value: 'BLUE' },
+  { text: 'RED', value: 'RED' },
+  { text: 'PINK', value: 'PINK' },
+  { text: 'MATTE BLACK', value: 'MATTE BLACK' },
+  { text: 'MATTE WHITE', value: 'MATTE WHITE' },
+  { text: 'RACING GREEN', value: 'RACING GREEN' },
+  { text: 'TURQUOISE', value: 'TURQUOISE' },
 ]
 
 
 const Group = [
-  { val: '120MMx1' },
-  { val: '120MMx2' },
-  { val: '120MMx3' },
-  { val: '120MMx5' },
-  { val: '140MMx1' },
-  { val: '140MMx2' },
+  { text: '120MMx1', value: '120MMx1' },
+  { text: '120MMx2', value: '120MMx2' },
+  { text: '120MMx3', value: '120MMx3' },
+  { text: '120MMx5', value: '120MMx5' },
+  { text: '140MMx1', value: '140MMx1' },
+  { text: '140MMx2', value: '140MMx2' },
 
 ]
 
@@ -161,8 +161,21 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
     >
       <Divider />
       <Form form={form} name="form_in_modal">
-        <Row gutter={20}>
-          <Col span={12}>
+        <Row gutter={24}>
+          <Col span={24}>
+            <Form.Item name="model" label="Model"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your Model!',
+                },
+              ]}>
+              <Input placeholder='Model' allowClear />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={24}>
+          <Col span={8}>
             <Form.Item label="Brand" name="brand"
               rules={[
                 {
@@ -170,40 +183,33 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
                   message: 'Please input your Brand!',
                 },
               ]}>
-              <Select placeholder="Brand" allowClear>
+              <Select placeholder="Brand" allowClear showSearch>
                 {Brand.map(item => (
-                  <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
+                  <Select.Option key={item.value} value={item.value}>{item.text}</Select.Option>
                 ))}
               </Select>
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item name="model" label="Model" >
-              <Input placeholder='Model' allowClear />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={20}>
-          <Col span={6}>
+          <Col span={8}>
             <Form.Item label="Color" name="color">
               <Select placeholder="Color" allowClear>
                 {Color.map(item => (
-                  <Select.Option key={item.val} value={item.val}>{item.val}</Select.Option>
+                  <Select.Option key={item.value} value={item.value}>{item.text}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item label="Group" name="group">
+              <Select placeholder="Group" allowClear>
+                {Group.map(item => (
+                  <Select.Option key={item.value} value={item.value}>{item.text}</Select.Option>
                 ))}
               </Select>
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={20}>
-          <Col span={6}>
-            <Form.Item label="Group" name="group">
-              <Select placeholder="Group" allowClear>
-                {Group.map(item => (
-                  <Select.Option key={item.val} value={item.val}>{item.label}</Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
           <Col span={6}>
             <Form.Item label="Price SRP" name="price_srp">
               <InputNumber
@@ -214,7 +220,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item label="Discount" name="discount">
+            <Form.Item label="MinPrice" name="discount">
               <InputNumber
                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
@@ -223,8 +229,8 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
         </Row>
-        <Row gutter={20}>
-          <Col span={18}>
+        <Row gutter={24}>
+          <Col span={24}>
             <Form.Item name="href" label="Link" >
               <Input placeholder='Link' allowClear />
             </Form.Item>
@@ -335,7 +341,9 @@ const FanData = () => {
   };
 
   const Column = [
-
+    {
+      title: 'ProductCode', dataIndex: 'f_id', key: 'f_id', width: 120,
+    },
     {
       title: 'Image',
       dataIndex: 'f_img',
@@ -345,96 +353,33 @@ const FanData = () => {
       render: (imageUrl) => <img src={API_URL + '/' + imageUrl} alt="thumbnail" height="30" />,
     },
     {
-      title: 'Brand', dataIndex: 'f_brand', key: 'f_brand', width: 150,
+      title: 'Brand', dataIndex: 'f_brand', key: 'f_brand', width: 130,
       render: (text, record) => <a href={record.f_href} target='_blank'>{text}</a>,
-      filters: [
-        {
-          text: 'ANTEC',
-          value: 'ANTEC',
-        },
-        {
-          text: 'BE QUIET',
-          value: 'BE QUIET',
-        },
-        {
-          text: 'COOLER MASTER',
-          value: 'COOLER MASTER',
-        },
-        {
-          text: 'CORSAIR',
-          value: 'CORSAIR',
-        },
-        {
-          text: 'EK-VARDAR',
-          value: 'EK-VARDAR',
-        },
-        {
-          text: 'ID-COOLING',
-          value: 'ID-COOLING',
-        },
-        {
-          text: 'INWIN',
-          value: 'INWIN',
-        },
-        {
-          text: 'LIANLI',
-          value: 'LIANLI',
-        },
-        {
-          text: 'NZXT',
-          value: 'NZXT',
-        },
-        {
-          text: 'POWER MONSTER',
-          value: 'POWER MONSTER',
-        },
-        {
-          text: 'SILVERSTONE',
-          value: 'SILVERSTONE',
-        },
-        {
-          text: 'THERMALTAKE',
-          value: 'THERMALTAKE',
-        },
-        {
-          text: 'TSUNAMI',
-          value: 'TSUNAMI',
-        },
-
-      ],
+      filters: Brand,
       onFilter: (value, record) => record.f_brand.indexOf(value) === 0,
       sorter: (a, b) => a.f_brand.localeCompare(b.f_brand),
       sortDirections: ['descend'],
 
     },
     {
-      title: 'Model', dataIndex: 'f_model', key: 'f_model', width: 350,
+      title: 'Model', dataIndex: 'f_model', key: 'f_model',
     },
     {
-      title: 'Color', dataIndex: 'f_color', key: 'f_color', width: 120, align: 'center',
-    },
-    {
-      title: 'Size', dataIndex: 'f_group', key: 'f_group', align: 'center',
-      filters: [
-        {
-          text: '120MM',
-          value: '120MM',
-        },
-        {
-          text: '140MM',
-          value: '140MM',
-        },
+      title: 'Color', dataIndex: 'f_color', key: 'f_color', width: 130, align: 'center',
+      filters: Color,
+      onFilter: (value, record) => record.f_color.indexOf(value) === 0,
 
-      ],
+    },
+    {
+      title: 'Size', dataIndex: 'f_group', key: 'f_group', align: 'center', width: 100,
+      filters: Group,
       onFilter: (value, record) => record.f_group.indexOf(value) === 0,
-      sorter: (a, b) => a.f_group.localeCompare(b.f_group),
-      sortDirections: ['ascend', 'descend'],
     },
     {
       title: 'STOCK',
       children: [
         {
-          title: 'นครนายก', dataIndex: 'stock_nny', key: 'stock_nny', align: 'center',
+          title: 'นครนายก', dataIndex: 'stock_nny', key: 'stock_nny', align: 'center', width: 70,
           sorter: (a, b) => a.stock_nny - b.stock_nny,
           render(text, record) {
             return {
@@ -446,7 +391,7 @@ const FanData = () => {
           }
         },
         {
-          title: 'รามอินทรา', dataIndex: 'stock_ramintra', key: 'stock_ramintra', align: 'center',
+          title: 'รามอินทรา', dataIndex: 'stock_ramintra', key: 'stock_ramintra', align: 'center', width: 70,
           sorter: (a, b) => a.stock_ramintra - b.stock_ramintra,
           render(text, record) {
             return {
@@ -458,7 +403,7 @@ const FanData = () => {
           }
         },
         {
-          title: 'บางพลัด', dataIndex: 'stock_bangphlat', key: 'stock_bangphlat', align: 'center',
+          title: 'บางพลัด', dataIndex: 'stock_bangphlat', key: 'stock_bangphlat', align: 'center', width: 70,
           sorter: (a, b) => a.stock_bangphlat - b.stock_bangphlat,
           render(text, record) {
             return {
@@ -470,7 +415,7 @@ const FanData = () => {
           }
         },
         {
-          title: 'เดอะโฟล์ท', dataIndex: 'stock_thefloat', key: 'stock_thefloat', align: 'center',
+          title: 'เดอะโฟล์ท', dataIndex: 'stock_thefloat', key: 'stock_thefloat', align: 'center', width: 70,
           sorter: (a, b) => a.stock_thefloat - b.stock_thefloat,
           render(text, record) {
             return {
@@ -482,7 +427,7 @@ const FanData = () => {
           }
         },
         {
-          title: 'รังสิต', dataIndex: 'stock_rangsit', key: 'stock_rangsit', align: 'center',
+          title: 'รังสิต', dataIndex: 'stock_rangsit', key: 'stock_rangsit', align: 'center', width: 70,
           sorter: (a, b) => a.stock_rangsit - b.stock_rangsit,
           render(text, record) {
             return {
@@ -494,7 +439,7 @@ const FanData = () => {
           }
         },
         {
-          title: 'บางแสน', dataIndex: 'stock_bangsaen', key: 'stock_bangsaen', align: 'center',
+          title: 'บางแสน', dataIndex: 'stock_bangsaen', key: 'stock_bangsaen', align: 'center', width: 70,
           sorter: (a, b) => a.stock_bangsaen - b.stock_bangsaen,
           render(text, record) {
             return {
@@ -506,7 +451,8 @@ const FanData = () => {
           }
         },
         {
-          title: 'รวม', dataIndex: 'sumstock', key: 'sumstock', align: 'center', sorter: (a, b) => a.sumstock - b.sumstock,
+          title: 'รวม', dataIndex: 'sumstock', key: 'sumstock', align: 'center', width: 70,
+          sorter: (a, b) => a.sumstock - b.sumstock,
           render(text, record) {
             return {
               props: {
@@ -520,28 +466,28 @@ const FanData = () => {
     },
 
     {
-      title: 'Price SRP', dataIndex: 'product_price', key: 'product_price', align: 'right',
+      title: 'Price SRP', dataIndex: 'product_price', key: 'product_price', align: 'right', width: 100,
       sorter: (a, b) => a.product_price - b.product_price,
       render: (value) => (
         <NumericFormat style={{ color: "#0958d9" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
     {
-      title: 'Discount', dataIndex: 'product_minprice', key: 'product_minprice', align: 'right',
+      title: 'MinPrice', dataIndex: 'product_minprice', key: 'product_minprice', align: 'right', width: 100,
       sorter: (a, b) => a.product_minprice - b.product_minprice,
       render: (value) => (
         <NumericFormat style={{ color: "#d4001a" }} value={value} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
       )
     },
     {
-      title: 'Status', dataIndex: 'status', key: 'status', align: 'center',
+      title: 'Status', dataIndex: 'status', key: 'status', align: 'center', width: 100,
       render: (text, record) => (
-        <Switch checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.product_id)}
+        <Switch loading={loading} checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.product_id)}
         />
       )
     },
     {
-      title: 'Action', dataIndex: 'action', key: 'action',
+      title: 'Action', dataIndex: 'action', key: 'action', align: 'center', width: 80,
       render: (text, record) => (
         <Space size="middle">
           <a key={record} onClick={() => showModal(record)}><EditTwoTone twoToneColor="#ffa940" /></a>
