@@ -83,6 +83,7 @@ const SW = [
   { text: 'RUBBER DOME', value: 'RUBBER DOME' },
   { text: 'TACTILE SWITCH', value: 'TACTILE SWITCH' },
   { text: 'TITAN SWITCH', value: 'TITAN SWITCH' },
+  { text: 'SILVER SWITCH', value: 'SILVER SWITCH' },
   { text: 'LINEAR', value: 'LINEAR' },
   { text: 'TACTLE', value: 'TACTLE' },
   { text: 'RAINBOW LED', value: 'RAINBOW LED' },
