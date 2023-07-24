@@ -44,6 +44,7 @@ const SW = [
   { text: 'PINK RED SWITCH', value: 'PINK RED SWITCH' },
   { text: 'BLACK RED SWITCH', value: 'BLACK RED SWITCH' },
   { text: 'GRAY RED SWITCH', value: 'GRAY RED SWITCH' },
+  { text: 'TTC RED SWITCH', value: 'TTC RED SWITCH' },
   { text: 'GRAY BLUE SWITCH', value: 'GRAY BLUE SWITCH' },
   { text: 'AKKO WINE WHITE SWITCH', value: 'AKKO WINE WHITE SWITCH' },
   { text: 'AKKO WINE RED SWITCH', value: 'AKKO WINE RED SWITCH' },
