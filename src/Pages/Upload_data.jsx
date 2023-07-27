@@ -51,13 +51,7 @@ const Upload_data = () => {
                   description: res.data,
                 });
               })
-            axios.get(API_URL + '/getpricefromsheet')
-              .then(res => {
-                notification.success({
-                  message: 'Successful',
-                  description: res.data,
-                });
-              })
+
             notification.success({
               message: 'Successful',
               description: res.data.message,
