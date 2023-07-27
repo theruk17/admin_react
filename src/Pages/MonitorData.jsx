@@ -644,7 +644,7 @@ const ShowData = () => {
   ]
   return (
     <div>
-      <Table bordered loading={loading} dataSource={data} columns={Column} rowKey={record => record.mnt_id} pagination={pagination} onChange={onChange} size="small"></Table>
+      <Table bordered loading={loading} dataSource={data} columns={Column} rowKey={record => record.mnt_id} pagination={pagination} onChange={onChange} size="small" ></Table>
       <EditForm
         visible={visible}
         onCreate={handleCreate}
