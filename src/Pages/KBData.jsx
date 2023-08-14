@@ -11,6 +11,7 @@ const Brand = [
   { text: 'AKKO', value: 'AKKO' },
   { text: 'ASUS', value: 'ASUS' },
   { text: 'CORSAIR', value: 'CORSAIR' },
+  { text: 'DAREU', value: 'DAREU' },
   { text: 'EGA', value: 'EGA' },
   { text: 'GLORIOUS', value: 'GLORIOUS' },
   { text: 'HyperX', value: 'HyperX' },

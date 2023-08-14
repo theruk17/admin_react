@@ -11,6 +11,7 @@ const Brand = [
   { text: 'ANITECH', value: 'ANITECH' },
   { text: 'ASUS', value: 'ASUS' },
   { text: 'CORSAIR', value: 'CORSAIR' },
+  { text: 'DAREU', value: 'DAREU' },
   { text: 'GALAX', value: 'GALAX' },
   { text: 'HyperX', value: 'HyperX' },
   { text: 'LOGA', value: 'LOGA' },
@@ -43,6 +44,7 @@ const Color = [
   { text: 'MATTE NEON MINT', value: 'MATTE NEON MINT' },
   { text: 'MATTE NEON PINK', value: 'MATTE NEON PINK' },
 ]
+
 
 const Type = [
   { text: 'WIRELESS', value: 'WIRELESS' },
