@@ -36,6 +36,7 @@ const App = () => {
           style={{
             height: '100%',
             borderRight: 0,
+
           }}
           onClick={(item) => {
             navigate(item.key);
@@ -114,7 +115,7 @@ const App = () => {
         <Header className="header" style={{
           position: 'fixed',
           top: 0,
-          zIndex: 1,
+          zIndex: 99,
           width: '100%',
         }}>
           <img className='logo' src={LogoIHC} alt="" style={{
@@ -139,9 +140,11 @@ const App = () => {
         </Header>
         <Content
           style={{
-            width: '90%',
+            display: 'flex',
+            width: '100%',
             padding: 10,
             top: 10,
+
             margin: '60px 170px 0',
             minHeight: '100dvh',
             background: colorBgContainer,
