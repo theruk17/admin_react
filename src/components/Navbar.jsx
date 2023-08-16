@@ -112,12 +112,14 @@ const App = () => {
       </Sider>
 
       <Layout>
-        <Header className="header" style={{
-          position: 'fixed',
-          top: 0,
-          zIndex: 99,
-          width: '100%',
-        }}>
+        <Header className="header"
+          style={{
+
+            position: 'fixed',
+            top: 0,
+            zIndex: 99,
+            width: '100%',
+          }}>
           <img className='logo' src={LogoIHC} alt="" style={{
             width: 140,
           }} />
@@ -138,20 +140,27 @@ const App = () => {
               },
             ]} />
         </Header>
-        <Content
+        <Layout
           style={{
             display: 'flex',
-            width: '90%',
-            padding: 10,
-            top: 10,
-            margin: '60px 170px 0',
-            minHeight: '100dvh',
-            background: colorBgContainer,
-          }}
-        >
-          <PageContent />
 
-        </Content>
+
+          }}>
+          <Content
+            style={{
+
+              width: '100%',
+              padding: 10,
+              top: 10,
+              margin: '60px 170px 0',
+
+              background: colorBgContainer,
+            }}
+          >
+            <PageContent />
+
+          </Content>
+        </Layout>
         <Footer
           style={{
             textAlign: 'left',
