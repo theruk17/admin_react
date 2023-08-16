@@ -4,7 +4,7 @@ import PageContent from '../components/PageContent'
 import '../index.css';
 import LogoIHC from '../assets/logo_ihc.svg'
 import { useNavigate } from 'react-router-dom';
-import { HouseDoor, ArrowRepeat, Laptop, Display, Pc, Fan, Headset, Keyboard, Mouse2, Mic, SquareFill, Snow, FileEarmark } from 'react-bootstrap-icons';
+import { HouseDoor, ArrowRepeat, Laptop, Display, Pc, Fan, Headset, Keyboard, Mouse2, Mic, SquareFill, Snow, FileEarmark, KeyboardFill } from 'react-bootstrap-icons';
 const { Header, Content, Sider, Footer } = Layout;
 
 const App = () => {
@@ -75,6 +75,11 @@ const App = () => {
               icon: <Keyboard />,
               label: "Keyboard",
               key: '/kb'
+            },
+            {
+              icon: <KeyboardFill />,
+              label: "KeyCap",
+              key: '/kcap'
             },
             {
               icon: <FileEarmark />,
