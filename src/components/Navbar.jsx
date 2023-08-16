@@ -141,10 +141,9 @@ const App = () => {
         <Content
           style={{
             display: 'flex',
-            width: '100%',
+            width: '90%',
             padding: 10,
             top: 10,
-
             margin: '60px 170px 0',
             minHeight: '100dvh',
             background: colorBgContainer,
