@@ -13,7 +13,11 @@ const App = () => {
   } = theme.useToken();
   const navigate = useNavigate()
   return (
-    <Layout hasSider>
+    <Layout hasSider
+      style={{
+        minHeight: '100vh',
+        minWidth: '100vh'
+      }}>
       <Sider
         breakpoint='lg'
         collapsedWidth='0'
@@ -143,17 +147,13 @@ const App = () => {
         <Layout
           style={{
             display: 'flex',
-
-
           }}>
           <Content
             style={{
-
-              width: '100%',
+              width: '90%',
               padding: 10,
               top: 10,
               margin: '60px 170px 0',
-
               background: colorBgContainer,
             }}
           >
