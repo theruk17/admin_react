@@ -63,10 +63,10 @@ const Color = [
 
 
 const Group = [
-  { text: 'ZONE iHAVECPU', value: 'ZONE iHAVECPU' },
   { text: 'ZONE A', value: 'ZONE A' },
   { text: 'ZONE B', value: 'ZONE B' },
   { text: 'ZONE C', value: 'ZONE C' },
+  { text: 'ZONE EXPENSIVE', value: 'ZONE EXPENSIVE' },
   { text: 'ZONE ITX', value: 'ZONE ITX' },
 ]
 
