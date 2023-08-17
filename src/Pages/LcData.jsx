@@ -21,6 +21,7 @@ const Brand = [
   { text: 'LIANLI', value: 'LIANLI' },
   { text: 'MSI', value: 'MSI' },
   { text: 'NZXT', value: 'NZXT' },
+  { text: 'PC COOLER', value: 'PC COOLER' },
   { text: 'SAPPHIRE', value: 'SAPPHIRE' },
   { text: 'SILVERSTONE', value: 'SILVERSTONE' },
   { text: 'THERMALTAKE', value: 'THERMALTAKE' },
