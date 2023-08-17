@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NumericFormat } from 'react-number-format';
-import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
+import { DeleteTwoTone, EditTwoTone, PlusOutlined, BarcodeOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Button } from 'antd';
 import '../App.css';
 
 const API_URL = import.meta.env.VITE_API_URL
+
+const { Search } = Input;
+const { Option } = Select;
 
 const Brand = [
   { text: 'ACER', value: 'ACER' },
@@ -388,6 +391,12 @@ const ShowData = () => {
   const [pagination, setPagination] = useState({
     pageSize: 100
   });
+  const [dataMntGroup, setDataMntGroup] = useState([]);
+  const [filteredData, setFilteredData] = useState([data]);
+  const [brands, setBrands] = useState({});
+  const [subcats, setSubcats] = useState({});
+  const [selectedBrands, setselectedBrands] = useState('all');
+  const [selectedSubcats, setSelectedSubcats] = useState('all');
 
   const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
@@ -400,6 +409,13 @@ const ShowData = () => {
         setData(res.data);
         setLoading(false);
       });
+
+    axios
+      .get(API_URL + "/monitor_group")
+      .then((res) => {
+        setDataMntGroup(res.data);
+      });
+
   }
 
   useEffect(() => {
@@ -408,6 +424,79 @@ const ShowData = () => {
 
 
   }, []);
+
+  const handleSearch = (value) => {
+    const filtered = data.filter((item) =>
+      String(item.mnt_model).toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredData(filtered);
+  };
+
+  useEffect(() => {
+    // group the data by a certain property
+    const brands = data.reduce((acc, item) => {
+      const group = item.mnt_brand
+      if (group !== '' && group !== null) {
+        if (!acc[group]) {
+          acc[group] = [];
+        }
+        acc[group].push(item);
+      }
+
+      return acc;
+    }, {});
+
+    setBrands(brands);
+
+
+    // group the data by a certain property
+    const subcats = data.reduce((acc, item) => {
+      const group = item.mnt_size
+      if (group !== '' && group !== null) {
+        if (!acc[group]) {
+          acc[group] = [];
+        }
+        acc[group].push(item);
+      }
+
+      return acc;
+    }, {});
+    // Sort the groups in ascending order
+    /* const sortedGroups = Object.keys(subcats).sort();
+    // Create a new object with sorted groups
+    const sortedGroupsObj = {};
+    sortedGroups.forEach((key) => {
+      sortedGroupsObj[key] = subcats[key];
+    }); */
+
+    setSubcats(subcats);
+
+
+    let Data = [...data];
+    let DataGroup = [...dataMntGroup];
+    // Filter data based on selected group
+    const filterData = () => {
+      if (selectedBrands !== 'all') {
+        Data = Data.filter(item => item.mnt_brand === selectedBrands);
+
+      }
+      if (selectedSubcats !== 'all') {
+        Data = Data.filter(item => item.mnt_size === selectedSubcats);
+
+      }
+      setFilteredData(Data);
+    };
+
+    filterData();
+  }, [selectedBrands, selectedSubcats, data]);
+
+  const handleBrandChange = (value) => {
+    setselectedBrands(value);
+  };
+
+  const handleSubcatChange = (value) => {
+    setSelectedSubcats(value);
+  };
 
   const showModal = (record) => {
     setVisible(true);
@@ -462,57 +551,19 @@ const ShowData = () => {
   };
 
   const Column = [
-    {
-      title: 'ProductCode', dataIndex: 'mnt_id', key: 'mnt_id', width: 120,
-    },
+
     {
       title: 'Image', dataIndex: 'mnt_img', key: 'mnt_img', width: 60, align: 'center',
-      render: (imageUrl) => <img src={API_URL + '/' + imageUrl} alt="thumbnail" width="30" height="30" />,
+      render: (imageUrl) => <img src={API_URL + '/' + imageUrl} alt="" height="30" />,
     },
     {
-      title: 'Brand', dataIndex: 'mnt_brand', key: 'mnt_brand', width: 130,
-      filters: Brand,
-      onFilter: (value, record) => record.mnt_brand.indexOf(value) === 0,
-      render: (text, record) => <a href={record.mnt_href} target='_blank'>{text}</a>,
-      sorter: (a, b) => a.mnt_brand.localeCompare(b.mnt_brand),
-      sortDirections: ['descend'],
+      title: 'Product name', dataIndex: 'mnt_model', key: 'mnt_model',
+      render: (_, record) => <><p>{record.mnt_brand} {record.mnt_model} {record.mnt_size} {record.mnt_panel} {record.mnt_refresh_rate} {record.mnt_resolution}</p>
+        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.mnt_id}</p></>,
     },
-    {
-      title: 'Model', dataIndex: 'mnt_model', key: 'mnt_model'
-    },
-    {
-      title: 'Size', dataIndex: 'mnt_size', key: 'mnt_size', align: 'right', width: 80,
-      filters: Size,
-      onFilter: (value, record) => record.mnt_size.indexOf(value) === 0,
-      render: (text) => <p>{text}</p>,
-      sorter: (a, b) => a.mnt_size.localeCompare(b.mnt_size),
-      sortDirections: ['ascend', 'descend'],
-    },
-    {
-      title: 'Refresh Rate', dataIndex: 'mnt_refresh_rate', key: 'mnt_refresh_rate', align: 'right', width: 80,
-      filters: Hz,
-      onFilter: (value, record) => record.mnt_refresh_rate.indexOf(value) === 0,
-      render: (text) => <p>{text}</p>,
-      sorter: (a, b) => a.mnt_refresh_rate.localeCompare(b.mnt_refresh_rate),
-      sortDirections: ['ascend', 'descend'],
-    },
-    {
-      title: 'Panel', dataIndex: 'mnt_panel', key: 'mnt_panel', align: 'right', width: 80,
-      filters: Panel,
-      onFilter: (value, record) => record.mnt_panel.indexOf(value) === 0,
-      sorter: (a, b) => a.mnt_panel.localeCompare(b.mnt_panel),
-      sortDirections: ['ascend', 'descend'],
-    },
-    {
-      title: 'Resolution', dataIndex: 'mnt_resolution', key: 'mnt_resolution', align: 'right', width: 140,
-      filters: Resolution,
-      onFilter: (value, record) => record.mnt_resolution.indexOf(value) === 0,
-      sorter: (a, b) => a.mnt_resolution.localeCompare(b.mnt_resolution),
-      sortDirections: ['ascend', 'descend'],
-    },
-    {
-      title: 'Curve', dataIndex: 'mnt_curve', key: 'mnt_curve', align: 'center', width: 50,
-    },
+    /*     {
+          title: 'Group', dataIndex: 'mnt_group', key: 'mnt_group', align: 'left', width: 130,
+        }, */
     {
       title: 'STOCK',
       children: [
@@ -644,7 +695,34 @@ const ShowData = () => {
   ]
   return (
     <div>
-      <Table bordered loading={loading} dataSource={data} columns={Column} rowKey={record => record.mnt_id} pagination={pagination} onChange={onChange} size="small" ></Table>
+      <Space style={{
+        marginBottom: 8,
+      }} split={<Divider type="vertical" />}>
+
+        <Search placeholder="Search only by NAME" onSearch={handleSearch} enterButton allowClear />
+
+        <Select defaultValue="all" onChange={handleBrandChange} style={{
+          width: 150,
+        }}>
+          <Option value="all">All Brands</Option>
+          {Object.keys(brands).map(group => (
+            <Option key={group} value={group}>
+              {group}
+            </Option>
+          ))}
+        </Select>
+        <Select defaultValue="all" onChange={handleSubcatChange} style={{
+          width: 150,
+        }}>
+          <Option value="all">All Size</Option>
+          {Object.keys(subcats).map(group => (
+            <Option key={group} value={group}>
+              {group}
+            </Option>
+          ))}
+        </Select>
+      </Space>
+      <Table bordered loading={loading} dataSource={filteredData} columns={Column} rowKey={record => record.mnt_id} pagination={pagination} onChange={onChange} size="small" ></Table>
       <EditForm
         visible={visible}
         onCreate={handleCreate}

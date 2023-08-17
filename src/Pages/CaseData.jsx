@@ -467,7 +467,7 @@ const CaseData = () => {
         <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.case_id}</p></>,
     },
     {
-      title: 'Group', dataIndex: 'case_group', key: 'case_group', align: 'center', width: 130,
+      title: 'Group', dataIndex: 'case_group', key: 'case_group', align: 'left', width: 130,
     },
     {
       title: 'STOCK',
@@ -603,7 +603,7 @@ const CaseData = () => {
   return (
     <div>
       <Space style={{
-        marginBottom: 16,
+        marginBottom: 8,
       }} split={<Divider type="vertical" />}>
 
         <Search placeholder="Search only by NAME" onSearch={handleSearch} enterButton allowClear />
