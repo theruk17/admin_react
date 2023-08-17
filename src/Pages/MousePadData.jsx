@@ -50,7 +50,10 @@ const Type = [
 ]
 
 const Group = [
-  { text: 'MOUSE PAD', value: 'MOUSE PAD' },
+  { text: 'SIZE S', value: 'SIZE S' },
+  { text: 'SIZE M', value: 'SIZE M' },
+  { text: 'SIZE XL', value: 'SIZE XL' },
+  { text: 'SIZE XXL', value: 'SIZE XXL' },
   { text: 'MOUSE FEET', value: 'MOUSE FEET' },
 ]
 
