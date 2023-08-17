@@ -37,6 +37,7 @@ const Color = [
   { text: 'BLUE', value: 'BLUE' },
   { text: 'PINK', value: 'PINK' },
   { text: 'GREY', value: 'GREY' },
+  { text: 'YELLOW', value: 'YELLOW' },
   { text: 'CHARCOAL', value: 'CHARCOAL' },
   { text: 'BLACK-TRANSPARENT', value: 'BLACK-TRANSPARENT' },
   { text: 'BLACK-RED', value: 'BLACK-RED' },

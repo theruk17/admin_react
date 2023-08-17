@@ -17,6 +17,7 @@ const Brand = [
   { text: 'INWIN', value: 'INWIN' },
   { text: 'LIANLI', value: 'LIANLI' },
   { text: 'NZXT', value: 'NZXT' },
+  { text: 'PC COOLER', value: 'PC COOLER' },
   { text: 'POWER MONSTER', value: 'POWER MONSTER' },
   { text: 'SILVERSTONE', value: 'SILVERSTONE' },
   { text: 'THERMALTAKE', value: 'THERMALTAKE' },
