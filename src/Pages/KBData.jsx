@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NumericFormat } from 'react-number-format';
-import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
+import { DeleteTwoTone, EditTwoTone, PlusOutlined, BarcodeOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tooltip } from 'antd';
 import '../App.css';
 
 const API_URL = import.meta.env.VITE_API_URL
+
+const { Search } = Input;
+const { Option } = Select;
 
 const Brand = [
   { text: 'AKKO', value: 'AKKO' },
@@ -396,6 +399,13 @@ const FanData = () => {
   const [pagination, setPagination] = useState({
     pageSize: 100
   });
+  const [filteredData, setFilteredData] = useState([data]);
+  const [brands, setBrands] = useState({});
+  const [subcats, setSubcats] = useState({});
+  const [connect, setConnect] = useState({});
+  const [selectedBrands, setselectedBrands] = useState('all');
+  const [selectedSubcats, setSelectedSubcats] = useState('all');
+  const [selectedConnect, setSelectedConnect] = useState('all');
 
   const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
@@ -415,6 +425,101 @@ const FanData = () => {
     init()
 
   }, []);
+
+  const handleSearch = (value) => {
+    const filtered = data.filter((item) =>
+      String(item.kb_model).toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredData(filtered);
+  };
+
+  useEffect(() => {
+    // group the data by a certain property
+    const brands = data.reduce((acc, item) => {
+      const group = item.kb_brand
+      if (group !== '' && group !== null) {
+        if (!acc[group]) {
+          acc[group] = [];
+        }
+        acc[group].push(item);
+      }
+
+      return acc;
+    }, {});
+
+    setBrands(brands);
+
+    const connect = data.reduce((acc, item) => {
+      const group = item.kb_connect
+      if (group !== '' && group !== null) {
+        if (!acc[group]) {
+          acc[group] = [];
+        }
+        acc[group].push(item);
+      }
+
+      return acc;
+    }, {});
+
+    setConnect(connect);
+
+
+    // group the data by a certain property
+    const subcats = data.reduce((acc, item) => {
+      const group = item.kb_group
+      if (group !== '' && group !== null) {
+        if (!acc[group]) {
+          acc[group] = [];
+        }
+        acc[group].push(item);
+      }
+
+      return acc;
+    }, {});
+    // Sort the groups in ascending order
+    const sortedGroups = Object.keys(subcats).sort();
+    // Create a new object with sorted groups
+    const sortedGroupsObj = {};
+    sortedGroups.forEach((key) => {
+      sortedGroupsObj[key] = subcats[key];
+    });
+
+    setSubcats(sortedGroupsObj);
+
+
+    let Data = [...data];
+
+    // Filter data based on selected group
+    const filterData = () => {
+      if (selectedBrands !== 'all') {
+        Data = Data.filter(item => item.kb_brand === selectedBrands);
+
+      }
+      if (selectedSubcats !== 'all') {
+        Data = Data.filter(item => item.kb_group === selectedSubcats);
+
+      }
+      if (selectedConnect !== 'all') {
+        Data = Data.filter(item => item.kb_connect === selectedConnect);
+
+      }
+      setFilteredData(Data);
+    };
+
+    filterData();
+  }, [selectedBrands, selectedSubcats, selectedConnect, data]);
+
+  const handleBrandChange = (value) => {
+    setselectedBrands(value);
+  };
+
+  const handleSubcatChange = (value) => {
+    setSelectedSubcats(value);
+  };
+
+  const handleConnectChange = (value) => {
+    setSelectedConnect(value);
+  };
 
   const showModal = (record) => {
     setVisible(true);
@@ -469,45 +574,20 @@ const FanData = () => {
 
   const Column = [
     {
-      title: 'ProductCode', dataIndex: 'kb_id', key: 'kb_id', width: 120,
-    },
-    {
       title: 'Image',
       dataIndex: 'kb_img',
       key: 'kb_img',
       width: 60,
       align: 'center',
-      render: (imageUrl) => <img src={API_URL + '/' + imageUrl} alt="thumbnail" height="30" />,
+      render: (text, record) => <a href={record.kb_href} target='_blank'><img src={API_URL + '/' + text} alt="" height="30" /></a>,
     },
     {
-      title: 'Brand', dataIndex: 'kb_brand', key: 'kb_brand', width: 130,
-      render: (text, record) => <a href={record.kb_href} target='_blank'>{text}</a>,
-
-      filters: Brand,
-      onFilter: (value, record) => record.kb_brand.indexOf(value) === 0,
-      sorter: (a, b) => a.kb_brand.localeCompare(b.kb_brand),
-      sortDirections: ['descend'],
-
+      title: 'Product name', dataIndex: 'kb_model', key: 'kb_model',
+      render: (_, record) => <><p>{record.kb_brand} {record.kb_model} {record.kb_switch} {record.kb_color} </p>
+        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.kb_id}</p></>,
     },
     {
-      title: 'Model', dataIndex: 'kb_model', key: 'kb_model',
-    },
-
-    {
-      title: 'Switch', dataIndex: 'kb_switch', key: 'kb_switch', align: 'center', width: 120,
-    },
-    {
-      title: 'Color', dataIndex: 'kb_color', key: 'kb_color', align: 'center', width: 120,
-    },
-    {
-      title: 'Type', dataIndex: 'kb_connect', key: 'kb_connect', align: 'center', width: 120,
-      filters: Type,
-      onFilter: (value, record) => record.kb_connect.indexOf(value) === 0,
-    },
-    {
-      title: 'Group', dataIndex: 'kb_group', key: 'kb_group', align: 'center', width: 120,
-      filters: Group,
-      onFilter: (value, record) => record.kb_group.indexOf(value) === 0,
+      title: 'Group', dataIndex: 'kb_group', key: 'kb_group', align: 'left', width: 120,
     },
     {
       title: 'STOCK',
@@ -641,9 +721,44 @@ const FanData = () => {
   ]
   return (
     <div>
-      <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.kb_id} pagination={pagination} onChange={onChange} bordered size="small"
+      <Space style={{
+        marginBottom: 8,
+      }} split={<Divider type="vertical" />}>
 
-      ></Table>
+        <Search placeholder="Search only by NAME" onSearch={handleSearch} enterButton allowClear />
+
+        <Select defaultValue="all" onChange={handleBrandChange} style={{
+          width: 150,
+        }}>
+          <Option value="all">All Brands</Option>
+          {Object.keys(brands).map(group => (
+            <Option key={group} value={group}>
+              {group}
+            </Option>
+          ))}
+        </Select>
+        <Select defaultValue="all" onChange={handleSubcatChange} style={{
+          width: 150,
+        }}>
+          <Option value="all">All Group</Option>
+          {Object.keys(subcats).map(group => (
+            <Option key={group} value={group}>
+              {group}
+            </Option>
+          ))}
+        </Select>
+        <Select defaultValue="all" onChange={handleConnectChange} style={{
+          width: 150,
+        }}>
+          <Option value="all">All Type</Option>
+          {Object.keys(connect).map(group => (
+            <Option key={group} value={group}>
+              {group}
+            </Option>
+          ))}
+        </Select>
+      </Space>
+      <Table loading={loading} dataSource={filteredData} columns={Column} rowKey={record => record.kb_id} pagination={pagination} onChange={onChange} bordered size="small"></Table>
       <EditForm
         visible={visible}
         onCreate={handleCreate}

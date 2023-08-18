@@ -321,13 +321,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
 
 
           <Col span={6}>
-            <Form.Item label="Price" name="price_srp"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input Price!',
-                },
-              ]}>
+            <Form.Item label="Price" name="price_srp">
               <InputNumber
                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
@@ -336,13 +330,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item label="MinPrice" name="price_w_com"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input Price!',
-                },
-              ]}>
+            <Form.Item label="MinPrice" name="price_w_com">
               <InputNumber
                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
@@ -395,8 +383,10 @@ const ShowData = () => {
   const [filteredData, setFilteredData] = useState([data]);
   const [brands, setBrands] = useState({});
   const [subcats, setSubcats] = useState({});
+  const [resolut, setResolut] = useState({});
   const [selectedBrands, setselectedBrands] = useState('all');
   const [selectedSubcats, setSelectedSubcats] = useState('all');
+  const [selectedResolut, setSelectedResolut] = useState('all');
 
   const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
@@ -448,7 +438,6 @@ const ShowData = () => {
 
     setBrands(brands);
 
-
     // group the data by a certain property
     const subcats = data.reduce((acc, item) => {
       const group = item.mnt_size
@@ -471,6 +460,20 @@ const ShowData = () => {
 
     setSubcats(sortedGroupsObj);
 
+    const resolut = data.reduce((acc, item) => {
+      const group = item.mnt_resolution
+      if (group !== '' && group !== null) {
+        if (!acc[group]) {
+          acc[group] = [];
+        }
+        acc[group].push(item);
+      }
+
+      return acc;
+    }, {});
+
+    setResolut(resolut);
+
 
     let Data = [...data];
 
@@ -484,11 +487,15 @@ const ShowData = () => {
         Data = Data.filter(item => item.mnt_size === selectedSubcats);
 
       }
+      if (selectedResolut !== 'all') {
+        Data = Data.filter(item => item.mnt_resolution === selectedResolut);
+
+      }
       setFilteredData(Data);
     };
 
     filterData();
-  }, [selectedBrands, selectedSubcats, data]);
+  }, [selectedBrands, selectedSubcats, selectedResolut, data]);
 
   const handleBrandChange = (value) => {
     setselectedBrands(value);
@@ -496,6 +503,10 @@ const ShowData = () => {
 
   const handleSubcatChange = (value) => {
     setSelectedSubcats(value);
+  };
+
+  const handleResolutChange = (value) => {
+    setSelectedResolut(value);
   };
 
   const showModal = (record) => {
@@ -554,7 +565,7 @@ const ShowData = () => {
 
     {
       title: 'Image', dataIndex: 'mnt_img', key: 'mnt_img', width: 60, align: 'center',
-      render: (imageUrl) => <img src={API_URL + '/' + imageUrl} alt="" height="30" />,
+      render: (text, record) => <a href={record.mnt_href} target='_blank'><img src={API_URL + '/' + text} alt="" height="30" /></a>,
     },
     {
       title: 'Product name', dataIndex: 'mnt_model', key: 'mnt_model',
@@ -716,6 +727,16 @@ const ShowData = () => {
         }}>
           <Option value="all">All Size</Option>
           {Object.keys(subcats).map(group => (
+            <Option key={group} value={group}>
+              {group}
+            </Option>
+          ))}
+        </Select>
+        <Select defaultValue="all" onChange={handleResolutChange} style={{
+          width: 150,
+        }}>
+          <Option value="all">All Resolution</Option>
+          {Object.keys(resolut).map(group => (
             <Option key={group} value={group}>
               {group}
             </Option>

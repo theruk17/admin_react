@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NumericFormat } from 'react-number-format';
-import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
+import { DeleteTwoTone, EditTwoTone, PlusOutlined, BarcodeOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tooltip } from 'antd';
 import '../App.css';
 
 const API_URL = import.meta.env.VITE_API_URL
+
+const { Search } = Input;
+const { Option } = Select;
 
 const Brand = [
   { text: 'ANDA SEAT', value: 'ANDA SEAT' },
@@ -254,6 +257,9 @@ const FanData = () => {
   const [pagination, setPagination] = useState({
     pageSize: 100
   });
+  const [filteredData, setFilteredData] = useState([data]);
+  const [brands, setBrands] = useState({});
+  const [selectedBrands, setselectedBrands] = useState('all');
 
   const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
@@ -273,6 +279,48 @@ const FanData = () => {
     init()
 
   }, []);
+
+  const handleSearch = (value) => {
+    const filtered = data.filter((item) =>
+      String(item.ch_model).toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredData(filtered);
+  };
+
+  useEffect(() => {
+    // group the data by a certain property
+    const brands = data.reduce((acc, item) => {
+      const group = item.ch_brand
+      if (group !== '' && group !== null) {
+        if (!acc[group]) {
+          acc[group] = [];
+        }
+        acc[group].push(item);
+      }
+
+      return acc;
+    }, {});
+
+    setBrands(brands);
+
+
+    let Data = [...data];
+
+    // Filter data based on selected group
+    const filterData = () => {
+      if (selectedBrands !== 'all') {
+        Data = Data.filter(item => item.ch_brand === selectedBrands);
+
+      }
+      setFilteredData(Data);
+    };
+
+    filterData();
+  }, [selectedBrands, data]);
+
+  const handleBrandChange = (value) => {
+    setselectedBrands(value);
+  };
 
   const showModal = (record) => {
     setVisible(true);
@@ -327,35 +375,19 @@ const FanData = () => {
 
   const Column = [
     {
-      title: 'ProductCode', dataIndex: 'ch_id', key: 'ch_id', width: 120,
-    },
-    {
       title: 'Image',
       dataIndex: 'ch_img',
       key: 'ch_img',
       width: 60,
       align: 'center',
-      render: (imageUrl) => <img src={API_URL + '/' + imageUrl} alt="thumbnail" height="30" />,
+      render: (text, record) => <a href={record.ch_href} target='_blank'><img src={API_URL + '/' + text} alt="" height="30" /></a>,
     },
     {
-      title: 'Brand', dataIndex: 'ch_brand', key: 'ch_brand', width: 100,
-      render: (text, record) => <a href={record.ch_href} target='_blank'>{text}</a>,
-      filters: Brand,
-      onFilter: (value, record) => record.ch_brand.indexOf(value) === 0,
-      sorter: (a, b) => a.ch_brand.localeCompare(b.ch_brand),
-      sortDirections: ['descend'],
-
-    },
-    {
-      title: 'Model', dataIndex: 'ch_model', key: 'ch_model',
+      title: 'Product name', dataIndex: 'ch_model', key: 'ch_model',
+      render: (_, record) => <><p>{record.ch_brand} {record.ch_model} {record.ch_color}</p>
+        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.ch_id}</p></>,
     },
 
-    {
-      title: 'Color', dataIndex: 'ch_color', key: 'ch_color', align: 'center', width: 150,
-      filters: Color,
-      onFilter: (value, record) => record.ch_color.indexOf(value) === 0,
-
-    },
     {
       title: 'STOCK',
       children: [
@@ -488,9 +520,24 @@ const FanData = () => {
   ]
   return (
     <div>
-      <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.ch_id} pagination={pagination} onChange={onChange} bordered size="small"
+      <Space style={{
+        marginBottom: 8,
+      }} split={<Divider type="vertical" />}>
 
-      ></Table>
+        <Search placeholder="Search only by NAME" onSearch={handleSearch} enterButton allowClear />
+
+        <Select defaultValue="all" onChange={handleBrandChange} style={{
+          width: 150,
+        }}>
+          <Option value="all">All Brands</Option>
+          {Object.keys(brands).map(group => (
+            <Option key={group} value={group}>
+              {group}
+            </Option>
+          ))}
+        </Select>
+      </Space>
+      <Table loading={loading} dataSource={filteredData} columns={Column} rowKey={record => record.ch_id} pagination={pagination} onChange={onChange} bordered size="small"></Table>
       <EditForm
         visible={visible}
         onCreate={handleCreate}

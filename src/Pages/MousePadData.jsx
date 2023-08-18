@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NumericFormat } from 'react-number-format';
-import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
+import { DeleteTwoTone, EditTwoTone, PlusOutlined, BarcodeOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tooltip } from 'antd';
 import '../App.css';
 
 const API_URL = import.meta.env.VITE_API_URL
+
+const { Search } = Input;
+const { Option } = Select;
 
 const Brand = [
   { text: 'AMD', value: 'AMD' },
@@ -295,6 +298,11 @@ const FanData = () => {
   const [pagination, setPagination] = useState({
     pageSize: 100
   });
+  const [filteredData, setFilteredData] = useState([data]);
+  const [brands, setBrands] = useState({});
+  const [subcats, setSubcats] = useState({});
+  const [selectedBrands, setselectedBrands] = useState('all');
+  const [selectedSubcats, setSelectedSubcats] = useState('all');
 
   const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
@@ -314,6 +322,80 @@ const FanData = () => {
     init()
 
   }, []);
+
+  const handleSearch = (value) => {
+    const filtered = data.filter((item) =>
+      String(item.mp_model).toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredData(filtered);
+  };
+
+  useEffect(() => {
+    // group the data by a certain property
+    const brands = data.reduce((acc, item) => {
+      const group = item.mp_brand
+      if (group !== '' && group !== null) {
+        if (!acc[group]) {
+          acc[group] = [];
+        }
+        acc[group].push(item);
+      }
+
+      return acc;
+    }, {});
+
+    setBrands(brands);
+
+
+    // group the data by a certain property
+    const subcats = data.reduce((acc, item) => {
+      const group = item.mp_group
+      if (group !== '' && group !== null) {
+        if (!acc[group]) {
+          acc[group] = [];
+        }
+        acc[group].push(item);
+      }
+
+      return acc;
+    }, {});
+    // Sort the groups in ascending order
+    const sortedGroups = Object.keys(subcats).sort();
+    // Create a new object with sorted groups
+    const sortedGroupsObj = {};
+    sortedGroups.forEach((key) => {
+      sortedGroupsObj[key] = subcats[key];
+    });
+
+    setSubcats(sortedGroupsObj);
+
+
+    let Data = [...data];
+
+    // Filter data based on selected group
+    const filterData = () => {
+      if (selectedBrands !== 'all') {
+        Data = Data.filter(item => item.mp_brand === selectedBrands);
+
+      }
+      if (selectedSubcats !== 'all') {
+        Data = Data.filter(item => item.mp_group === selectedSubcats);
+
+      }
+      setFilteredData(Data);
+    };
+
+    filterData();
+  }, [selectedBrands, selectedSubcats, data]);
+
+  const handleBrandChange = (value) => {
+    setselectedBrands(value);
+  };
+
+  const handleSubcatChange = (value) => {
+    setSelectedSubcats(value);
+  };
+
 
   const showModal = (record) => {
     setVisible(true);
@@ -368,45 +450,20 @@ const FanData = () => {
 
   const Column = [
     {
-      title: 'ProductCode', dataIndex: 'mp_id', key: 'mp_id', width: 120,
-    },
-    {
       title: 'Image',
       dataIndex: 'mp_img',
       key: 'mp_img',
       width: 60,
       align: 'center',
-      render: (imageUrl) => <img src={API_URL + '/' + imageUrl} alt="thumbnail" height="30" />,
+      render: (text, record) => <a href={record.mp_href} target='_blank'><img src={API_URL + '/' + text} alt="" height="30" /></a>,
     },
     {
-      title: 'Brand', dataIndex: 'mp_brand', key: 'mp_brand', width: 130,
-      render: (text, record) => <a href={record.mp_href} target='_blank'>{text}</a>,
-
-      filters: Brand,
-      onFilter: (value, record) => record.mp_brand.indexOf(value) === 0,
-      sorter: (a, b) => a.mp_brand.localeCompare(b.mp_brand),
-      sortDirections: ['descend'],
-
+      title: 'Product name', dataIndex: 'mp_model', key: 'mp_model',
+      render: (_, record) => <><p>{record.mp_brand} {record.mp_model} {record.mp_color}</p>
+        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.mp_id}</p></>,
     },
     {
-      title: 'Model', dataIndex: 'mp_model', key: 'mp_model',
-    },
-
-    {
-      title: 'Color', dataIndex: 'mp_color', key: 'mp_color', align: 'center', width: 120,
-      filters: Color,
-      onFilter: (value, record) => record.mp_color.indexOf(value) === 0,
-
-    },
-    {
-      title: 'Group', dataIndex: 'mp_group', key: 'mp_group', align: 'center', width: 120,
-      filters: Group,
-      onFilter: (value, record) => record.mp_group.indexOf(value) === 0,
-    },
-    {
-      title: 'Dimentions', dataIndex: 'mp_dimentions', key: 'mp_dimentions', align: 'center', width: 120,
-      filters: Type,
-      onFilter: (value, record) => record.mp_dimentions.indexOf(value) === 0,
+      title: 'Group', dataIndex: 'mp_group', key: 'mp_group', align: 'left', width: 120,
     },
     {
       title: 'STOCK',
@@ -540,9 +597,34 @@ const FanData = () => {
   ]
   return (
     <div>
-      <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.mp_id} pagination={pagination} onChange={onChange} bordered size="small"
+      <Space style={{
+        marginBottom: 8,
+      }} split={<Divider type="vertical" />}>
 
-      ></Table>
+        <Search placeholder="Search only by NAME" onSearch={handleSearch} enterButton allowClear />
+
+        <Select defaultValue="all" onChange={handleBrandChange} style={{
+          width: 150,
+        }}>
+          <Option value="all">All Brands</Option>
+          {Object.keys(brands).map(group => (
+            <Option key={group} value={group}>
+              {group}
+            </Option>
+          ))}
+        </Select>
+        <Select defaultValue="all" onChange={handleSubcatChange} style={{
+          width: 150,
+        }}>
+          <Option value="all">All Group</Option>
+          {Object.keys(subcats).map(group => (
+            <Option key={group} value={group}>
+              {group}
+            </Option>
+          ))}
+        </Select>
+      </Space>
+      <Table loading={loading} dataSource={filteredData} columns={Column} rowKey={record => record.mp_id} pagination={pagination} onChange={onChange} bordered size="small"></Table>
       <EditForm
         visible={visible}
         onCreate={handleCreate}

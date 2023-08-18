@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NumericFormat } from 'react-number-format';
-import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
+import { DeleteTwoTone, EditTwoTone, PlusOutlined, BarcodeOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tooltip } from 'antd';
 import '../App.css';
 
 const API_URL = import.meta.env.VITE_API_URL
+
+const { Search } = Input;
+const { Option } = Select;
 
 const Brand = [
   { text: 'ANTEC', value: 'ANTEC' },
@@ -243,6 +246,9 @@ const FanData = () => {
   const [pagination, setPagination] = useState({
     pageSize: 100
   });
+  const [filteredData, setFilteredData] = useState([data]);
+  const [brands, setBrands] = useState({});
+  const [selectedBrands, setselectedBrands] = useState('all');
 
   const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
@@ -262,6 +268,47 @@ const FanData = () => {
     init()
 
   }, []);
+
+  const handleSearch = (value) => {
+    const filtered = data.filter((item) =>
+      String(item.s_model).toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredData(filtered);
+  };
+
+  useEffect(() => {
+    // group the data by a certain property
+    const brands = data.reduce((acc, item) => {
+      const group = item.s_brand
+      if (group !== '' && group !== null) {
+        if (!acc[group]) {
+          acc[group] = [];
+        }
+        acc[group].push(item);
+      }
+
+      return acc;
+    }, {});
+
+    setBrands(brands);
+
+    let Data = [...data];
+
+    // Filter data based on selected group
+    const filterData = () => {
+      if (selectedBrands !== 'all') {
+        Data = Data.filter(item => item.s_brand === selectedBrands);
+
+      }
+      setFilteredData(Data);
+    };
+
+    filterData();
+  }, [selectedBrands, data]);
+
+  const handleBrandChange = (value) => {
+    setselectedBrands(value);
+  };
 
   const showModal = (record) => {
     setVisible(true);
@@ -316,32 +363,17 @@ const FanData = () => {
 
   const Column = [
     {
-      title: 'ProductCode', dataIndex: 's_id', key: 's_id', width: 120,
-    },
-    {
       title: 'Image',
       dataIndex: 's_img',
       key: 's_img',
       width: 60,
       align: 'center',
-      render: (imageUrl) => <img src={API_URL + '/' + imageUrl} alt="thumbnail" height="30" />,
+      render: (text, record) => <a href={record.s_href} target='_blank'><img src={API_URL + '/' + text} alt="" height="30" /></a>,
     },
     {
-      title: 'Brand', dataIndex: 's_brand', key: 's_brand', width: 130,
-      render: (text, record) => <a href={record.s_href} target='_blank'>{text}</a>,
-      filters: Brand,
-      onFilter: (value, record) => record.s_brand.indexOf(value) === 0,
-      sorter: (a, b) => a.s_brand.localeCompare(b.s_brand),
-      sortDirections: ['descend'],
-
-    },
-    {
-      title: 'Model', dataIndex: 's_model', key: 's_model',
-    },
-    {
-      title: 'Color', dataIndex: 's_color', key: 's_color', align: 'center', width: 120,
-      filters: Color,
-      onFilter: (value, record) => record.s_color.indexOf(value) === 0,
+      title: 'Product name', dataIndex: 's_model', key: 's_model',
+      render: (_, record) => <><p>{record.s_brand} {record.s_model} {record.s_color}</p>
+        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.s_id}</p></>,
     },
     {
       title: 'STOCK',
@@ -475,9 +507,24 @@ const FanData = () => {
   ]
   return (
     <div>
-      <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.s_id} pagination={pagination} onChange={onChange} bordered size="small"
+      <Space style={{
+        marginBottom: 8,
+      }} split={<Divider type="vertical" />}>
 
-      ></Table>
+        <Search placeholder="Search only by NAME" onSearch={handleSearch} enterButton allowClear />
+
+        <Select defaultValue="all" onChange={handleBrandChange} style={{
+          width: 150,
+        }}>
+          <Option value="all">All Brands</Option>
+          {Object.keys(brands).map(group => (
+            <Option key={group} value={group}>
+              {group}
+            </Option>
+          ))}
+        </Select>
+      </Space>
+      <Table loading={loading} dataSource={filteredData} columns={Column} rowKey={record => record.s_id} pagination={pagination} onChange={onChange} bordered size="small"></Table>
       <EditForm
         visible={visible}
         onCreate={handleCreate}

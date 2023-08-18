@@ -459,7 +459,7 @@ const CaseData = () => {
       key: 'case_img',
       width: 60,
       align: 'center',
-      render: (imageUrl) => <img src={API_URL + '/' + imageUrl} alt="" width="30" height="30" />,
+      render: (text, record) => <a href={record.case_href} target='_blank'><img src={API_URL + '/' + text} alt="" height="30" /></a>,
     },
     {
       title: 'Product name', dataIndex: 'case_model', key: 'case_model',

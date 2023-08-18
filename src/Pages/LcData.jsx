@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NumericFormat } from 'react-number-format';
-import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
+import { DeleteTwoTone, EditTwoTone, PlusOutlined, BarcodeOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tooltip } from 'antd';
 import '../App.css';
 
 const API_URL = import.meta.env.VITE_API_URL
+
+const { Search } = Input;
+const { Option } = Select;
 
 const Brand = [
   { text: 'ASUS', value: 'ASUS' },
@@ -267,6 +270,11 @@ const LcData = () => {
   const [pagination, setPagination] = useState({
     pageSize: 100
   });
+  const [filteredData, setFilteredData] = useState([data]);
+  const [brands, setBrands] = useState({});
+  const [subcats, setSubcats] = useState({});
+  const [selectedBrands, setselectedBrands] = useState('all');
+  const [selectedSubcats, setSelectedSubcats] = useState('all');
 
   const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
@@ -286,6 +294,78 @@ const LcData = () => {
     init()
 
   }, []);
+
+  const handleSearch = (value) => {
+    const filtered = data.filter((item) =>
+      String(item.lc_model).toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredData(filtered);
+  };
+
+  useEffect(() => {
+    // group the data by a certain property
+    const brands = data.reduce((acc, item) => {
+      const group = item.lc_brand
+      if (group !== '' && group !== null) {
+        if (!acc[group]) {
+          acc[group] = [];
+        }
+        acc[group].push(item);
+      }
+
+      return acc;
+    }, {});
+
+    setBrands(brands);
+
+
+    // group the data by a certain property
+    const subcats = data.reduce((acc, item) => {
+      const group = item.lc_group
+      if (group !== '' && group !== null) {
+        if (!acc[group]) {
+          acc[group] = [];
+        }
+        acc[group].push(item);
+      }
+
+      return acc;
+    }, {});
+    // Sort the groups in ascending order
+    const sortedGroups = Object.keys(subcats).sort();
+    // Create a new object with sorted groups
+    const sortedGroupsObj = {};
+    sortedGroups.forEach((key) => {
+      sortedGroupsObj[key] = subcats[key];
+    });
+
+    setSubcats(sortedGroupsObj);
+
+    let Data = [...data];
+
+    // Filter data based on selected group
+    const filterData = () => {
+      if (selectedBrands !== 'all') {
+        Data = Data.filter(item => item.lc_brand === selectedBrands);
+
+      }
+      if (selectedSubcats !== 'all') {
+        Data = Data.filter(item => item.lc_group === selectedSubcats);
+
+      }
+      setFilteredData(Data);
+    };
+
+    filterData();
+  }, [selectedBrands, selectedSubcats, data]);
+
+  const handleBrandChange = (value) => {
+    setselectedBrands(value);
+  };
+
+  const handleSubcatChange = (value) => {
+    setSelectedSubcats(value);
+  };
 
   const showModal = (record) => {
     setVisible(true);
@@ -340,38 +420,20 @@ const LcData = () => {
 
   const Column = [
     {
-      title: 'ProductCode', dataIndex: 'lc_id', key: 'lc_id', width: 120,
-    },
-    {
       title: 'Image',
       dataIndex: 'lc_img',
       key: 'lc_img',
       width: 60,
       align: 'center',
-      render: (imageUrl) => <img src={API_URL + '/' + imageUrl} alt="thumbnail" height="30" />,
+      render: (text, record) => <a href={record.lc_href} target='_blank'><img src={API_URL + '/' + text} alt="" height="30" /></a>,
     },
     {
-      title: 'Brand', dataIndex: 'lc_brand', key: 'lc_brand', width: 130,
-      render: (text, record) => <a href={record.lc_href} target='_blank'>{text}</a>,
-      filters: Brand,
-      onFilter: (value, record) => record.lc_brand.indexOf(value) === 0,
-      sorter: (a, b) => a.lc_brand.localeCompare(b.lc_brand),
-      sortDirections: ['descend'],
-
+      title: 'Product name', dataIndex: 'lc_model', key: 'lc_model',
+      render: (_, record) => <><p>{record.lc_brand} {record.lc_model} {record.lc_color}</p>
+        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.lc_id}</p></>,
     },
     {
-      title: 'Model', dataIndex: 'lc_model', key: 'lc_model',
-    },
-    {
-      title: 'Color', dataIndex: 'lc_color', key: 'lc_color', width: 140,
-      filters: Color,
-      onFilter: (value, record) => record.lc_color.indexOf(value) === 0,
-
-    },
-    {
-      title: 'Size', dataIndex: 'lc_group', key: 'lc_group', align: 'center', width: 100,
-      filters: Group,
-      onFilter: (value, record) => record.lc_group.indexOf(value) === 0,
+      title: 'Group', dataIndex: 'lc_group', key: 'lc_group', align: 'center', width: 100,
     },
     {
       title: 'STOCK',
@@ -505,9 +567,34 @@ const LcData = () => {
   ]
   return (
     <div>
-      <Table loading={loading} dataSource={data} columns={Column} rowKey={record => record.lc_id} pagination={pagination} onChange={onChange} bordered size="small"
+      <Space style={{
+        marginBottom: 8,
+      }} split={<Divider type="vertical" />}>
 
-      ></Table>
+        <Search placeholder="Search only by NAME" onSearch={handleSearch} enterButton allowClear />
+
+        <Select defaultValue="all" onChange={handleBrandChange} style={{
+          width: 150,
+        }}>
+          <Option value="all">All Brands</Option>
+          {Object.keys(brands).map(group => (
+            <Option key={group} value={group}>
+              {group}
+            </Option>
+          ))}
+        </Select>
+        <Select defaultValue="all" onChange={handleSubcatChange} style={{
+          width: 150,
+        }}>
+          <Option value="all">All Group</Option>
+          {Object.keys(subcats).map(group => (
+            <Option key={group} value={group}>
+              {group}
+            </Option>
+          ))}
+        </Select>
+      </Space>
+      <Table loading={loading} dataSource={filteredData} columns={Column} rowKey={record => record.lc_id} pagination={pagination} onChange={onChange} bordered size="small"></Table>
       <EditForm
         visible={visible}
         onCreate={handleCreate}
