@@ -462,18 +462,18 @@ const ShowData = () => {
       return acc;
     }, {});
     // Sort the groups in ascending order
-    /* const sortedGroups = Object.keys(subcats).sort();
+    const sortedGroups = Object.keys(subcats).sort();
     // Create a new object with sorted groups
     const sortedGroupsObj = {};
     sortedGroups.forEach((key) => {
       sortedGroupsObj[key] = subcats[key];
-    }); */
+    });
 
-    setSubcats(subcats);
+    setSubcats(sortedGroupsObj);
 
 
     let Data = [...data];
-    let DataGroup = [...dataMntGroup];
+
     // Filter data based on selected group
     const filterData = () => {
       if (selectedBrands !== 'all') {
