@@ -278,6 +278,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
 };
 
 const NbData = () => {
+
   const [data, setData] = useState([]);
   const [visible, setVisible] = useState(false);
   const [record, setRecord] = useState({});

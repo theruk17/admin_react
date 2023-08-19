@@ -23,6 +23,7 @@ const Brand = [
   { text: 'DARKFLASH', value: 'DARKFLASH' },
   { text: 'FRACTAL', value: 'FRACTAL' },
   { text: 'GIGABYTE', value: 'GIGABYTE' },
+  { text: 'JONSBO', value: 'JONSBO' },
   { text: 'LIAN LI', value: 'LIAN LI' },
   { text: 'INWIN', value: 'INWIN' },
   { text: 'iHAVECPU', value: 'iHAVECPU' },
