@@ -1,13 +1,36 @@
-import { Layout, Menu, theme } from 'antd';
-import React from 'react';
+import { Layout, Menu, theme, Space, Badge, Avatar, Drawer, Divider } from 'antd';
+import React, { useEffect, useState } from 'react';
 import PageContent from '../components/PageContent'
 import '../index.css';
 import LogoIHC from '../assets/logo_ihc.svg'
 import { useNavigate } from 'react-router-dom';
-import { HouseDoor, ArrowRepeat, Laptop, Display, Pc, Fan, Headset, Keyboard, Mouse2, Mic, SquareFill, Snow, FileEarmark, KeyboardFill } from 'react-bootstrap-icons';
+import { HouseDoor, ArrowRepeat, Laptop, Display, Pc, Fan, Headset, Keyboard, Mouse2, Mic, SquareFill, Snow, FileEarmark, KeyboardFill, BellFill } from 'react-bootstrap-icons';
+import axios from 'axios';
 const { Header, Content, Sider, Footer } = Layout;
 
+const API_URL = import.meta.env.VITE_API_URL
+
 const App = () => {
+  const [open, setOpen] = useState(false);
+  const [count, setCount] = useState(0);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios.get(API_URL + '/new_stock')
+      .then((res) => {
+        setData(res.data)
+        setCount(res.data.length)
+
+      })
+
+  }, [])
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+  const onClose = () => {
+    setOpen(false);
+  };
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -18,6 +41,7 @@ const App = () => {
         minHeight: '100vh',
         minWidth: '100vh'
       }}>
+
       <Sider
         breakpoint='lg'
         collapsedWidth='0'
@@ -127,6 +151,15 @@ const App = () => {
           <img className='logo' src={LogoIHC} alt="" style={{
             width: 140,
           }} />
+          <div style={{ float: 'right', marginRight: '10px' }}>
+            <Space >
+              <Badge count={count} size="small">
+                <Avatar style={{ cursor: 'pointer' }} shape="square" size="large" icon={<BellFill />} onClick={showDrawer} />
+              </Badge>
+
+            </Space>
+
+          </div>
           <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}
             onClick={(item) => {
               navigate(item.key);
@@ -157,6 +190,15 @@ const App = () => {
               background: colorBgContainer,
             }}
           >
+            <Drawer size='large' title="สินค้าที่มี Stock เข้า (*ที่ยังไม่ได้เปิด)" placement="right" onClose={onClose} open={open} style={{ color: 'black', fontSize: 11 }}>
+              {data.map((item) => (
+                <>
+                  <p key={item.productCode}>{item.productCode + ' - ' + item.productName}</p>
+                  <Divider style={{ margin: 0 }} dashed />
+                </>
+              ))}
+
+            </Drawer>
             <PageContent />
 
           </Content>
