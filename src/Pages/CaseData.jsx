@@ -52,6 +52,7 @@ const Color = [
   { text: '(BLACK/RED)', value: '(BLACK/RED)' },
   { text: '(BLACK/WHITE)', value: '(BLACK/WHITE)' },
   { text: '(GRAY)', value: '(GRAY)' },
+  { text: '(GREY)', value: '(GREY)' },
   { text: '(CYAN)', value: '(CYAN)' },
   { text: '(PURPLE)', value: '(PURPLE)' },
   { text: '(PINK)', value: '(PINK)' },
