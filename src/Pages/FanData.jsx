@@ -12,6 +12,7 @@ const { Option } = Select;
 
 const Brand = [
   { text: 'ANTEC', value: 'ANTEC' },
+  { text: 'ASUS', value: 'ASUS' },
   { text: 'BE QUIET', value: 'BE QUIET' },
   { text: 'COOLER MASTER', value: 'COOLER MASTER' },
   { text: 'CORSAIR', value: 'CORSAIR' },
