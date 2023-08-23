@@ -311,7 +311,8 @@ const KeyCapData = () => {
 
   const handleSearch = (value) => {
     const filtered = data.filter((item) =>
-      String(item.kc_model).toLowerCase().includes(value.toLowerCase())
+      String(item.kc_model).toLowerCase().includes(value.toLowerCase()) ||
+      String(item.kc_id).toLowerCase().includes(value.toLowerCase())
     );
     setFilteredData(filtered);
   };
@@ -587,7 +588,7 @@ const KeyCapData = () => {
         marginBottom: 8,
       }} split={<Divider type="vertical" />}>
 
-        <Search placeholder="Search only by NAME" onSearch={handleSearch} enterButton allowClear />
+        <Search placeholder="Search Code and Name" onSearch={handleSearch} enterButton allowClear />
 
         <Select defaultValue="all" onChange={handleBrandChange} style={{
           width: 150,

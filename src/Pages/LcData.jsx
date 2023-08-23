@@ -297,7 +297,8 @@ const LcData = () => {
 
   const handleSearch = (value) => {
     const filtered = data.filter((item) =>
-      String(item.lc_model).toLowerCase().includes(value.toLowerCase())
+      String(item.lc_model).toLowerCase().includes(value.toLowerCase()) ||
+      String(item.lc_id).toLowerCase().includes(value.toLowerCase())
     );
     setFilteredData(filtered);
   };
@@ -571,7 +572,7 @@ const LcData = () => {
         marginBottom: 8,
       }} split={<Divider type="vertical" />}>
 
-        <Search placeholder="Search only by NAME" onSearch={handleSearch} enterButton allowClear />
+        <Search placeholder="Search Code and Name" onSearch={handleSearch} enterButton allowClear />
 
         <Select defaultValue="all" onChange={handleBrandChange} style={{
           width: 150,
