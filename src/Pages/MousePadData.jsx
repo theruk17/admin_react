@@ -27,7 +27,7 @@ const Brand = [
 
 
 const Color = [
-  { text: 'BLACk', value: 'BLACK' },
+  { text: 'BLACK', value: 'BLACK' },
   { text: 'WHITE', value: 'WHITE' },
   { text: 'RED', value: 'RED' },
   { text: 'GREEN', value: 'GREEN' },
