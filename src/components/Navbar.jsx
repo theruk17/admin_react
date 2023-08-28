@@ -96,6 +96,11 @@ const App = () => {
               key: '/fan'
             },
             {
+              icon: <FileEarmark />,
+              label: "SINK",
+              key: '/sink'
+            },
+            {
               icon: <Headset />,
               label: "HeadSet",
               key: '/headset'
@@ -130,11 +135,7 @@ const App = () => {
               label: "MIC",
               key: '/mic'
             },
-            {
-              icon: <FileEarmark />,
-              label: "SINK",
-              key: '/sink'
-            },
+
           ]}
         />
       </Sider>
