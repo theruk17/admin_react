@@ -91,15 +91,16 @@ const App = () => {
               key: '/lc'
             },
             {
-              icon: <Fan />,
-              label: "FAN",
-              key: '/fan'
-            },
-            {
               icon: <FileEarmark />,
               label: "SINK",
               key: '/sink'
             },
+            {
+              icon: <Fan />,
+              label: "FAN",
+              key: '/fan'
+            },
+
             {
               icon: <Headset />,
               label: "HeadSet",
