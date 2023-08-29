@@ -118,7 +118,7 @@ const App = () => {
             },
             {
               icon: <FileEarmark />,
-              label: "Chair",
+              label: "Chair/Desk",
               key: '/ch'
             },
             {
