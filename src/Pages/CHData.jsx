@@ -41,7 +41,10 @@ const Color = [
   { text: 'SAKURA BLACK', value: 'SAKURA BLACK' },
   { text: 'MESH BLACK', value: 'MESH BLACK' },
 ]
-
+const Group = [
+  { text: 'GAMING CHAIR', value: 'GAMING CHAIR' },
+  { text: 'GAMING DESK', value: 'GAMING DESK' },
+]
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -74,6 +77,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
   useEffect(() => {
     setFileList([{ url: API_URL + '/' + record.ch_img }])
     form.setFieldsValue({
+      group: record.ch_group,
       color: record.ch_color,
       brand: record.ch_brand,
       model: record.ch_model,
@@ -197,6 +201,15 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           </Col>
         </Row>
         <Row gutter={24}>
+          <Col span={8}>
+            <Form.Item label="Group" name="group">
+              <Select placeholder="Group" allowClear>
+                {Group.map(item => (
+                  <Select.Option key={item.value} value={item.value}>{item.text}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
           <Col span={6}>
             <Form.Item label="Price SRP" name="price_srp">
               <InputNumber
@@ -388,7 +401,9 @@ const FanData = () => {
       render: (_, record) => <><p>{record.ch_brand} {record.ch_model} {record.ch_color}</p>
         <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.ch_id}</p></>,
     },
-
+    {
+      title: 'Group', dataIndex: 'ch_group', key: 'ch_group', align: 'left', width: 100,
+    },
     {
       title: 'STOCK',
       children: [
