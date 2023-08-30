@@ -29,12 +29,14 @@ const Color = [
   { text: 'RED', value: 'RED' },
   { text: 'GREEN', value: 'GREEN' },
   { text: 'PINK', value: 'PINK' },
+  { text: 'WOOD', value: 'WOOD' },
   { text: 'CHARCOAL', value: 'CHARCOAL' },
   { text: 'RED MAROON', value: 'RED MAROON' },
   { text: 'GRAY-CHARCOAL', value: 'GRAY-CHARCOAL' },
   { text: 'WHITE-GRAY', value: 'WHITE-GRAY' },
   { text: 'BLACK CYAN', value: 'BLACK CYAN' },
   { text: 'BLACK RED', value: 'BLACK RED' },
+  { text: 'BLACK GREEN', value: 'BLACK GREEN' },
   { text: 'BLACK EDITION', value: 'BLACK EDITION' },
   { text: 'ALL BLACK', value: 'ALL BLACK' },
   { text: 'AZURE BLUE', value: 'AZURE BLUE' },
@@ -44,6 +46,7 @@ const Color = [
   { text: 'JET BLACK', value: 'JET BLACK' },
   { text: 'SAKURA BLACK', value: 'SAKURA BLACK' },
   { text: 'MESH BLACK', value: 'MESH BLACK' },
+  { text: 'SUPER BLACK', value: 'SUPER BLACK' },
 ]
 const Group = [
   { text: 'GAMING CHAIR', value: 'GAMING CHAIR' },
