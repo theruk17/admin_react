@@ -476,6 +476,18 @@ const CaseData = () => {
       title: 'STOCK',
       children: [
         {
+          title: 'รวม', dataIndex: 'sumstock', key: 'sumstock', align: 'center', width: 70,
+          sorter: (a, b) => a.sumstock - b.sumstock,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+        {
           title: 'นครนายก', dataIndex: 'stock_nny', key: 'stock_nny', align: 'center', width: 70,
           sorter: (a, b) => a.stock_nny - b.stock_nny,
           render(text, record) {
@@ -547,18 +559,7 @@ const CaseData = () => {
             };
           }
         },
-        {
-          title: 'รวม', dataIndex: 'sumstock', key: 'sumstock', align: 'center', width: 70,
-          sorter: (a, b) => a.sumstock - b.sumstock,
-          render(text, record) {
-            return {
-              props: {
-                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
-              },
-              children: <div>{text}</div>
-            };
-          }
-        },
+
       ]
     },
 
