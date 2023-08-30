@@ -13,7 +13,11 @@ const { Option } = Select;
 const Brand = [
   { text: 'ANDA SEAT', value: 'ANDA SEAT' },
   { text: 'CORSAIR', value: 'CORSAIR' },
+  { text: 'COOLER MASTER', value: 'COOLER MASTER' },
+  { text: 'EGA', value: 'EGA' },
+  { text: 'GALAX', value: 'GALAX' },
   { text: 'MSI', value: 'MSI' },
+  { text: 'NUBWO', value: 'NUBWO' },
   { text: 'NOBLECHAIRS', value: 'NOBLECHAIRS' },
   { text: 'THUNDERX3', value: 'THUNDERX3' },
 ]
