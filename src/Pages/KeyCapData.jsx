@@ -528,6 +528,18 @@ const KeyCapData = () => {
           }
         },
         {
+          title: 'พระราม2', dataIndex: 'stock_rama2', key: 'stock_rama2', align: 'center', width: 70,
+          sorter: (a, b) => a.stock_rama2 - b.stock_rama2,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+        {
           title: 'รวม', dataIndex: 'sumstock', key: 'sumstock', align: 'center', width: 70,
           sorter: (a, b) => a.sumstock - b.sumstock,
           render(text, record) {

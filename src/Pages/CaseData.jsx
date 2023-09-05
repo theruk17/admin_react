@@ -143,7 +143,6 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
         }
       })
         .then(res => {
-          console.log(res);
           const imageUrl = res.data.secure_url;
           message.success("Upload Image to Server " + res.statusText);
           onSuccess(imageUrl);
@@ -274,8 +273,11 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             onPreview={handlePreview}
             onChange={handleChange}
             beforeUpload={beforeUpload}
+            maxCount={5}
+            multiple
+
           >
-            {fileList.length >= 1 ? null : uploadButton}
+            {fileList.length >= 5 ? null : uploadButton}
           </Upload>
           <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
             <img
@@ -550,6 +552,18 @@ const CaseData = () => {
         {
           title: 'บางแสน', dataIndex: 'stock_bangsaen', key: 'stock_bangsaen', align: 'center', width: 70,
           sorter: (a, b) => a.stock_bangsaen - b.stock_bangsaen,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+        {
+          title: 'พระราม2', dataIndex: 'stock_rama2', key: 'stock_rama2', align: 'center', width: 70,
+          sorter: (a, b) => a.stock_rama2 - b.stock_rama2,
           render(text, record) {
             return {
               props: {
