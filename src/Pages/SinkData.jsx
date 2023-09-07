@@ -17,6 +17,7 @@ const Brand = [
   { text: 'CORSAIR', value: 'CORSAIR' },
   { text: 'DEEPCOOL', value: 'DEEPCOOL' },
   { text: 'ID COOLING', value: 'ID COOLING' },
+  { text: 'iHAVECPU', value: 'iHAVECPU' },
   { text: 'NOCTUA', value: 'NOCTUA' },
   { text: 'NZXT', value: 'NZXT' },
   { text: 'PC COOLER', value: 'PC COOLER' },

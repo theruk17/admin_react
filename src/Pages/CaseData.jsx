@@ -97,7 +97,6 @@ const beforeUpload = (file) => {
 
 const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const [form] = Form.useForm();
-
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
@@ -117,6 +116,14 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
     });
   }, [record, form]);
 
+  /* useEffect(() => {
+    axios.post(API_URL + '/getimages', { id: record.case_id })
+      .then(res => {
+        const img = res.data.map(item => ({ url: API_URL + '/' + item.url }))
+        setFileList(img)
+
+      })
+  }, [visible === true]) */
 
   const handleCancel = () => setPreviewOpen(false);
   const handlePreview = async (file) => {
