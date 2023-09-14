@@ -22,6 +22,7 @@ const Brand = [
   { text: 'NZXT', value: 'NZXT' },
   { text: 'PC COOLER', value: 'PC COOLER' },
   { text: 'TSUNAMI', value: 'TSUNAMI' },
+  { text: 'THERMALTAKE', value: 'THERMALTAKE' },
   { text: 'ZALMAN', value: 'ZALMAN' },
 ]
 
