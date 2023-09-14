@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NumericFormat } from 'react-number-format';
+import { DndContext, PointerSensor, useSensor } from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import { DeleteTwoTone, EditTwoTone, PlusOutlined, BarcodeOutlined } from '@ant-design/icons';
 import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tag } from 'antd';
 
@@ -95,15 +103,40 @@ const beforeUpload = (file) => {
   return isJpgOrPng && isLt2M;
 };
 
+const DraggableUploadListItem = ({ originNode, file }) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: file.uid,
+  });
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    cursor: 'move',
+  };
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      // prevent preview event when drag end
+      className={isDragging ? 'is-dragging' : ''}
+      {...attributes}
+      {...listeners}
+    >
+      {/* hide error tooltip when dragging */}
+      {file.status === 'error' && isDragging ? originNode.props.children : originNode}
+    </div>
+  );
+};
+
 const EditForm = ({ visible, onCreate, onCancel, record }) => {
   const [form] = Form.useForm();
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState([]);
+  const [image, setImage] = useState([]);
 
   useEffect(() => {
-    setFileList([{ url: API_URL + '/' + record.case_img }])
+    //setFileList([{ url: API_URL + '/' + record.case_img }])
     form.setFieldsValue({
       group: record.case_group,
       brand: record.case_brand,
@@ -116,14 +149,14 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
     });
   }, [record, form]);
 
-  /* useEffect(() => {
+  useEffect(() => {
     axios.post(API_URL + '/getimages', { id: record.case_id })
       .then(res => {
         const img = res.data.map(item => ({ url: API_URL + '/' + item.url }))
         setFileList(img)
-
+        setImage(res.data)
       })
-  }, [visible === true]) */
+  }, [visible === true])
 
   const handleCancel = () => setPreviewOpen(false);
   const handlePreview = async (file) => {
@@ -135,12 +168,16 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
     setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
   };
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+
+
   const handleUpload = ({ file, onSuccess, onError, onProgress }) => {
+    const index = fileList.findIndex((item) => item.uid === file.uid);
     const formData = new FormData();
     formData.append('file', file);
+
     formData.append('id', record.case_id);
-    formData.append('t_name', 'case');
-    formData.append('c_name', 'case');
+    formData.append('sort', index);
+
 
     try {
       axios.post(API_URL + '/uploadimg', formData, {
@@ -161,7 +198,32 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
       message.error('Image upload failed!');
       onError();
     }
+
   };
+
+  const handleSubmit = () => {
+    const dataimg = image.map(items => ({
+
+      file: items.url,
+      id: items.product_id,
+      sort: fileList.findIndex((item) => item.url.split("/", 4)[3] === items.url)
+
+    }))
+
+    for (const item of dataimg) {
+      axios.post(API_URL + '/updateimg', item)
+    }
+    form
+      .validateFields()
+      .then((values) => {
+        onCreate(values);
+        form.resetFields();
+      })
+      .catch((info) => {
+        console.log('Validate Failed:', info);
+      });
+
+  }
   const uploadButton = (
     <div>
       <PlusOutlined />
@@ -175,6 +237,34 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
     </div>
   );
 
+  const handleRemove = (file) => {
+    const filename = file.url.split("/", 4)[3]
+
+    axios.delete(API_URL + '/deleteimg/' + filename)
+      .then((res) => {
+        message.success(res.data.message);
+      })
+      .catch((error) => {
+        message.error(error.message);
+      });
+  };
+
+  const sensor = useSensor(PointerSensor, {
+    activationConstraint: {
+      distance: 10,
+    },
+  });
+  const onDragEnd = ({ active, over }) => {
+    if (active.id !== over?.id) {
+      setFileList((prev) => {
+        const activeIndex = prev.findIndex((i) => i.uid === active.id);
+        const overIndex = prev.findIndex((i) => i.uid === over?.id);
+        return arrayMove(prev, activeIndex, overIndex);
+
+      });
+    }
+  };
+
   return (
     <Modal
       open={visible}
@@ -183,17 +273,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
       okText="Save"
       cancelText="Cancel"
       onCancel={onCancel}
-      onOk={() => {
-        form
-          .validateFields()
-          .then((values) => {
-            onCreate(values);
-            form.resetFields();
-          })
-          .catch((info) => {
-            console.log('Validate Failed:', info);
-          });
-      }}
+      onOk={handleSubmit}
     >
       <Divider />
       <Form form={form} name="form_in_modal">
@@ -273,19 +353,29 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
             </Form.Item>
           </Col>
         </Row>
-        <Form.Item label="Upload Image">
-          <Upload listType="picture-card"
-            fileList={fileList}
-            customRequest={handleUpload}
-            onPreview={handlePreview}
-            onChange={handleChange}
-            beforeUpload={beforeUpload}
-            maxCount={5}
-            multiple
-
-          >
-            {fileList.length >= 5 ? null : uploadButton}
-          </Upload>
+        <Form.Item label="Upload Image" >
+          <>
+            <DndContext sensors={[sensor]} onDragEnd={onDragEnd}>
+              <SortableContext items={fileList.map((i) => i.uid)} strategy={verticalListSortingStrategy}>
+                <Upload
+                  listType="picture-card"
+                  fileList={fileList}
+                  customRequest={handleUpload}
+                  onPreview={handlePreview}
+                  onChange={handleChange}
+                  onRemove={handleRemove}
+                  beforeUpload={beforeUpload}
+                  maxCount={5}
+                  multiple
+                  itemRender={(originNode, file) => (
+                    <DraggableUploadListItem originNode={originNode} file={file} />
+                  )}
+                >
+                  {fileList.length >= 5 ? null : uploadButton}
+                </Upload>
+              </SortableContext>
+            </DndContext>
+          </>
           <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
             <img
               alt="example"
@@ -467,8 +557,8 @@ const CaseData = () => {
   const Column = [
     {
       title: 'Image',
-      dataIndex: 'case_img',
-      key: 'case_img',
+      dataIndex: 'url_main',
+      key: 'url_main',
       width: 60,
       align: 'center',
       render: (text, record) => <a href={record.case_href} target='_blank'><img src={API_URL + '/' + text} alt="" height="30" /></a>,
