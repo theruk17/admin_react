@@ -1,39 +1,48 @@
+// ** React Imports
 import React, { useState } from 'react'
+
+// ** Axios Imports
 import axios from 'axios';
+
+// ** Ant Design Imports
 import { Card, Button, Form, Input, Divider, notification } from 'antd';
+
+// ** Ant Icon Imports
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+
+// ** React Router Imports
 import { useNavigate } from 'react-router-dom';
 
 import LOGO from '../assets/logo_ihc.svg'
 
-
+// ** API URL
 const API_URL = import.meta.env.VITE_API_URL
 
 const Login = () => {
+    // ** States
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
 
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         setLoading(true)
-        axios.post(API_URL + '/auth/login', values,)
+        await axios.post(API_URL + '/auth/login', values,)
             .then(res => {
                 window.localStorage.setItem('accessToken', res.data.accessToken)
                 window.localStorage.setItem('userData', res.data.userData.username)
                 setLoading(false)
                 navigate("/");
             })
-            .catch(err => {
-                setLoading(false)
+            .catch(async err => {
                 notification.error({
                     message: 'Error',
                     description: err.response.data.message,
                 });
+                setLoading(false)
             });
     };
     return (
         <div style={{ backgroundColor: '#F0F2F5', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', }}>
             <Card
-
                 bordered={false}
                 style={{
                     width: 450,
@@ -64,7 +73,6 @@ const Login = () => {
                     >
                         <Input size="large" placeholder="username" prefix={<UserOutlined />} />
                     </Form.Item>
-
                     <Form.Item
                         label="Password"
                         name="password"
@@ -77,7 +85,6 @@ const Login = () => {
                     >
                         <Input.Password size="large" placeholder="············" prefix={<LockOutlined />} />
                     </Form.Item>
-
                     <Form.Item>
                         <Button size='large' type="primary" htmlType="submit" block loading={loading}>
                             Sign in

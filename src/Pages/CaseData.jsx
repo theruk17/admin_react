@@ -180,7 +180,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
 
 
     try {
-      axios.post(API_URL + '/uploadimg', formData, {
+      axios.post(API_URL + '/uploadimgnew', formData, {
         onUploadProgress: (progressEvent) => {
           const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
           onProgress({ percent });
