@@ -1,0 +1,92 @@
+import React, { useState } from 'react'
+import axios from 'axios';
+import { Card, Button, Form, Input, Divider, notification } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+
+import LOGO from '../assets/logo_ihc.svg'
+
+
+const API_URL = import.meta.env.VITE_API_URL
+
+const Login = () => {
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+
+    const onFinish = (values) => {
+        setLoading(true)
+        axios.post(API_URL + '/auth/login', values,)
+            .then(res => {
+                window.localStorage.setItem('accessToken', res.data.accessToken)
+                window.localStorage.setItem('userData', res.data.userData.username)
+                setLoading(false)
+                navigate("/");
+            })
+            .catch(err => {
+                setLoading(false)
+                notification.error({
+                    message: 'Error',
+                    description: err.response.data.message,
+                });
+            });
+    };
+    return (
+        <div style={{ backgroundColor: '#F0F2F5', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', }}>
+            <Card
+
+                bordered={false}
+                style={{
+                    width: 450,
+                    padding: 30,
+                    minHeight: 500,
+                    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05)'
+                }}
+            >
+                <div style={{ display: 'flex', justifyContent: 'center', }}>
+                    <img src={LOGO} width={200} ></img>
+                </div>
+                <Divider />
+                <Form
+                    layout='vertical'
+                    requiredMark={false}
+                    onFinish={onFinish}
+                    autoComplete="off"
+                >
+                    <Form.Item
+                        label="Username"
+                        name="username"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your username!',
+                            },
+                        ]}
+                    >
+                        <Input size="large" placeholder="username" prefix={<UserOutlined />} />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Password"
+                        name="password"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your password!',
+                            },
+                        ]}
+                    >
+                        <Input.Password size="large" placeholder="············" prefix={<LockOutlined />} />
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Button size='large' type="primary" htmlType="submit" block loading={loading}>
+                            Sign in
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </Card>
+        </div>
+    )
+}
+
+export default Login
