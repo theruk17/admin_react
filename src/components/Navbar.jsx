@@ -1,4 +1,5 @@
-import { Layout, Menu, theme, Space, Badge, Avatar, Drawer, Divider } from 'antd';
+import { Layout, Menu, theme, Space, Badge, Avatar, Drawer, Divider, Button, Dropdown } from 'antd';
+import { LogoutOutlined, UserOutlined, KeyOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react';
 import PageContent from '../components/PageContent'
 import '../index.css';
@@ -6,14 +7,22 @@ import LogoIHC from '../assets/logo_ihc.svg'
 import { useNavigate } from 'react-router-dom';
 import { HouseDoor, ArrowRepeat, Laptop, Display, Pc, Fan, Headset, Keyboard, Mouse2, Mic, SquareFill, Snow, FileEarmark, KeyboardFill, BellFill } from 'react-bootstrap-icons';
 import axios from 'axios';
+import { useAuth } from "../provider/authProvider";
+
 const { Header, Content, Sider, Footer } = Layout;
 
 const API_URL = import.meta.env.VITE_API_URL
 
-const App = () => {
+const Navbar = () => {
+  const { setToken } = useAuth();
   const [open, setOpen] = useState(false);
   const [count, setCount] = useState(0);
   const [data, setData] = useState([]);
+
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
+  const navigate = useNavigate()
 
   useEffect(() => {
     axios.get(API_URL + '/new_stock')
@@ -31,10 +40,32 @@ const App = () => {
   const onClose = () => {
     setOpen(false);
   };
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
-  const navigate = useNavigate()
+
+  const items = [
+    {
+      label: 'เปลี่ยนรหัสผ่าน',
+      icon: <KeyOutlined />,
+      disabled: true,
+      key: '1',
+    },
+    {
+      type: 'divider',
+    },
+    {
+      label: 'ออกจากระบบ',
+      icon: <LogoutOutlined />,
+      danger: true,
+      key: '3',
+    },
+  ];
+
+  const onClick = ({ key }) => {
+    if (key === '3') {
+      setToken();
+      navigate("/", { replace: true });
+    }
+  };
+
   return (
     <Layout hasSider
       style={{
@@ -153,12 +184,26 @@ const App = () => {
           <img className='logo' src={LogoIHC} alt="" style={{
             width: 140,
           }} />
-          <div style={{ float: 'right', marginRight: '10px' }}>
-            <Space >
+          <div style={{ float: 'right' }}>
+            <Space size={24}>
               <Badge count={count} size="small">
                 <Avatar style={{ cursor: 'pointer' }} shape="square" size="large" icon={<BellFill />} onClick={showDrawer} />
               </Badge>
-
+              <Dropdown
+                menu={{
+                  items,
+                  onClick
+                }}
+                trigger={['click']}
+                placement="bottomRight"
+                arrow
+              >
+                <a onClick={(e) => e.preventDefault()}>
+                  <Avatar style={{
+                    backgroundColor: '#87d068',
+                  }} size={38} icon={<UserOutlined />} />
+                </a>
+              </Dropdown>
             </Space>
 
           </div>
@@ -216,4 +261,4 @@ const App = () => {
     </Layout>
   );
 };
-export default App;
+export default Navbar;

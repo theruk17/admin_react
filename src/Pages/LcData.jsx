@@ -281,8 +281,14 @@ const LcData = () => {
   };
 
   const init = () => {
+    const storedToken = window.localStorage.getItem('token')
     axios
-      .post(API_URL + "/admin_data", { t_name: 'liquid', c_name: 'lc' })
+      .post(API_URL + "/admin_data", {
+        t_name: 'liquid', c_name: 'lc',
+        headers: {
+          'Authorization': storedToken
+        }
+      })
       .then((res) => {
         setData(res.data);
         setLoading(false)

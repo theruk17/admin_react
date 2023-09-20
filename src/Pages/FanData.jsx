@@ -285,8 +285,14 @@ const FanData = () => {
   };
 
   const init = () => {
+    const storedToken = window.localStorage.getItem('token')
     axios
-      .post(API_URL + "/admin_data", { t_name: 'fan', c_name: 'f' })
+      .post(API_URL + "/admin_data", {
+        t_name: 'fan', c_name: 'f',
+        headers: {
+          'Authorization': storedToken
+        }
+      })
       .then((res) => {
         setData(res.data);
         setLoading(false)

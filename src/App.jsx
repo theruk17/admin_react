@@ -1,15 +1,12 @@
-import { useEffect, useState } from 'react'
-
-import Navbar from './components/Navbar'
-
+import AuthProvider from "./provider/authProvider";
+import Routes from "./routes";
 import './App.css'
-
 
 function App() {
   return (
-    <div>
-      <Navbar />
-    </div>
+    <AuthProvider>
+      <Routes />
+    </AuthProvider>
   )
 }
 

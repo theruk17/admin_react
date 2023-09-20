@@ -13,7 +13,9 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 // ** React Router Imports
 import { useNavigate } from 'react-router-dom';
 
-import LOGO from '../assets/logo_ihc.svg'
+import { useAuth } from "../provider/authProvider";
+
+import LOGO from '../assets/logo_ihc_b.svg'
 
 // ** API URL
 const API_URL = import.meta.env.VITE_API_URL
@@ -21,16 +23,17 @@ const API_URL = import.meta.env.VITE_API_URL
 const Login = () => {
     // ** States
     const navigate = useNavigate();
+    const { setToken } = useAuth();
     const [loading, setLoading] = useState(false);
+
 
     const onFinish = async (values) => {
         setLoading(true)
-        await axios.post(API_URL + '/auth/login', values,)
+        await axios.post(API_URL + '/auth/login', values)
             .then(res => {
-                window.localStorage.setItem('accessToken', res.data.accessToken)
-                window.localStorage.setItem('userData', res.data.userData.username)
+                setToken(res.data.accessToken)
                 setLoading(false)
-                navigate("/");
+                navigate("/", { replace: true });
             })
             .catch(async err => {
                 notification.error({
@@ -41,7 +44,7 @@ const Login = () => {
             });
     };
     return (
-        <div style={{ backgroundColor: '#F0F2F5', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', }}>
+        <div style={{ backgroundColor: '#262626', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', }}>
             <Card
                 bordered={false}
                 style={{

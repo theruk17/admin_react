@@ -394,8 +394,14 @@ const ShowData = () => {
   };
 
   const init = () => {
+    const storedToken = window.localStorage.getItem('token')
     axios
-      .post(API_URL + "/admin_data", { t_name: 'monitor', c_name: 'mnt' })
+      .post(API_URL + "/admin_data", {
+        t_name: 'monitor', c_name: 'mnt',
+        headers: {
+          Authorization: storedToken
+        }
+      })
       .then((res) => {
         setData(res.data);
         setLoading(false);

@@ -297,8 +297,14 @@ const NbData = () => {
   };
 
   const init = () => {
+    const storedToken = window.localStorage.getItem('token')
     axios
-      .post(API_URL + "/admin_data", { t_name: 'nb', c_name: 'nb' })
+      .post(API_URL + "/admin_data", {
+        t_name: 'nb', c_name: 'nb',
+        headers: {
+          'Authorization': storedToken
+        }
+      })
       .then((res) => {
         setData(res.data);
         setLoading(false)

@@ -10,7 +10,8 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { DeleteTwoTone, EditTwoTone, PlusOutlined, BarcodeOutlined } from '@ant-design/icons';
-import { Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Checkbox, Input, InputNumber, Select, Upload, Popconfirm, Tag } from 'antd';
+import { Button, Space, Table, Switch, Modal, Divider, message, Row, Col, Form, Result, Input, InputNumber, Select, Upload, Popconfirm, Tag } from 'antd';
+import { Navigate } from "react-router-dom";
 
 import '../App.css';
 
@@ -365,13 +366,13 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
                   onChange={handleChange}
                   onRemove={handleRemove}
                   beforeUpload={beforeUpload}
-                  maxCount={5}
+                  maxCount={6}
                   multiple
                   itemRender={(originNode, file) => (
                     <DraggableUploadListItem originNode={originNode} file={file} />
                   )}
                 >
-                  {fileList.length >= 5 ? null : uploadButton}
+                  {fileList.length >= 6 ? null : uploadButton}
                 </Upload>
               </SortableContext>
             </DndContext>
@@ -410,14 +411,23 @@ const CaseData = () => {
   };
 
   const init = () => {
+    const storedToken = window.localStorage.getItem('token')
     axios
-      .post(API_URL + "/admin_data", { t_name: 'case', c_name: 'case' })
+      .post(API_URL + "/admin_data", {
+        t_name: 'case', c_name: 'case',
+        headers: {
+          'Authorization': storedToken,
+        }
+      })
       .then((res) => {
         setData(res.data);
         setselectedBrands("all")
         setSelectedSubcats("all")
         setLoading(false);
-      });
+      })
+      .catch((error) => {
+      })
+
   }
 
   useEffect(() => {
