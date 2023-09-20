@@ -37,14 +37,6 @@ export const ProtectedRoute = () => {
         return <Navigate to="/login" />;
     }
 
-
-
-    useEffect(() => {
-
-    }, [])
-
-
-
     // If authenticated, render the child routes
     return <Navbar><Outlet /></Navbar>;
 };

@@ -30,10 +30,10 @@ const Login = () => {
     const onFinish = async (values) => {
         setLoading(true)
         await axios.post(API_URL + '/auth/login', values)
-            .then(res => {
-                setToken(res.data.accessToken)
+            .then(async res => {
+                await setToken(res.data.accessToken)
+                navigate("/", { replace: true })
                 setLoading(false)
-                navigate("/", { replace: true });
             })
             .catch(async err => {
                 notification.error({

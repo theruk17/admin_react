@@ -393,16 +393,16 @@ const ShowData = () => {
     console.log('params', pagination, filters, sorter, extra);
   };
 
-  const init = () => {
+  const init = async () => {
     const storedToken = window.localStorage.getItem('token')
-    axios
+    await axios
       .post(API_URL + "/admin_data", {
         t_name: 'monitor', c_name: 'mnt',
         headers: {
           Authorization: storedToken
         }
       })
-      .then((res) => {
+      .then(async res => {
         setData(res.data);
         setLoading(false);
       });
