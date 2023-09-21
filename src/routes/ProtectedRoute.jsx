@@ -27,7 +27,7 @@ export const ProtectedRoute = () => {
             .catch(() => {
                 localStorage.removeItem('userData')
                 localStorage.removeItem('refreshToken')
-                localStorage.removeItem('token')
+                //localStorage.removeItem('token')
                 //setUser(null)
                 return <Navigate to="/login" />;
             })
