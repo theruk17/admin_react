@@ -17,6 +17,7 @@ const Brand = [
   { text: 'DAREU', value: 'DAREU' },
   { text: 'GALAX', value: 'GALAX' },
   { text: 'HyperX', value: 'HyperX' },
+  { text: 'KFA2', value: 'KFA2' },
   { text: 'LOGA', value: 'LOGA' },
   { text: 'LOGITECH', value: 'LOGITECH' },
   { text: 'MICROPACK', value: 'MICROPACK' },
