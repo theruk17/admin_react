@@ -20,6 +20,7 @@ const Brand = [
   { text: 'EK', value: 'EK' },
   { text: 'ENERMAX', value: 'ENERMAX' },
   { text: 'EVGA', value: 'EVGA' },
+  { text: 'iHAVECPU', value: 'iHAVECPU' },
   { text: 'ID-COOLING', value: 'ID-COOLING' },
   { text: 'LIANLI', value: 'LIANLI' },
   { text: 'MSI', value: 'MSI' },
