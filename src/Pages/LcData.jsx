@@ -17,6 +17,7 @@ const Brand = [
   { text: 'COOLER MASTER', value: 'COOLER MASTER' },
   { text: 'CORSAIR', value: 'CORSAIR' },
   { text: 'DARKFLASH', value: 'DARKFLASH' },
+  { text: 'DEEPCOOL', value: 'DEEPCOOL' },
   { text: 'EK', value: 'EK' },
   { text: 'ENERMAX', value: 'ENERMAX' },
   { text: 'EVGA', value: 'EVGA' },
