@@ -47,6 +47,7 @@ const Hz = [
   { text: '144Hz', value: '144Hz' },
   { text: '165Hz', value: '165Hz' },
   { text: '170Hz', value: '170Hz' },
+  { text: '180Hz', value: '180Hz' },
   { text: '240Hz', value: '240Hz' },
   { text: '280Hz', value: '280Hz' },
   { text: '360Hz', value: '360Hz' }
