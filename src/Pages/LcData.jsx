@@ -305,8 +305,9 @@ const LcData = () => {
 
   const handleSearch = (value) => {
     const filtered = data.filter((item) =>
-      String(item.lc_model).toLowerCase().includes(value.toLowerCase()) ||
-      String(item.lc_id).toLowerCase().includes(value.toLowerCase())
+      String(item.lc_model).toLowerCase().includes(value.trim().toLowerCase()) ||
+      String(item.lc_id).toLowerCase().includes(value.trim().toLowerCase()) ||
+      String(item.sku).toLowerCase().includes(value.trim().toLowerCase())
     );
     setFilteredData(filtered);
   };
@@ -389,13 +390,13 @@ const LcData = () => {
     axios
       .delete(API_URL + `/admin_del_lc/${id}`)
       .then(res => {
-        setData(data.filter(item => item.lc_id !== id));
+        setData(data.filter(item => item.sku !== id));
         message.success(res.data);
       });
   };
 
   const handleCreate = (values) => {
-    axios.put(API_URL + '/edit_lc/' + record.lc_id, values)
+    axios.put(API_URL + '/edit_lc/' + record.sku, values)
       .then(res => {
         setVisible(false)
         message.success(res.data);
@@ -410,7 +411,7 @@ const LcData = () => {
   const handleStatusChange = (key) => {
     setLoading(true)
     const newData = [...data];
-    const target = newData.find((item) => item.product_id === key);
+    const target = newData.find((item) => item.sku === key);
     if (target) {
       target.status = target.status === 'Y' ? 'N' : 'Y';
       setData(newData);
@@ -439,7 +440,7 @@ const LcData = () => {
     {
       title: 'Product name', dataIndex: 'lc_model', key: 'lc_model',
       render: (_, record) => <><p>{record.lc_brand} {record.lc_model} {record.lc_color}</p>
-        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.lc_id}</p></>,
+        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.lc_id} - {record.sku}</p></>,
     },
     {
       title: 'Group', dataIndex: 'lc_group', key: 'lc_group', align: 'center', width: 100,
@@ -563,7 +564,7 @@ const LcData = () => {
     {
       title: 'Status', dataIndex: 'status', key: 'status', align: 'center', width: 100,
       render: (text, record) => (
-        <Switch loading={loading} checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.product_id)}
+        <Switch loading={loading} checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.sku)}
         />
       )
     },
@@ -574,7 +575,7 @@ const LcData = () => {
           <a key={record} onClick={() => showModal(record)}><EditTwoTone twoToneColor="#ffa940" /></a>
           <Popconfirm
             title="Delete the item"
-            onConfirm={() => handleDelete(record.lc_id)}
+            onConfirm={() => handleDelete(record.sku)}
             placement="topRight"
             description="Are you sure you want to delete this item?"
             okText="Yes"
@@ -592,7 +593,7 @@ const LcData = () => {
         marginBottom: 8,
       }} split={<Divider type="vertical" />}>
 
-        <Search placeholder="Search Code and Name" onSearch={handleSearch} enterButton allowClear />
+        <Search placeholder="Search Code, SKU, Name" onSearch={handleSearch} enterButton allowClear />
 
         <Select defaultValue="all" onChange={handleBrandChange} style={{
           width: 150,

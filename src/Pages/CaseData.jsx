@@ -438,8 +438,9 @@ const CaseData = () => {
 
   const handleSearch = (value) => {
     const filtered = data.filter((item) =>
-      String(item.case_model).toLowerCase().includes(value.toLowerCase()) ||
-      String(item.case_id).toLowerCase().includes(value.toLowerCase())
+      String(item.case_model).toLowerCase().includes(value.trim().toLowerCase()) ||
+      String(item.case_id).toLowerCase().includes(value.trim().toLowerCase()) ||
+      String(item.sku).toLowerCase().includes(value.trim().toLowerCase())
     );
     setFilteredData(filtered);
   };
@@ -523,13 +524,13 @@ const CaseData = () => {
     axios
       .delete(API_URL + `/admin_del_case/${id}`)
       .then(res => {
-        setData(data.filter(item => item.case_id !== id));
+        setData(data.filter(item => item.sku !== id));
         message.success(res.data);
       });
   };
 
   const handleCreate = (values) => {
-    axios.put(API_URL + '/edit_case/' + record.case_id, values)
+    axios.put(API_URL + '/edit_case/' + record.sku, values)
       .then(res => {
         setVisible(false)
         message.success(res.data);
@@ -547,7 +548,7 @@ const CaseData = () => {
   const handleStatusChange = (key) => {
     setLoading(true)
     const newData = [...data];
-    const target = newData.find((item) => item.product_id === key);
+    const target = newData.find((item) => item.sku === key);
     if (target) {
       target.status = target.status === 'Y' ? 'N' : 'Y';
       setData(newData);
@@ -576,7 +577,7 @@ const CaseData = () => {
     {
       title: 'Product name', dataIndex: 'case_model', key: 'case_model',
       render: (_, record) => <><p>{record.case_brand} {record.case_model} {record.case_color}</p>
-        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.case_id}</p></>,
+        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.case_id} - {record.sku}</p></>,
     },
     {
       title: 'Group', dataIndex: 'case_group', key: 'case_group', align: 'left', width: 130,
@@ -702,7 +703,7 @@ const CaseData = () => {
     {
       title: 'Status', dataIndex: 'status', key: 'status', align: 'center', width: 100,
       render: (text, record) => (
-        <Switch loading={loading} checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.product_id)}
+        <Switch loading={loading} checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.sku)}
         />
       )
     },
@@ -713,7 +714,7 @@ const CaseData = () => {
           <a key={record} onClick={() => showModal(record)}><EditTwoTone twoToneColor="#ffa940" /></a>
           <Popconfirm
             title="Delete the item"
-            onConfirm={() => handleDelete(record.case_id)}
+            onConfirm={() => handleDelete(record.sku)}
             placement="topRight"
             description="Are you sure you want to delete this item?"
             okText="Yes"
@@ -731,7 +732,7 @@ const CaseData = () => {
         marginBottom: 8,
       }} split={<Divider type="vertical" />}>
 
-        <Search placeholder="Search Code and Name" onSearch={handleSearch} enterButton allowClear />
+        <Search placeholder="Search Code, SKU, Name" onSearch={handleSearch} enterButton allowClear />
 
         <Select defaultValue="all" onChange={handleBrandChange} style={{
           width: 150,

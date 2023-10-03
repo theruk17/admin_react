@@ -319,8 +319,9 @@ const NbData = () => {
 
   const handleSearch = (value) => {
     const filtered = data.filter((item) =>
-      String(item.nb_model).toLowerCase().includes(value.toLowerCase()) ||
-      String(item.nb_id).toLowerCase().includes(value.toLowerCase())
+      String(item.nb_model).toLowerCase().includes(value.trim().toLowerCase()) ||
+      String(item.nb_id).toLowerCase().includes(value.trim().toLowerCase()) ||
+      String(item.sku).toLowerCase().includes(value.trim().toLowerCase())
     );
     setFilteredData(filtered);
   };
@@ -405,13 +406,13 @@ const NbData = () => {
     axios
       .delete(API_URL + `/admin_del_nb/${id}`)
       .then(res => {
-        setData(data.filter(item => item.nb_id !== id));
+        setData(data.filter(item => item.sku !== id));
         message.success(res.data);
       });
   };
 
   const handleCreate = (values) => {
-    axios.put(API_URL + '/edit_nb/' + record.nb_id, values)
+    axios.put(API_URL + '/edit_nb/' + record.sku, values)
       .then(res => {
         setVisible(false)
         message.success(res.data);
@@ -426,7 +427,7 @@ const NbData = () => {
   const handleStatusChange = (key) => {
     setLoading(true)
     const newData = [...data];
-    const target = newData.find((item) => item.product_id === key);
+    const target = newData.find((item) => item.sku === key);
     if (target) {
       target.status = target.status === 'Y' ? 'N' : 'Y';
       setData(newData);
@@ -455,7 +456,7 @@ const NbData = () => {
     {
       title: 'Product name', dataIndex: 'nb_model', key: 'nb_model',
       render: (_, record) => <><p>{record.nb_brand} {record.nb_model} {record.nb_color}</p>
-        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.nb_id}</p></>,
+        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.nb_id} - {record.sku}</p></>,
     },
     {
       title: 'Group', dataIndex: 'nb_group', key: 'nb_group', width: 120,
@@ -579,7 +580,7 @@ const NbData = () => {
     {
       title: 'Status', dataIndex: 'status', key: 'status', align: 'center', width: 100,
       render: (text, record) => (
-        <Switch loading={loading} checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.product_id)}
+        <Switch loading={loading} checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.sku)}
         />
       )
     },
@@ -590,7 +591,7 @@ const NbData = () => {
           <a key={record} onClick={() => showModal(record)}><EditTwoTone twoToneColor="#ffa940" /></a>
           <Popconfirm
             title="Delete the item"
-            onConfirm={() => handleDelete(record.nb_id)}
+            onConfirm={() => handleDelete(record.sku)}
             placement="topRight"
             description="Are you sure you want to delete this item?"
             okText="Yes"
@@ -608,7 +609,7 @@ const NbData = () => {
         marginBottom: 8,
       }} split={<Divider type="vertical" />}>
 
-        <Search placeholder="Search Code and Name" onSearch={handleSearch} enterButton allowClear />
+        <Search placeholder="Search Code, SKU, Name" onSearch={handleSearch} enterButton allowClear />
 
         <Select defaultValue="all" onChange={handleBrandChange} style={{
           width: 150,

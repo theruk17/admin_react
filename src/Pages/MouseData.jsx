@@ -314,8 +314,9 @@ const FanData = () => {
 
   const handleSearch = (value) => {
     const filtered = data.filter((item) =>
-      String(item.m_model).toLowerCase().includes(value.toLowerCase()) ||
-      String(item.m_id).toLowerCase().includes(value.toLowerCase())
+      String(item.m_model).toLowerCase().includes(value.trim().toLowerCase()) ||
+      String(item.m_id).toLowerCase().includes(value.trim().toLowerCase()) ||
+      String(item.sku).toLowerCase().includes(value.trim().toLowerCase())
     );
     setFilteredData(filtered);
   };
@@ -399,13 +400,13 @@ const FanData = () => {
     axios
       .delete(API_URL + `/admin_del_m/${id}`)
       .then(res => {
-        setData(data.filter(item => item.m_id !== id));
+        setData(data.filter(item => item.sku !== id));
         message.success(res.data);
       });
   };
 
   const handleCreate = (values) => {
-    axios.put(API_URL + '/edit_m/' + record.m_id, values)
+    axios.put(API_URL + '/edit_m/' + record.sku, values)
       .then(res => {
         setVisible(false)
         message.success(res.data);
@@ -420,7 +421,7 @@ const FanData = () => {
   const handleStatusChange = (key) => {
     setLoading(true)
     const newData = [...data];
-    const target = newData.find((item) => item.product_id === key);
+    const target = newData.find((item) => item.sku === key);
     if (target) {
       target.status = target.status === 'Y' ? 'N' : 'Y';
       setData(newData);
@@ -449,7 +450,7 @@ const FanData = () => {
     {
       title: 'Product name', dataIndex: 'm_model', key: 'm_model',
       render: (_, record) => <><p>{record.m_brand} {record.m_model} {record.m_color}</p>
-        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.m_id}</p></>,
+        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.m_id} - {record.sku}</p></>,
     },
     {
       title: 'Group', dataIndex: 'm_type', key: 'm_type', align: 'left', width: 120,
@@ -573,7 +574,7 @@ const FanData = () => {
     {
       title: 'Status', dataIndex: 'status', key: 'status', align: 'center', width: 100,
       render: (text, record) => (
-        <Switch loading={loading} checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.product_id)}
+        <Switch loading={loading} checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.sku)}
         />
       )
     },
@@ -584,7 +585,7 @@ const FanData = () => {
           <a key={record} onClick={() => showModal(record)}><EditTwoTone twoToneColor="#ffa940" /></a>
           <Popconfirm
             title="Delete the item"
-            onConfirm={() => handleDelete(record.m_id)}
+            onConfirm={() => handleDelete(record.sku)}
             placement="topRight"
             description="Are you sure you want to delete this item?"
             okText="Yes"
@@ -602,7 +603,7 @@ const FanData = () => {
         marginBottom: 8,
       }} split={<Divider type="vertical" />}>
 
-        <Search placeholder="Search Code and Name" onSearch={handleSearch} enterButton allowClear />
+        <Search placeholder="Search Code, SKU, Name" onSearch={handleSearch} enterButton allowClear />
 
         <Select defaultValue="all" onChange={handleBrandChange} style={{
           width: 150,
