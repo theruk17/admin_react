@@ -282,8 +282,7 @@ const FanData = () => {
   const handleSearch = (value) => {
     const filtered = data.filter((item) =>
       String(item.hs_model).toLowerCase().includes(value.trim().toLowerCase()) ||
-      String(item.hs_id).toLowerCase().includes(value.trim().toLowerCase()) ||
-      String(item.sku).toLowerCase().includes(value.trim().toLowerCase())
+      String(item.hs_id).toLowerCase().includes(value.trim().toLowerCase())
     );
     setFilteredData(filtered);
   };
@@ -570,7 +569,7 @@ const FanData = () => {
         marginBottom: 8,
       }} split={<Divider type="vertical" />}>
 
-        <Search placeholder="Search Code, SKU, Name" onSearch={handleSearch} enterButton allowClear />
+        <Search placeholder="Search Code, Name" onSearch={handleSearch} enterButton allowClear />
 
         <Select defaultValue="all" onChange={handleBrandChange} style={{
           width: 150,
