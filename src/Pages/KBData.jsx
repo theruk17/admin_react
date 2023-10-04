@@ -29,6 +29,7 @@ const Brand = [
   { text: 'RAZER', value: 'RAZER' },
   { text: 'ROYAL KLUDGE', value: 'ROYAL KLUDGE' },
   { text: 'SARU', value: 'SARU' },
+  { text: 'SIGNO', value: 'SIGNO' },
   { text: 'TSUNAMI', value: 'TSUNAMI' },
 ]
 
