@@ -592,7 +592,7 @@ const FanData = () => {
     {
       title: 'Product name', dataIndex: 'kb_model', key: 'kb_model',
       render: (_, record) => <><p>{record.kb_brand} {record.kb_model} {record.kb_switch} {record.kb_color} </p>
-        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.kb_id} - {record.sku}</p></>,
+        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.kb_id}</p></>,
     },
     {
       title: 'Group', dataIndex: 'kb_group', key: 'kb_group', align: 'left', width: 120,

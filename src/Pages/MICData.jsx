@@ -384,7 +384,7 @@ const FanData = () => {
     {
       title: 'Product name', dataIndex: 'mic_model', key: 'mic_model',
       render: (_, record) => <><p>{record.mic_brand} {record.mic_model} {record.mic_color}</p>
-        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.mic_id} - {record.sku}</p></>,
+        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.mic_id}</p></>,
     },
 
     {

@@ -439,7 +439,7 @@ const LcData = () => {
     {
       title: 'Product name', dataIndex: 'lc_model', key: 'lc_model',
       render: (_, record) => <><p>{record.lc_brand} {record.lc_model} {record.lc_color}</p>
-        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.lc_id} - {record.sku}</p></>,
+        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.lc_id}</p></>,
     },
     {
       title: 'Group', dataIndex: 'lc_group', key: 'lc_group', align: 'center', width: 100,

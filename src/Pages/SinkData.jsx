@@ -382,7 +382,7 @@ const FanData = () => {
     {
       title: 'Product name', dataIndex: 's_model', key: 's_model',
       render: (_, record) => <><p>{record.s_brand} {record.s_model} {record.s_color}</p>
-        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.s_id} - {record.sku}</p></>,
+        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.s_id}</p></>,
     },
     {
       title: 'STOCK',

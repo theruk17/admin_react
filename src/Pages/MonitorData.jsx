@@ -579,7 +579,7 @@ const ShowData = () => {
     {
       title: 'Product name', dataIndex: 'mnt_model', key: 'mnt_model',
       render: (_, record) => <><p>{record.mnt_brand} {record.mnt_model} {record.mnt_size} {record.mnt_panel} {record.mnt_refresh_rate} {record.mnt_resolution}</p>
-        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.mnt_id} - {record.sku}</p></>,
+        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.mnt_id}</p></>,
     },
     /*     {
           title: 'Group', dataIndex: 'mnt_group', key: 'mnt_group', align: 'left', width: 130,

@@ -453,7 +453,7 @@ const KeyCapData = () => {
     {
       title: 'Product name', dataIndex: 'kc_model', key: 'kc_model',
       render: (_, record) => <><p>{record.kc_brand} {record.kc_model} {record.kc_color}</p>
-        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.kc_id} - {record.sku}</p></>,
+        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.kc_id}</p></>,
     },
     {
       title: 'Group', dataIndex: 'kc_group', key: 'kc_group', align: 'left', width: 80,

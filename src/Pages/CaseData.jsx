@@ -576,7 +576,7 @@ const CaseData = () => {
     {
       title: 'Product name', dataIndex: 'case_model', key: 'case_model',
       render: (_, record) => <><p>{record.case_brand} {record.case_model} {record.case_color}</p>
-        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.case_id} - {record.sku}</p></>,
+        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.case_id}</p></>,
     },
     {
       title: 'Group', dataIndex: 'case_group', key: 'case_group', align: 'left', width: 130,

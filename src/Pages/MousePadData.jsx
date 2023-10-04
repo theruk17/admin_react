@@ -468,7 +468,7 @@ const FanData = () => {
     {
       title: 'Product name', dataIndex: 'mp_model', key: 'mp_model',
       render: (_, record) => <><p>{record.mp_brand} {record.mp_model} {record.mp_color}</p>
-        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.mp_id} - {record.sku}</p></>,
+        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.mp_id}</p></>,
     },
     {
       title: 'Group', dataIndex: 'mp_group', key: 'mp_group', align: 'left', width: 120,

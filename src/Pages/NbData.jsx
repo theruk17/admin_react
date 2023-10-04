@@ -455,7 +455,7 @@ const NbData = () => {
     {
       title: 'Product name', dataIndex: 'nb_model', key: 'nb_model',
       render: (_, record) => <><p>{record.nb_brand} {record.nb_model} {record.nb_color}</p>
-        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.nb_id} - {record.sku}</p></>,
+        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.nb_id}</p></>,
     },
     {
       title: 'Group', dataIndex: 'nb_group', key: 'nb_group', width: 120,

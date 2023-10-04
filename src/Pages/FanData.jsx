@@ -442,7 +442,7 @@ const FanData = () => {
     {
       title: 'Product name', dataIndex: 'f_model', key: 'f_model',
       render: (_, record) => <><p>{record.f_brand} {record.f_model} {record.f_color}</p>
-        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.f_id} - {record.sku}</p></>,
+        <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.f_id}</p></>,
     },
     {
       title: 'Group', dataIndex: 'f_group', key: 'f_group', align: 'center', width: 100,
