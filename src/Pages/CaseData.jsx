@@ -42,6 +42,7 @@ const Brand = [
   { text: 'OCPC', value: 'OCPC' },
   { text: 'NZXT', value: 'NZXT' },
   { text: 'PLENTY', value: 'PLENTY' },
+  { text: 'SAMA', value: 'SAMA' },
   { text: 'SILVERSTONE', value: 'SILVERSTONE' },
   { text: 'THERMALTAKE', value: 'THERMALTAKE' },
   { text: 'TSUNAMI', value: 'TSUNAMI' },
