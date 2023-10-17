@@ -681,7 +681,18 @@ const CaseData = () => {
             };
           }
         },
-
+        {
+          title: 'บางนา', dataIndex: 'stock_bangna', key: 'stock_bangna', align: 'center', width: 70,
+          sorter: (a, b) => a.stock_bangna - b.stock_bangna,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
       ]
     },
 
