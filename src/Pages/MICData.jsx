@@ -15,6 +15,7 @@ const Brand = [
   { text: 'BLUE', value: 'BLUE' },
   { text: 'BEYERDYNAMIC', value: 'BEYERDYNAMIC' },
   { text: 'FIFINE', value: 'FIFINE' },
+  { text: 'LOGITECH', value: 'LOGITECH' },
   { text: 'HyperX', value: 'HyperX' },
   { text: 'NZXT', value: 'NZXT' },
   { text: 'ONIKUMA', value: 'ONIKUMA' },
