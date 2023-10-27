@@ -37,7 +37,7 @@ const Brand = [
   { text: 'INWIN', value: 'INWIN' },
   { text: 'iHAVECPU', value: 'iHAVECPU' },
   { text: 'MONTECH', value: 'MONTECH' },
-  { text: 'NEOLUTION', value: 'NEOLUTION' },
+  { text: 'NEOLUTION E-SPORT', value: 'NEOLUTION E-SPORT' },
   { text: 'MSI', value: 'MSI' },
   { text: 'OCPC', value: 'OCPC' },
   { text: 'NZXT', value: 'NZXT' },
