@@ -30,6 +30,7 @@ const Brand = [
 const Color = [
   { text: 'BLACK', value: 'BLACK' },
   { text: 'WHITE', value: 'WHITE' },
+  { text: 'GRAY', value: 'GRAY' },
   { text: 'CHROMAX BLACK', value: 'CHROMAX BLACK' },
 ]
 
