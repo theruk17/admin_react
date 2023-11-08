@@ -13,6 +13,7 @@ import MouseData from "../Pages/MouseData";
 import MousePadData from "../Pages/MousePadData";
 import MICData from "../Pages/MICData";
 import SinkData from "../Pages/SinkData";
+import HolderData from "../Pages/HolderData";
 
 function AppRoutes() {
     return (
@@ -32,6 +33,7 @@ function AppRoutes() {
             <Route path="/mousepad" element={<MousePadData />}></Route>
             <Route path="/mic" element={<MICData />}></Route>
             <Route path="/sink" element={<SinkData />}></Route>
+            <Route path="/holder" element={<HolderData />}></Route>
         </Routes>
     )
 }

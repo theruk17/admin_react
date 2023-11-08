@@ -167,6 +167,11 @@ const Navbar = () => {
               label: "MIC",
               key: '/mic'
             },
+            {
+              icon: <FileEarmark />,
+              label: "HOLDER",
+              key: '/holder'
+            },
 
           ]}
         />

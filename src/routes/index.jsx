@@ -18,6 +18,7 @@ import MouseData from "../Pages/MouseData";
 import MousePadData from "../Pages/MousePadData";
 import MICData from "../Pages/MICData";
 import SinkData from "../Pages/SinkData";
+import HolderData from "../Pages/HolderData";
 import '../index.css'
 
 const Routes = () => {
@@ -88,6 +89,10 @@ const Routes = () => {
                 {
                     path: "/sink",
                     element: <SinkData />,
+                },
+                {
+                    path: "/holder",
+                    element: <HolderData />,
                 }
 
             ],
