@@ -16,6 +16,7 @@ const Brand = [
   { text: 'CORSAIR', value: 'CORSAIR' },
   { text: 'DAREU', value: 'DAREU' },
   { text: 'EGA', value: 'EGA' },
+  { text: 'FANTECH', value: 'FANTECH' },
   { text: 'GLORIOUS', value: 'GLORIOUS' },
   { text: 'HyperX', value: 'HyperX' },
   { text: 'KEYDOUS', value: 'KEYDOUS' },

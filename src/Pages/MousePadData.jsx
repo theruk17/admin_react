@@ -14,7 +14,9 @@ const Brand = [
   { text: 'AMD', value: 'AMD' },
   { text: 'ASUS', value: 'ASUS' },
   { text: 'CORSAIR', value: 'CORSAIR' },
+  { text: 'FANTECH', value: 'FANTECH' },
   { text: 'GALAX', value: 'GALAX' },
+  { text: 'HyperX', value: 'HyperX' },
   { text: 'IHAVECPU', value: 'IHAVECPU' },
   { text: 'JAK', value: 'JAK' },
   { text: 'LOGA', value: 'LOGA' },
@@ -24,6 +26,7 @@ const Brand = [
   { text: 'PULSAR', value: 'PULSAR' },
   { text: 'ROCCAT', value: 'ROCCAT' },
   { text: 'SIGNO', value: 'SIGNO' },
+  { text: 'ZOWIE', value: 'ZOWIE' },
 ]
 
 

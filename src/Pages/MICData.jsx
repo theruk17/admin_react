@@ -21,6 +21,7 @@ const Brand = [
   { text: 'ONIKUMA', value: 'ONIKUMA' },
   { text: 'RAZER', value: 'RAZER' },
   { text: 'SIGNO', value: 'SIGNO' },
+  { text: 'STREAMPLIFY', value: 'STREAMPLIFY' },
 ]
 
 
