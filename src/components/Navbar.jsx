@@ -5,7 +5,7 @@ import PageContent from '../components/PageContent'
 import '../index.css';
 import LogoIHC from '../assets/logo_ihc.svg'
 import { useNavigate } from 'react-router-dom';
-import { HouseDoor, ArrowRepeat, Laptop, Display, Pc, Fan, Headset, Keyboard, Mouse2, Mic, SquareFill, Snow, FileEarmark, KeyboardFill, BellFill } from 'react-bootstrap-icons';
+import { HouseDoor, ArrowRepeat, Laptop, Display, Pc, Fan, Headset, Keyboard, Mouse2, Mic, SquareFill, Snow, FileEarmark, KeyboardFill, BellFill, SignpostFill, Safe2 } from 'react-bootstrap-icons';
 import axios from 'axios';
 import { useAuth } from "../provider/authProvider";
 
@@ -122,7 +122,7 @@ const Navbar = () => {
               key: '/lc'
             },
             {
-              icon: <FileEarmark />,
+              icon: <Safe2 />,
               label: "SINK",
               key: '/sink'
             },
@@ -168,7 +168,7 @@ const Navbar = () => {
               key: '/mic'
             },
             {
-              icon: <FileEarmark />,
+              icon: <SignpostFill />,
               label: "HOLDER",
               key: '/holder'
             },
