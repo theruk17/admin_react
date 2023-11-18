@@ -29,6 +29,7 @@ const Brand = [
   { text: 'PC COOLER', value: 'PC COOLER' },
   { text: 'SAPPHIRE', value: 'SAPPHIRE' },
   { text: 'SILVERSTONE', value: 'SILVERSTONE' },
+  { text: 'T-FORCE', value: 'T-FORCE' },
   { text: 'THERMALTAKE', value: 'THERMALTAKE' },
   { text: 'ZADAK', value: 'ZADAK' },
 ]

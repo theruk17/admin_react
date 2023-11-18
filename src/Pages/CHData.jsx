@@ -15,10 +15,12 @@ const Brand = [
   { text: 'CORSAIR', value: 'CORSAIR' },
   { text: 'COOLER MASTER', value: 'COOLER MASTER' },
   { text: 'EGA', value: 'EGA' },
+  { text: 'ERGONOZ', value: 'ERGONOZ' },
   { text: 'GALAX', value: 'GALAX' },
   { text: 'MSI', value: 'MSI' },
   { text: 'NUBWO', value: 'NUBWO' },
   { text: 'NOBLECHAIRS', value: 'NOBLECHAIRS' },
+  { text: 'RAZER', value: 'RAZER' },
   { text: 'THUNDERX3', value: 'THUNDERX3' },
 ]
 
@@ -34,6 +36,7 @@ const Color = [
   { text: 'RED MAROON', value: 'RED MAROON' },
   { text: 'GRAY-CHARCOAL', value: 'GRAY-CHARCOAL' },
   { text: 'WHITE-GRAY', value: 'WHITE-GRAY' },
+  { text: 'LIGHT GRAY', value: 'LIGHT GRAY' },
   { text: 'BLACK CYAN', value: 'BLACK CYAN' },
   { text: 'BLACK RED', value: 'BLACK RED' },
   { text: 'BLACK GREEN', value: 'BLACK GREEN' },
