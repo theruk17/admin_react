@@ -45,6 +45,7 @@ const Color = [
   { text: '(MECHA GRAY)', value: '(MECHA GRAY)' },
   { text: '(ECLIPSE GRAY)', value: '(ECLIPSE GRAY)' },
   { text: '(DARK SHADOW GREY)', value: '(DARK SHADOW GREY)' },
+  { text: '(STAR BLUE)', value: '(STAR BLUE)' },
   { text: '(SPRUCE BLUE)', value: '(SPRUCE BLUE)' },
   { text: '(QUIET BLUE)', value: '(QUIET BLUE)' },
   { text: '(PERFOMANCE BLUE)', value: '(PERFOMANCE BLUE)' },
