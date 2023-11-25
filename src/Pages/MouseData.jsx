@@ -17,6 +17,7 @@ const Brand = [
   { text: 'DAREU', value: 'DAREU' },
   { text: 'FANTECH', value: 'FANTECH' },
   { text: 'GALAX', value: 'GALAX' },
+  { text: 'GLORIOUS', value: 'GLORIOUS' },
   { text: 'HyperX', value: 'HyperX' },
   { text: 'KFA2', value: 'KFA2' },
   { text: 'LOGA', value: 'LOGA' },
