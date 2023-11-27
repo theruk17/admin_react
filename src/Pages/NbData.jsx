@@ -41,6 +41,7 @@ const Color = [
   { text: '(STORM GREY)', value: '(STORM GREY)' },
   { text: '(ONYX GREY)', value: '(ONYX GREY)' },
   { text: '(SLATE GREY)', value: '(SLATE GREY)' },
+  { text: '(STEEL GRAY)', value: '(STEEL GRAY)' },
   { text: '(STELLAR GRAY)', value: '(STELLAR GRAY)' },
   { text: '(MECHA GRAY)', value: '(MECHA GRAY)' },
   { text: '(ECLIPSE GRAY)', value: '(ECLIPSE GRAY)' },

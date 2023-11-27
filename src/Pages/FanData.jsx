@@ -16,6 +16,7 @@ const Brand = [
   { text: 'BE QUIET', value: 'BE QUIET' },
   { text: 'COOLER MASTER', value: 'COOLER MASTER' },
   { text: 'CORSAIR', value: 'CORSAIR' },
+  { text: 'DEEPCOOL', value: 'DEEPCOOL' },
   { text: 'EK-VARDAR', value: 'EK-VARDAR' },
   { text: 'ID-COOLING', value: 'ID-COOLING' },
   { text: 'INWIN', value: 'INWIN' },
