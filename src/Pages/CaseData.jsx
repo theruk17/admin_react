@@ -75,6 +75,7 @@ const Color = [
   { text: '(MATTE WHITE)', value: '(MATTE WHITE)' },
   { text: '(MESH BLACK)', value: '(MESH BLACK)' },
   { text: '(MESH WHITE)', value: '(MESH WHITE)' },
+  { text: '(MATTE WHITE/MATTE BLACK)', value: '(MATTE WHITE/MATTE BLACK)' },
   { text: '(RAZER EDITION)', value: '(RAZER EDITION)' },
   { text: '(YELLOW)', value: '(YELLOW)' },
 
