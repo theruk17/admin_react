@@ -69,7 +69,8 @@ const Resolution = [
   { text: '1920x1080 (FHD)', value: '1920x1080 (FHD)' },
   { text: '2560x1440 (2K)', value: '2560x1440 (2K)' },
   { text: '3840x2160 (4K)', value: '3840x2160 (4K)' },
-  { text: '3440x1440 (2K)', value: '3440x1440 (2K)' }
+  { text: '3440x1440 (2K)', value: '3440x1440 (2K)' },
+  { text: '3440x1440 (UWQHD)', value: '3440x1440 (UWQHD)' }
 ]
 
 const getBase64 = (file) =>
