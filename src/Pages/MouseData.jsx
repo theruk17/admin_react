@@ -51,6 +51,7 @@ const Color = [
   { text: 'BLACK-TRANSPARENT', value: 'BLACK-TRANSPARENT' },
   { text: 'BLACK-RED', value: 'BLACK-RED' },
   { text: 'WHITE-PINK', value: 'WHITE-PINK' },
+  { text: 'WHITE/BLACK', value: 'WHITE/BLACK' },
   { text: 'MATTE NEON MINT', value: 'MATTE NEON MINT' },
   { text: 'MATTE NEON PINK', value: 'MATTE NEON PINK' },
 ]
