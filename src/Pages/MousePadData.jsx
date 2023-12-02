@@ -11,12 +11,14 @@ const { Search } = Input;
 const { Option } = Select;
 
 const Brand = [
+  { text: 'AKKO', value: 'AKKO' },
   { text: 'AMD', value: 'AMD' },
   { text: 'ASUS', value: 'ASUS' },
   { text: 'CORSAIR', value: 'CORSAIR' },
   { text: 'DW', value: 'DW' },
   { text: 'FANTECH', value: 'FANTECH' },
   { text: 'GALAX', value: 'GALAX' },
+  { text: 'GIGABYTE', value: 'GIGABYTE' },
   { text: 'HyperX', value: 'HyperX' },
   { text: 'IHAVECPU', value: 'IHAVECPU' },
   { text: 'JAK', value: 'JAK' },
