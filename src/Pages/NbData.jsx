@@ -34,6 +34,7 @@ const Color = [
   { text: '(MIXED BLACK)', value: '(MIXED BLACK)' },
   { text: '(SHALE BLACK)', value: '(SHALE BLACK)' },
   { text: '(MATT BLACK)', value: '(MATT BLACK)' },
+  { text: '(TRANSLUCENT BLACK)', value: '(TRANSLUCENT BLACK)' },
   { text: '(ARCTIC GREY)', value: '(ARCTIC GREY)' },
   { text: '(CLOUD GREY)', value: '(CLOUD GREY)' },
   { text: '(PLATINUM GREY)', value: '(PLATINUM GREY)' },
