@@ -29,6 +29,7 @@ const Brand = [
   { text: 'PULSAR', value: 'PULSAR' },
   { text: 'ROCCAT', value: 'ROCCAT' },
   { text: 'SIGNO', value: 'SIGNO' },
+  { text: 'XTRFY', value: 'XTRFY' },
   { text: 'ZOWIE', value: 'ZOWIE' },
 ]
 

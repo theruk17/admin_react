@@ -14,6 +14,7 @@ const Brand = [
   { text: 'AKKO', value: 'AKKO' },
   { text: 'ALTEC LANSING', value: 'ALTEC LANSING' },
   { text: 'ASUS', value: 'ASUS' },
+  { text: 'CHERRY', value: 'CHERRY' },
   { text: 'CORSAIR', value: 'CORSAIR' },
   { text: 'DAREU', value: 'DAREU' },
   { text: 'EGA', value: 'EGA' },

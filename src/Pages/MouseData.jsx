@@ -13,6 +13,7 @@ const { Option } = Select;
 const Brand = [
   { text: 'ANITECH', value: 'ANITECH' },
   { text: 'ASUS', value: 'ASUS' },
+  { text: 'CHERRY', value: 'CHERRY' },
   { text: 'CORSAIR', value: 'CORSAIR' },
   { text: 'DAREU', value: 'DAREU' },
   { text: 'FANTECH', value: 'FANTECH' },
@@ -31,6 +32,7 @@ const Brand = [
   { text: 'ROCCAT', value: 'ROCCAT' },
   { text: 'SIGNO', value: 'SIGNO' },
   { text: 'THUNDERX3', value: 'THUNDERX3' },
+  { text: 'XTRFY', value: 'XTRFY' },
   { text: 'ZOWIE', value: 'ZOWIE' },
 ]
 
@@ -54,6 +56,8 @@ const Color = [
   { text: 'WHITE/BLACK', value: 'WHITE/BLACK' },
   { text: 'MATTE NEON MINT', value: 'MATTE NEON MINT' },
   { text: 'MATTE NEON PINK', value: 'MATTE NEON PINK' },
+  { text: 'CYBER BLACK', value: 'CYBER BLACK' },
+  { text: 'SKY BLUE', value: 'SKY BLUE' },
 ]
 
 
