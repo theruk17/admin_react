@@ -47,6 +47,8 @@ const Color = [
   { text: 'BLUE', value: 'BLUE' },
   { text: 'PINK', value: 'PINK' },
   { text: 'GREY', value: 'GREY' },
+  { text: 'FROSTY MINT', value: 'FROSTY MINT' },
+  { text: 'RETRO', value: 'RETRO' },
   { text: 'MAGENTA', value: 'MAGENTA' },
   { text: 'YELLOW', value: 'YELLOW' },
   { text: 'CHARCOAL', value: 'CHARCOAL' },
