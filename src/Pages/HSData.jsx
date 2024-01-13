@@ -13,6 +13,7 @@ const { Option } = Select;
 const Brand = [
   { text: 'ASUS', value: 'ASUS' },
   { text: 'CORSAIR', value: 'CORSAIR' },
+  { text: 'EGA', value: 'EGA' },
   { text: 'EPOS', value: 'EPOS' },
   { text: 'FANTECH', value: 'FANTECH' },
   { text: 'GALAX', value: 'GALAX' },
@@ -24,6 +25,7 @@ const Brand = [
   { text: 'RAPOO', value: 'RAPOO' },
   { text: 'RAZER', value: 'RAZER' },
   { text: 'SIGNO', value: 'SIGNO' },
+  { text: 'SIMGOT', value: 'SIMGOT' },
   { text: 'TFZ', value: 'TFZ' },
 ]
 

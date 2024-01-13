@@ -21,6 +21,7 @@ const Brand = [
   { text: 'ID-COOLING', value: 'ID-COOLING' },
   { text: 'INWIN', value: 'INWIN' },
   { text: 'LIANLI', value: 'LIANLI' },
+  { text: 'MONTECH', value: 'MONTECH' },
   { text: 'NZXT', value: 'NZXT' },
   { text: 'PC COOLER', value: 'PC COOLER' },
   { text: 'POWER MONSTER', value: 'POWER MONSTER' },
