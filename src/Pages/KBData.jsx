@@ -95,6 +95,7 @@ const SW = [
   { text: 'KAILH TURBO RED', value: 'KAILH TURBO RED' },
   { text: 'KAILH TURBO BROWN', value: 'KAILH TURBO BROWN' },
   { text: 'KAILH TURBO SILVE', value: 'KAILH TURBO SILVE' },
+  { text: 'KAILH SAKURA PINK MAGNETIC SWITCH', value: 'KAILH SAKURA PINK MAGNETIC SWITCH' },
   { text: 'RUBBER DOME', value: 'RUBBER DOME' },
   { text: 'TACTILE SWITCH', value: 'TACTILE SWITCH' },
   { text: 'TITAN SWITCH', value: 'TITAN SWITCH' },
