@@ -18,6 +18,7 @@ const Brand = [
   { text: 'FANTECH', value: 'FANTECH' },
   { text: 'GALAX', value: 'GALAX' },
   { text: 'HyperX', value: 'HyperX' },
+  { text: 'IINVICTOR', value: 'IINVICTOR' },
   { text: 'KZ', value: 'KZ' },
   { text: 'LOGITECH', value: 'LOGITECH' },
   { text: 'NUBWO', value: 'NUBWO' },

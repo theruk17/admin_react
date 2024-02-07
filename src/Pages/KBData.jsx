@@ -136,6 +136,7 @@ const Color = [
   { text: 'CEMENT GRAY', value: 'CEMENT GRAY' },
   { text: 'MECHANICAL GREY', value: 'MECHANICAL GREY' },
   { text: 'MANGO STICKY RICE', value: 'MANGO STICKY RICE' },
+  { text: 'TARO MILK', value: 'TARO MILK' },
   { text: 'WHITE CASE/STEEL PLATE', value: 'WHITE CASE/STEEL PLATE' },
 ]
 

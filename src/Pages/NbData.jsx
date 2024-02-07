@@ -31,6 +31,7 @@ const Color = [
   { text: '(GRAPHITE BLACK)', value: '(GRAPHITE BLACK)' },
   { text: '(INDIE BLACK)', value: '(INDIE BLACK)' },
   { text: '(CARBON BLACK)', value: '(CARBON BLACK)' },
+  { text: '(CHARCOAL BLACK)', value: '(CHARCOAL BLACK)' },
   { text: '(MIXED BLACK)', value: '(MIXED BLACK)' },
   { text: '(SHALE BLACK)', value: '(SHALE BLACK)' },
   { text: '(MATT BLACK)', value: '(MATT BLACK)' },
