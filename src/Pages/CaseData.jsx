@@ -88,7 +88,7 @@ const Group = [
   { text: 'ZONE C', value: 'ZONE C' },
   { text: 'ZONE D', value: 'ZONE D' },
   { text: 'ZONE ITX', value: 'ZONE ITX' },
-  { text: 'PREMIUM', value: 'PREMIUM' },
+  { text: 'ZONE PREMIUM', value: 'ZONE PREMIUM' },
 
 ]
 
