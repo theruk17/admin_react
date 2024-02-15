@@ -700,6 +700,18 @@ const CaseData = () => {
             };
           }
         },
+        {
+          title: 'โคราช', dataIndex: 'stock_korat', key: 'stock_korat', align: 'center', width: 70,
+          sorter: (a, b) => a.stock_korat - b.stock_korat,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
       ]
     },
 
