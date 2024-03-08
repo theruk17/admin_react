@@ -409,13 +409,13 @@ const NbData = () => {
     axios
       .delete(API_URL + `/admin_del_nb/${id}`)
       .then(res => {
-        setData(data.filter(item => item.sku !== id));
+        setData(data.filter(item => item.nb_id !== id));
         message.success(res.data);
       });
   };
 
   const handleCreate = (values) => {
-    axios.put(API_URL + '/edit_nb/' + record.sku, values)
+    axios.put(API_URL + '/edit_nb/' + record.nb_id, values)
       .then(res => {
         setVisible(false)
         message.success(res.data);
@@ -607,7 +607,7 @@ const NbData = () => {
     {
       title: 'Status', dataIndex: 'status', key: 'status', align: 'center', width: 100,
       render: (text, record) => (
-        <Switch loading={loading} checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.sku)}
+        <Switch loading={loading} checkedChildren="On" unCheckedChildren="Off" checked={record.status === 'Y'} onChange={() => handleStatusChange(record.nb_id)}
         />
       )
     },
@@ -618,7 +618,7 @@ const NbData = () => {
           <a key={record} onClick={() => showModal(record)}><EditTwoTone twoToneColor="#ffa940" /></a>
           <Popconfirm
             title="Delete the item"
-            onConfirm={() => handleDelete(record.sku)}
+            onConfirm={() => handleDelete(record.nb_id)}
             placement="topRight"
             description="Are you sure you want to delete this item?"
             okText="Yes"
