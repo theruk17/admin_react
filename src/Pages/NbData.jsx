@@ -415,7 +415,7 @@ const NbData = () => {
   };
 
   const handleCreate = (values) => {
-    axios.put(API_URL + '/edit_nb/' + record.nb_id, values)
+    axios.put(API_URL + '/edit_nb/' + record.sku, values)
       .then(res => {
         setVisible(false)
         message.success(res.data);
