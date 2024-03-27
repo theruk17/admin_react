@@ -29,13 +29,18 @@ const Brand = [
 ]
 
 const Size = [
+  { text: '21.45"', value: '21.45"' },
   { text: '21.5"', value: '21.5"' },
+  { text: '23.6"', value: '23.6"' },
   { text: '23.8"', value: '23.8"' },
   { text: '24"', value: '24"' },
-  { text: '23.6"', value: '23.6"' },
+  { text: '24.1"', value: '24.1"' },
   { text: '24.5"', value: '24.5"' },
   { text: '27"', value: '27"' },
+  { text: '27.6"', value: '27.6"' },
+  { text: '27.9"', value: '27.9"' },
   { text: '28"', value: '28"' },
+  { text: '30"', value: '30"' },
   { text: '31.5"', value: '31.5"' },
   { text: '32"', value: '32"' },
   { text: '34"', value: '34"' }
