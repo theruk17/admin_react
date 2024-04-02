@@ -23,6 +23,7 @@ const Brand = [
   { text: 'EVGA', value: 'EVGA' },
   { text: 'GIGABYTE', value: 'GIGABYTE' },
   { text: 'G.SKILL', value: 'G.SKILL' },
+  { text: 'HYTE', value: 'HYTE' },
   { text: 'iHAVECPU', value: 'iHAVECPU' },
   { text: 'ID-COOLING', value: 'ID-COOLING' },
   { text: 'LIANLI', value: 'LIANLI' },
