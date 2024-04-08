@@ -28,6 +28,7 @@ const Brand = [
   { text: 'MELGEEK', value: 'MELGEEK' },
   { text: 'MONSGEEK', value: 'MONSGEEK' },
   { text: 'MICROPACK', value: 'MICROPACK' },
+  { text: 'NEOLUTION', value: 'NEOLUTION' },
   { text: 'NUBWO', value: 'NUBWO' },
   { text: 'OKER', value: 'OKER' },
   { text: 'ONIKUMA', value: 'ONIKUMA' },
