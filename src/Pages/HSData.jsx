@@ -21,6 +21,7 @@ const Brand = [
   { text: 'IINVICTOR', value: 'IINVICTOR' },
   { text: 'KZ', value: 'KZ' },
   { text: 'LOGITECH', value: 'LOGITECH' },
+  { text: 'NEOLUTION', value: 'NEOLUTION' },
   { text: 'NUBWO', value: 'NUBWO' },
   { text: 'ONIKUMA', value: 'ONIKUMA' },
   { text: 'RAPOO', value: 'RAPOO' },
