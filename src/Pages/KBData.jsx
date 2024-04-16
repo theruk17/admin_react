@@ -106,6 +106,7 @@ const SW = [
   { text: 'LINEAR (นมเย็น)', value: 'LINEAR (นมเย็น)' },
   { text: 'TACTLE (ชาไทย)', value: 'TACTLE (ชาไทย)' },
   { text: 'RAINBOW LED', value: 'RAINBOW LED' },
+  { text: 'MEMBRANE', value: 'MEMBRANE' },
 ]
 
 const Color = [
