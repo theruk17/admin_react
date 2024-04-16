@@ -29,6 +29,7 @@ const Brand = [
 ]
 
 const Size = [
+  { text: '19.5"', value: '19.5"' },
   { text: '21.45"', value: '21.45"' },
   { text: '21.5"', value: '21.5"' },
   { text: '23.6"', value: '23.6"' },
