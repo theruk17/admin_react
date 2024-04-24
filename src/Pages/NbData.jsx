@@ -576,6 +576,18 @@ const NbData = () => {
           }
         },
         {
+          title: 'บางใหญ่', dataIndex: 'stock_bangyai', key: 'stock_bangyai', align: 'center', width: 70,
+          sorter: (a, b) => a.stock_bangyai - b.stock_bangyai,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+        {
           title: 'รวม', dataIndex: 'sumstock', key: 'sumstock', align: 'center', width: 70,
           sorter: (a, b) => a.sumstock - b.sumstock,
           render(text, record) {
