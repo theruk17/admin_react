@@ -107,6 +107,7 @@ const SW = [
   { text: 'TACTLE (ชาไทย)', value: 'TACTLE (ชาไทย)' },
   { text: 'RAINBOW LED', value: 'RAINBOW LED' },
   { text: 'MEMBRANE', value: 'MEMBRANE' },
+  { text: 'CHARTREUSE SWITCH', value: 'CHARTREUSE SWITCH' },
 ]
 
 const Color = [
@@ -140,6 +141,10 @@ const Color = [
   { text: 'MANGO STICKY RICE', value: 'MANGO STICKY RICE' },
   { text: 'TARO MILK', value: 'TARO MILK' },
   { text: 'WHITE CASE/STEEL PLATE', value: 'WHITE CASE/STEEL PLATE' },
+  { text: 'OCEAN BLUE', value: 'OCEAN BLUE' },
+  { text: 'PHANTOM', value: 'PHANTOM' },
+  { text: 'CAMPING', value: 'CAMPING' },
+  { text: 'CLOUD', value: 'CLOUD' },
 ]
 
 const Type = [
