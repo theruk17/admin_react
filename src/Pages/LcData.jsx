@@ -14,6 +14,7 @@ const Brand = [
   { text: 'ASUS', value: 'ASUS' },
   { text: 'ALPHACOOL', value: 'ALPHACOOL' },
   { text: 'ARCTIC', value: 'ARCTIC' },
+  { text: 'BE QUIET', value: 'BE QUIET' },
   { text: 'COOLER MASTER', value: 'COOLER MASTER' },
   { text: 'CORSAIR', value: 'CORSAIR' },
   { text: 'DARKFLASH', value: 'DARKFLASH' },
