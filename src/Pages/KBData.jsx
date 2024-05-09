@@ -145,6 +145,7 @@ const Color = [
   { text: 'PHANTOM', value: 'PHANTOM' },
   { text: 'CAMPING', value: 'CAMPING' },
   { text: 'CLOUD', value: 'CLOUD' },
+  { text: 'LIGHT CLOUD', value: 'LIGHT CLOUD' },
 ]
 
 const Type = [
