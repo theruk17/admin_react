@@ -30,6 +30,7 @@ const Brand = [
   { text: 'COOLER MASTER', value: 'COOLER MASTER' },
   { text: 'CORSAIR', value: 'CORSAIR' },
   { text: 'DARKFLASH', value: 'DARKFLASH' },
+  { text: 'GALAX', value: 'GALAX' },
   { text: 'FRACTAL', value: 'FRACTAL' },
   { text: 'GIGABYTE', value: 'GIGABYTE' },
   { text: 'HYTE', value: 'HYTE' },
