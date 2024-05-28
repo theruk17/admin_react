@@ -36,6 +36,7 @@ const Brand = [
   { text: 'ROYAL KLUDGE', value: 'ROYAL KLUDGE' },
   { text: 'SARU', value: 'SARU' },
   { text: 'SIGNO', value: 'SIGNO' },
+  { text: 'STEELSERIES', value: 'STEELSERIES' },
   { text: 'TSUNAMI', value: 'TSUNAMI' },
 ]
 

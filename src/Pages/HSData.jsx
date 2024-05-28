@@ -27,6 +27,7 @@ const Brand = [
   { text: 'RAPOO', value: 'RAPOO' },
   { text: 'RAZER', value: 'RAZER' },
   { text: 'SIGNO', value: 'SIGNO' },
+  { text: 'STEELSERIES', value: 'STEELSERIES' },
   { text: 'SIMGOT', value: 'SIMGOT' },
   { text: 'TFZ', value: 'TFZ' },
 ]

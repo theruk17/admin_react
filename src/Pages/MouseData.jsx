@@ -33,6 +33,7 @@ const Brand = [
   { text: 'RAZER', value: 'RAZER' },
   { text: 'ROCCAT', value: 'ROCCAT' },
   { text: 'SIGNO', value: 'SIGNO' },
+  { text: 'STEELSERIES', value: 'STEELSERIES' },
   { text: 'THUNDERX3', value: 'THUNDERX3' },
   { text: 'XTRFY', value: 'XTRFY' },
   { text: 'ZOWIE', value: 'ZOWIE' },
