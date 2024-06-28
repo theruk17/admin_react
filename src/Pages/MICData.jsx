@@ -11,6 +11,7 @@ const { Search } = Input;
 const { Option } = Select;
 
 const Brand = [
+  { text: 'ASUS', value: 'ASUS' },
   { text: 'AVERMEDIA', value: 'AVERMEDIA' },
   { text: 'BLUE', value: 'BLUE' },
   { text: 'BEYERDYNAMIC', value: 'BEYERDYNAMIC' },

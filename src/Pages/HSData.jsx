@@ -20,6 +20,7 @@ const Brand = [
   { text: 'HyperX', value: 'HyperX' },
   { text: 'IINVICTOR', value: 'IINVICTOR' },
   { text: 'KZ', value: 'KZ' },
+  { text: 'LOGA', value: 'LOGA' },
   { text: 'LOGITECH', value: 'LOGITECH' },
   { text: 'NEOLUTION', value: 'NEOLUTION' },
   { text: 'NUBWO', value: 'NUBWO' },

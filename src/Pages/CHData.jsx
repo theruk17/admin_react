@@ -16,10 +16,12 @@ const Brand = [
   { text: 'COOLER MASTER', value: 'COOLER MASTER' },
   { text: 'EGA', value: 'EGA' },
   { text: 'ERGONOZ', value: 'ERGONOZ' },
+  { text: 'ERGOPIXEL', value: 'ERGOPIXEL' },
   { text: 'GALAX', value: 'GALAX' },
   { text: 'MSI', value: 'MSI' },
   { text: 'NUBWO', value: 'NUBWO' },
   { text: 'NOBLECHAIRS', value: 'NOBLECHAIRS' },
+  { text: 'ONEX', value: 'ONEX' },
   { text: 'RAZER', value: 'RAZER' },
   { text: 'THUNDERX3', value: 'THUNDERX3' },
 ]
