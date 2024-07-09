@@ -80,6 +80,7 @@ const Color = [
   { text: '(RAZER EDITION)', value: '(RAZER EDITION)' },
   { text: '(MATCHA GREEN EDITION)', value: '(MATCHA GREEN EDITION)' },
   { text: '(HYDRANGEA BLUE)', value: '(HYDRANGEA BLUE)' },
+  { text: '(BUBBLE PINK)', value: '(BUBBLE PINK)' },
   { text: '(YELLOW)', value: '(YELLOW)' },
 
 ]
