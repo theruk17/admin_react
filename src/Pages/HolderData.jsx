@@ -15,6 +15,7 @@ const Brand = [
   { text: 'ASUS', value: 'ASUS' },
   { text: 'GIGABYTE', value: 'GIGABYTE' },
   { text: 'iHAVECPU', value: 'iHAVECPU' },
+  { text: 'THERMALTAKE', value: 'THERMALTAKE' },
   { text: 'ZOTAC', value: 'ZOTAC' },
 ]
 
