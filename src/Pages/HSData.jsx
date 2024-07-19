@@ -14,6 +14,7 @@ const Brand = [
   { text: 'ASUS', value: 'ASUS' },
   { text: 'CORSAIR', value: 'CORSAIR' },
   { text: 'EGA', value: 'EGA' },
+  { text: 'EDIFIER', value: 'EDIFIER' },
   { text: 'EPOS', value: 'EPOS' },
   { text: 'FANTECH', value: 'FANTECH' },
   { text: 'GALAX', value: 'GALAX' },
