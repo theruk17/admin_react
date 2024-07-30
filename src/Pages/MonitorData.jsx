@@ -20,6 +20,7 @@ const Brand = [
   { text: 'DAHUA', value: 'DAHUA' },
   { text: 'DELL', value: 'DELL' },
   { text: 'GIGABYTE', value: 'GIGABYTE' },
+  { text: 'HP', value: 'HP' },
   { text: 'LENOVO', value: 'LENOVO' },
   { text: 'LG', value: 'LG' },
   { text: 'MSI', value: 'MSI' },
