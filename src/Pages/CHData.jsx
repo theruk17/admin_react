@@ -14,6 +14,7 @@ const Brand = [
   { text: 'ANDA SEAT', value: 'ANDA SEAT' },
   { text: 'CORSAIR', value: 'CORSAIR' },
   { text: 'COOLER MASTER', value: 'COOLER MASTER' },
+  { text: 'DELI', value: 'DELI' },
   { text: 'EGA', value: 'EGA' },
   { text: 'ERGONOZ', value: 'ERGONOZ' },
   { text: 'ERGOPIXEL', value: 'ERGOPIXEL' },
