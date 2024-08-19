@@ -13,6 +13,7 @@ const { Option } = Select;
 const Brand = [
   { text: 'ANITECH', value: 'ANITECH' },
   { text: 'ASUS', value: 'ASUS' },
+  { text: 'AULA', value: 'AULA' },
   { text: 'CHERRY', value: 'CHERRY' },
   { text: 'CORSAIR', value: 'CORSAIR' },
   { text: 'DAREU', value: 'DAREU' },
