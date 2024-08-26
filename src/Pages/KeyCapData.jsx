@@ -582,6 +582,18 @@ const KeyCapData = () => {
           }
         },
         {
+          title: 'รามคำแหง', dataIndex: 'stock_ramkhamhaeng', key: 'stock_ramkhamhaeng', align: 'center', width: 70,
+          sorter: (a, b) => a.stock_ramkhamhaeng - b.stock_ramkhamhaeng,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+        {
           title: 'รวม', dataIndex: 'sumstock', key: 'sumstock', align: 'center', width: 70,
           sorter: (a, b) => a.sumstock - b.sumstock,
           render(text, record) {
