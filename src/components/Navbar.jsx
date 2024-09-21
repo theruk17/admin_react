@@ -111,11 +111,11 @@ const Navbar = () => {
               label: "Case",
               key: '/case'
             },
-            {
+            /* {
               icon: <Laptop />,
               label: "Notebook",
               key: '/nb'
-            },
+            }, */
             {
               icon: <Snow />,
               label: "Liquid Cooling",
@@ -132,7 +132,7 @@ const Navbar = () => {
               key: '/fan'
             },
 
-            {
+            /* {
               icon: <Headset />,
               label: "HeadSet",
               key: '/headset'
@@ -166,7 +166,7 @@ const Navbar = () => {
               icon: <Mic />,
               label: "MIC",
               key: '/mic'
-            },
+            }, */
             {
               icon: <SignpostFill />,
               label: "HOLDER",
