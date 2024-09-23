@@ -49,6 +49,7 @@ const Color = [
 
 
 const Group = [
+  { text: 'NEW ITEM', value: 'NEW ITEM' },
   { text: '120MM', value: '120MM' },
   { text: '240MM', value: '240MM' },
   { text: '280MM', value: '280MM' },

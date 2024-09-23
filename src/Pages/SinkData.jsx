@@ -34,6 +34,10 @@ const Color = [
   { text: 'CHROMAX BLACK', value: 'CHROMAX BLACK' },
 ]
 
+const Group = [
+  { text: 'NEW ITEM', value: 'NEW ITEM' }
+]
+
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -67,6 +71,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
     setFileList([{ url: API_URL + '/' + record.s_img }])
     form.setFieldsValue({
       color: record.s_color,
+      group: record.s_group,
       brand: record.s_brand,
       model: record.s_model,
       price_srp: record.product_price,
@@ -163,7 +168,7 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
           </Col>
         </Row>
         <Row gutter={24}>
-          <Col span={12}>
+          <Col span={8}>
             <Form.Item label="Brand" name="brand"
               rules={[
                 {
@@ -178,11 +183,20 @@ const EditForm = ({ visible, onCreate, onCancel, record }) => {
               </Select>
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col span={8}>
             <Form.Item label="Color" name="color">
               <Select placeholder="Color" allowClear>
                 {Color.map(item => (
                   <Select.Option key={item.value} value={item.value}>{item.value}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item label="Group" name="group">
+              <Select placeholder="Group" allowClear>
+                {Group.map(item => (
+                  <Select.Option key={item.value} value={item.value}>{item.text}</Select.Option>
                 ))}
               </Select>
             </Form.Item>
@@ -384,6 +398,9 @@ const FanData = () => {
       title: 'Product name', dataIndex: 's_model', key: 's_model',
       render: (_, record) => <><p>{record.s_brand} {record.s_model} {record.s_color}</p>
         <p style={{ lineHeight: 1, fontSize: 10, color: 'Gray' }}><BarcodeOutlined /> {record.s_id}</p></>,
+    },
+    {
+      title: 'Group', dataIndex: 's_group', key: 's_group', align: 'center', width: 100,
     },
     {
       title: 'STOCK',

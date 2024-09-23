@@ -45,6 +45,7 @@ const Color = [
 
 
 const Group = [
+  { text: 'NEW ITEM', value: 'NEW ITEM' },
   { text: '120MMx1', value: '120MMx1' },
   { text: '120MMx2', value: '120MMx2' },
   { text: '120MMx3', value: '120MMx3' },
