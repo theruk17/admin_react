@@ -587,6 +587,18 @@ const LcData = () => {
           }
         },
         {
+          title: 'ดินแดง', dataIndex: 'stock_dindang', key: 'stock_dindang', align: 'center', width: 70,
+          sorter: (a, b) => a.stock_dindang - b.stock_dindang,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+        {
           title: 'BKK', dataIndex: 'stock_bkk', key: 'stock_bkk', align: 'center', width: 70,
           sorter: (a, b) => a.stock_bkk - b.stock_bkk,
           render(text, record) {
