@@ -18,6 +18,7 @@ const Brand = [
   { text: 'CORSAIR', value: 'CORSAIR' },
   { text: 'DEEPCOOL', value: 'DEEPCOOL' },
   { text: 'EK-VARDAR', value: 'EK-VARDAR' },
+  { text: 'GIGABTYE', value: 'GIGABTYE' },
   { text: 'ID-COOLING', value: 'ID-COOLING' },
   { text: 'INWIN', value: 'INWIN' },
   { text: 'LIANLI', value: 'LIANLI' },
