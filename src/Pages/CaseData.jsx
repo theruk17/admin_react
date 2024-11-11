@@ -32,6 +32,7 @@ const Brand = [
   { text: 'DARKFLASH', value: 'DARKFLASH' },
   { text: 'DEEPCOOL', value: 'DEEPCOOL' },
   { text: 'GALAX', value: 'GALAX' },
+  { text: 'HAVN', value: 'HAVN' },
   { text: 'FRACTAL', value: 'FRACTAL' },
   { text: 'GIGABYTE', value: 'GIGABYTE' },
   { text: 'HYTE', value: 'HYTE' },
