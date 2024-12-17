@@ -47,12 +47,12 @@ const Color = [
 
 const Group = [
   { text: 'NEW ITEM', value: 'NEW ITEM' },
-  { text: '120MMx1', value: '120MMx1' },
-  { text: '120MMx2', value: '120MMx2' },
-  { text: '120MMx3', value: '120MMx3' },
-  { text: '120MMx5', value: '120MMx5' },
-  { text: '140MMx1', value: '140MMx1' },
-  { text: '140MMx2', value: '140MMx2' },
+  { text: '120MMX1', value: '120MMX1' },
+  { text: '120MMX2', value: '120MMX2' },
+  { text: '120MMX3', value: '120MMX3' },
+  { text: '120MMX5', value: '120MMX5' },
+  { text: '140MMX1', value: '140MMX1' },
+  { text: '140MMX2', value: '140MMX2' },
 
 ]
 
