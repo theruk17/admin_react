@@ -754,6 +754,18 @@ const ShowData = () => {
           }
         },
         {
+          title: 'นครปฐม', dataIndex: 'stock_nkpt', key: 'stock_nkpt', align: 'center', width: 70,
+          sorter: (a, b) => a.stock_nkpt - b.stock_nkpt,
+          render(text, record) {
+            return {
+              props: {
+                style: { background: parseInt(text) === 0 ? "#ffccc7" : "" }
+              },
+              children: <div>{text}</div>
+            };
+          }
+        },
+        {
           title: 'BKK', dataIndex: 'stock_bkk', key: 'stock_bkk', align: 'center', width: 70,
           sorter: (a, b) => a.stock_bkk - b.stock_bkk,
           render(text, record) {
