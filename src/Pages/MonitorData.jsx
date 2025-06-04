@@ -53,6 +53,7 @@ const Hz = [
   { text: '75Hz', value: '75Hz' },
   { text: '100Hz', value: '100Hz' },
   { text: '144Hz', value: '144Hz' },
+  { text: '160Hz', value: '160Hz' },
   { text: '165Hz', value: '165Hz' },
   { text: '170Hz', value: '170Hz' },
   { text: '180Hz', value: '180Hz' },
