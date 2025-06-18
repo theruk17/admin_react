@@ -60,7 +60,12 @@ const Hz = [
   { text: '200Hz', value: '200Hz' },
   { text: '240Hz', value: '240Hz' },
   { text: '280Hz', value: '280Hz' },
-  { text: '360Hz', value: '360Hz' }
+  { text: '360Hz', value: '360Hz' },
+  { text: '380Hz', value: '380Hz' },
+  { text: '500Hz', value: '500Hz' },
+  { text: '520Hz', value: '520Hz' },
+  { text: '540Hz', value: '540Hz' },
+  { text: '600Hz', value: '600Hz' }
 ]
 
 const Panel = [
