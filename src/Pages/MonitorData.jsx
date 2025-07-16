@@ -85,6 +85,7 @@ const Resolution = [
   { text: '1920x1080 (FHD)', value: '1920x1080 (FHD)' },
   { text: '2560x1440 (2K)', value: '2560x1440 (2K)' },
   { text: '3840x2160 (4K)', value: '3840x2160 (4K)' },
+  { text: '5120x2880 (5K)', value: '5120x2880 (5K)' },
   { text: '3440x1440 (2K)', value: '3440x1440 (2K)' },
   { text: '3440x1440 (UWQHD)', value: '3440x1440 (UWQHD)' }
 ]
