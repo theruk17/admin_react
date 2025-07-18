@@ -29,6 +29,7 @@ const Brand = [
   { text: 'SILVERSTONE', value: 'SILVERSTONE' },
   { text: 'T-FORCE', value: 'T-FORCE' },
   { text: 'THERMALTAKE', value: 'THERMALTAKE' },
+  { text: 'TRYX', value: 'TRYX' },
   { text: 'TSUNAMI', value: 'TSUNAMI' },
 ]
 
