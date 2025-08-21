@@ -44,6 +44,8 @@ const Brand = [
   { text: 'NEOLUTION E-SPORT', value: 'NEOLUTION E-SPORT' },
   { text: 'MSI', value: 'MSI' },
   { text: 'OCPC', value: 'OCPC' },
+  { text: 'OCYPUS', value: 'OCYPUS' },
+  { text: 'OCYPUS x iHAVECPU', value: 'OCYPUS x iHAVECPU' },
   { text: 'NZXT', value: 'NZXT' },
   { text: 'PLENTY', value: 'PLENTY' },
   { text: 'SAMA', value: 'SAMA' },

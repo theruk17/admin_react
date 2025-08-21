@@ -30,6 +30,8 @@ const Brand = [
   { text: 'LIANLI', value: 'LIANLI' },
   { text: 'MSI', value: 'MSI' },
   { text: 'NZXT', value: 'NZXT' },
+  { text: 'OCYPUS', value: 'OCYPUS' },
+  { text: 'OCYPUS x iHAVECPU', value: 'OCYPUS x iHAVECPU' },
   { text: 'PC COOLER', value: 'PC COOLER' },
   { text: 'SAPPHIRE', value: 'SAPPHIRE' },
   { text: 'SILVERSTONE', value: 'SILVERSTONE' },
